@@ -5,14 +5,14 @@ using Npgsql;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-var dataSourceBuilder = new NpgsqlDataSourceBuilder("User ID=postgres;Password=postgres;Host=localhost;Port=5432;Database=finansik;Connection Lifetime=0;");
+var connectionString = builder.Configuration.GetConnectionString("Postgres");
+var dataSourceBuilder = new NpgsqlDataSourceBuilder(connectionString);
 dataSourceBuilder.MapEnum<OperationDirection>();
 var dataSource = dataSourceBuilder.Build();
 
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 builder.Services.AddDbContextPool<FinansikDbContext>(options => options.UseNpgsql(dataSource));
 
 var app = builder.Build();
