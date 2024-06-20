@@ -1,0 +1,3 @@
+# Finansik
+
+> Personal finance application
