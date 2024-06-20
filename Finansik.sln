@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finansik.Storage", "Finansi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finansik.Common", "Finansik.Common\Finansik.Common.csproj", "{1F3A7242-568B-47F2-85C9-F74C7347AFBE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finansik.API", "Finansik.API\Finansik.API.csproj", "{0D2F2E7A-F44E-4787-8F85-03B222BFD315}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,5 +31,9 @@ Global
 		{1F3A7242-568B-47F2-85C9-F74C7347AFBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F3A7242-568B-47F2-85C9-F74C7347AFBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F3A7242-568B-47F2-85C9-F74C7347AFBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D2F2E7A-F44E-4787-8F85-03B222BFD315}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D2F2E7A-F44E-4787-8F85-03B222BFD315}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D2F2E7A-F44E-4787-8F85-03B222BFD315}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D2F2E7A-F44E-4787-8F85-03B222BFD315}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

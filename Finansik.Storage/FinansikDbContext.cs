@@ -1,8 +1,9 @@
+using Finansik.Common;
 using Microsoft.EntityFrameworkCore;
 
 namespace Finansik.Storage;
 
-public class FinansikDbContext : DbContext
+public class FinansikDbContext(DbContextOptions options) : DbContext(options)
 {
     public DbSet<User> Users { get; set; }
     
@@ -17,4 +18,7 @@ public class FinansikDbContext : DbContext
     public DbSet<PerformedOperation> PerformedOperations { get; set; }
     
     public DbSet<ScheduledOperation> ScheduledOperations { get; set; }
+    
+    protected override void OnModelCreating(ModelBuilder builder)
+        => builder.HasPostgresEnum<OperationDirection>();
 }
