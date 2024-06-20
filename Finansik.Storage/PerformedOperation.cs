@@ -12,6 +12,9 @@ public class PerformedOperation : KeyedEntity
     
     public Guid PeriodCategoryId { get; set; }
     
+    [ForeignKey(nameof(PeriodCategoryId))]
+    public PeriodCategory PeriodCategory { get; set; }
+    
     public decimal Amount { get; set; }
     
     public required string CurrencyCode { get; set; }
