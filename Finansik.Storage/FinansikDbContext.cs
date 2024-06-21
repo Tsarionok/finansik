@@ -1,4 +1,5 @@
 using Finansik.Common;
+using Finansik.Storage.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Finansik.Storage;

@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Finansik.Storage;
+namespace Finansik.Storage.Entities;
 
 public class User : KeyedEntity
 {

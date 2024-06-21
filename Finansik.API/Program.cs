@@ -1,4 +1,7 @@
 using Finansik.Common;
+using Finansik.Domain;
+using Finansik.Domain.UseCases.CreateCategory;
+using Finansik.Domain.UseCases.GetGroups;
 using Finansik.Storage;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
@@ -9,6 +12,10 @@ var connectionString = builder.Configuration.GetConnectionString("Postgres");
 var dataSourceBuilder = new NpgsqlDataSourceBuilder(connectionString);
 dataSourceBuilder.MapEnum<OperationDirection>();
 var dataSource = dataSourceBuilder.Build();
+
+builder.Services.AddSingleton<IGuidFactory, GuidFactory>();
+builder.Services.AddScoped<IGetGroupsUseCase, GetGroupsUseCase>();
+builder.Services.AddScoped<ICreateCategoryUseCase, CreateCategoryUseCase>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

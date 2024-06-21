@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Finansik.Storage;
+namespace Finansik.Storage.Entities;
 
 public class PeriodCategory : KeyedEntity
 {

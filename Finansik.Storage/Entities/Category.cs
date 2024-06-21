@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Finansik.Storage;
+namespace Finansik.Storage.Entities;
 
 public class Category : KeyedEntity
 {
@@ -13,4 +13,6 @@ public class Category : KeyedEntity
     public Group Group { get; set; }
     
     public required string Name { get; set; }
+    
+    public string? Icon { get; set; } 
 }

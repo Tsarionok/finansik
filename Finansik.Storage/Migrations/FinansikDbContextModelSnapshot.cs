@@ -24,7 +24,7 @@ namespace Finansik.Storage.Migrations
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "operation_direction", new[] { "income", "expense" });
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Finansik.Storage.Category", b =>
+            modelBuilder.Entity("Finansik.Storage.Entities.Category", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -32,6 +32,9 @@ namespace Finansik.Storage.Migrations
 
                     b.Property<Guid>("GroupId")
                         .HasColumnType("uuid");
+
+                    b.Property<string>("Icon")
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -44,7 +47,7 @@ namespace Finansik.Storage.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("Finansik.Storage.Group", b =>
+            modelBuilder.Entity("Finansik.Storage.Entities.Group", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -63,7 +66,7 @@ namespace Finansik.Storage.Migrations
                     b.ToTable("Groups");
                 });
 
-            modelBuilder.Entity("Finansik.Storage.PerformedOperation", b =>
+            modelBuilder.Entity("Finansik.Storage.Entities.PerformedOperation", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -100,7 +103,7 @@ namespace Finansik.Storage.Migrations
                     b.ToTable("PerformedOperations");
                 });
 
-            modelBuilder.Entity("Finansik.Storage.Period", b =>
+            modelBuilder.Entity("Finansik.Storage.Entities.Period", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -122,7 +125,7 @@ namespace Finansik.Storage.Migrations
                     b.ToTable("Periods");
                 });
 
-            modelBuilder.Entity("Finansik.Storage.PeriodCategory", b =>
+            modelBuilder.Entity("Finansik.Storage.Entities.PeriodCategory", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -150,7 +153,7 @@ namespace Finansik.Storage.Migrations
                     b.ToTable("PeriodCategories");
                 });
 
-            modelBuilder.Entity("Finansik.Storage.ScheduledOperation", b =>
+            modelBuilder.Entity("Finansik.Storage.Entities.ScheduledOperation", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -183,7 +186,7 @@ namespace Finansik.Storage.Migrations
                     b.ToTable("ScheduledOperations");
                 });
 
-            modelBuilder.Entity("Finansik.Storage.User", b =>
+            modelBuilder.Entity("Finansik.Storage.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -214,9 +217,9 @@ namespace Finansik.Storage.Migrations
                     b.ToTable("GroupUser");
                 });
 
-            modelBuilder.Entity("Finansik.Storage.Category", b =>
+            modelBuilder.Entity("Finansik.Storage.Entities.Category", b =>
                 {
-                    b.HasOne("Finansik.Storage.Group", "Group")
+                    b.HasOne("Finansik.Storage.Entities.Group", "Group")
                         .WithMany()
                         .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -225,15 +228,15 @@ namespace Finansik.Storage.Migrations
                     b.Navigation("Group");
                 });
 
-            modelBuilder.Entity("Finansik.Storage.PerformedOperation", b =>
+            modelBuilder.Entity("Finansik.Storage.Entities.PerformedOperation", b =>
                 {
-                    b.HasOne("Finansik.Storage.PeriodCategory", "PeriodCategory")
+                    b.HasOne("Finansik.Storage.Entities.PeriodCategory", "PeriodCategory")
                         .WithMany("PerformedOperations")
                         .HasForeignKey("PeriodCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Finansik.Storage.ScheduledOperation", "ScheduledOperation")
+                    b.HasOne("Finansik.Storage.Entities.ScheduledOperation", "ScheduledOperation")
                         .WithMany()
                         .HasForeignKey("ScheduledOperationId");
 
@@ -242,9 +245,9 @@ namespace Finansik.Storage.Migrations
                     b.Navigation("ScheduledOperation");
                 });
 
-            modelBuilder.Entity("Finansik.Storage.Period", b =>
+            modelBuilder.Entity("Finansik.Storage.Entities.Period", b =>
                 {
-                    b.HasOne("Finansik.Storage.Group", "Group")
+                    b.HasOne("Finansik.Storage.Entities.Group", "Group")
                         .WithMany("Periods")
                         .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -253,15 +256,15 @@ namespace Finansik.Storage.Migrations
                     b.Navigation("Group");
                 });
 
-            modelBuilder.Entity("Finansik.Storage.PeriodCategory", b =>
+            modelBuilder.Entity("Finansik.Storage.Entities.PeriodCategory", b =>
                 {
-                    b.HasOne("Finansik.Storage.Category", "Category")
+                    b.HasOne("Finansik.Storage.Entities.Category", "Category")
                         .WithMany("PeriodCategories")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Finansik.Storage.Period", "Period")
+                    b.HasOne("Finansik.Storage.Entities.Period", "Period")
                         .WithMany("PeriodCategories")
                         .HasForeignKey("PeriodId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -272,9 +275,9 @@ namespace Finansik.Storage.Migrations
                     b.Navigation("Period");
                 });
 
-            modelBuilder.Entity("Finansik.Storage.ScheduledOperation", b =>
+            modelBuilder.Entity("Finansik.Storage.Entities.ScheduledOperation", b =>
                 {
-                    b.HasOne("Finansik.Storage.PeriodCategory", "PeriodCategory")
+                    b.HasOne("Finansik.Storage.Entities.PeriodCategory", "PeriodCategory")
                         .WithMany("ScheduledOperations")
                         .HasForeignKey("PeriodCategoryId");
 
@@ -283,35 +286,35 @@ namespace Finansik.Storage.Migrations
 
             modelBuilder.Entity("GroupUser", b =>
                 {
-                    b.HasOne("Finansik.Storage.Group", null)
+                    b.HasOne("Finansik.Storage.Entities.Group", null)
                         .WithMany()
                         .HasForeignKey("GroupsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Finansik.Storage.User", null)
+                    b.HasOne("Finansik.Storage.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UsersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Finansik.Storage.Category", b =>
+            modelBuilder.Entity("Finansik.Storage.Entities.Category", b =>
                 {
                     b.Navigation("PeriodCategories");
                 });
 
-            modelBuilder.Entity("Finansik.Storage.Group", b =>
+            modelBuilder.Entity("Finansik.Storage.Entities.Group", b =>
                 {
                     b.Navigation("Periods");
                 });
 
-            modelBuilder.Entity("Finansik.Storage.Period", b =>
+            modelBuilder.Entity("Finansik.Storage.Entities.Period", b =>
                 {
                     b.Navigation("PeriodCategories");
                 });
 
-            modelBuilder.Entity("Finansik.Storage.PeriodCategory", b =>
+            modelBuilder.Entity("Finansik.Storage.Entities.PeriodCategory", b =>
                 {
                     b.Navigation("PerformedOperations");
 

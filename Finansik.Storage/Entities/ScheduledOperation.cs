@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Finansik.Common;
 
-namespace Finansik.Storage;
+namespace Finansik.Storage.Entities;
 
 public class ScheduledOperation : KeyedEntity
 {
