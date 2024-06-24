@@ -1,10 +1,9 @@
-using Finansik.API.Controllers.Rest;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Finansik.API.Controllers;
 
 [ApiController]
-[Route(Resources.Category)]
+[Route("category")]
 public class CategoryController : ControllerBase
 {
     [HttpGet]

@@ -1,4 +1,3 @@
-using Finansik.API.Controllers.Rest;
 using Finansik.API.Models;
 using Finansik.Domain.UseCases.CreateGroup;
 using Finansik.Domain.UseCases.GetGroups;
@@ -7,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Finansik.API.Controllers;
 
 [ApiController]
-[Route(Resources.Group)]
+[Route("group")]
 public class GroupController : ControllerBase
 {
     [HttpGet]
