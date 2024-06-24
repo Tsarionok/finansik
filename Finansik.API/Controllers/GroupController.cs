@@ -1,5 +1,6 @@
 using Finansik.API.Controllers.Rest;
 using Finansik.API.Models;
+using Finansik.Domain.UseCases.CreateGroup;
 using Finansik.Domain.UseCases.GetGroups;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,5 +24,21 @@ public class GroupController : ControllerBase
             Icon = g.Icon
         });
         return Ok(groups);
+    }
+
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Group))]
+    public async Task<IActionResult> AddGroup(
+        string name, string icon,
+        [FromServices] ICreateGroupUseCase useCase, 
+        CancellationToken cancellationToken)
+    {
+        var addedGroup = await useCase.Execute(name, icon, cancellationToken);
+        return Ok(new Group
+        {
+            Id = addedGroup.Id,
+            Name = addedGroup.Name,
+            Icon = addedGroup.Icon
+        });
     }
 }

@@ -1,6 +1,7 @@
 using Finansik.Common;
 using Finansik.Domain;
 using Finansik.Domain.UseCases.CreateCategory;
+using Finansik.Domain.UseCases.CreateGroup;
 using Finansik.Domain.UseCases.GetGroups;
 using Finansik.Storage;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +17,7 @@ var dataSource = dataSourceBuilder.Build();
 builder.Services.AddSingleton<IGuidFactory, GuidFactory>();
 builder.Services.AddScoped<IGetGroupsUseCase, GetGroupsUseCase>();
 builder.Services.AddScoped<ICreateCategoryUseCase, CreateCategoryUseCase>();
+builder.Services.AddScoped<ICreateGroupUseCase, CreateGroupUseCase>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
