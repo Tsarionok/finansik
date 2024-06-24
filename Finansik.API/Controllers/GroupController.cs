@@ -28,6 +28,7 @@ public class GroupController : ControllerBase
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Group))]
     public async Task<IActionResult> AddGroup(
+        // TODO: replace "name" and "icon" from request parameters to body
         string name, string icon,
         [FromServices] ICreateGroupUseCase useCase, 
         CancellationToken cancellationToken)
