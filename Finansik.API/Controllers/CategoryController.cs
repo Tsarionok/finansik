@@ -1,5 +1,6 @@
 using Finansik.API.Models;
 using Finansik.Domain.Exceptions;
+using Finansik.Domain.UseCases.GetCategories;
 using Finansik.Domain.UseCases.RenameCategory;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,9 +11,25 @@ namespace Finansik.API.Controllers;
 public class CategoryController : ControllerBase
 {
     [HttpGet]
-    public IActionResult GetCategories()
+    public async Task<IActionResult> GetCategories(
+        Guid groupId,
+        [FromServices] IGetCategoriesByGroupIdUseCase useCase,
+        CancellationToken cancellationToken)
     {
-        return NotFound();
+        try
+        {
+            var categories = await useCase.Execute(groupId, cancellationToken);
+            return Ok(categories.Select(c => new Category
+            {
+                Id = c.Id,
+                Name = c.Name,
+                Icon = c.Icon
+            }));
+        }
+        catch (GroupNotFoundException e)
+        {
+            return NotFound(e.Message);
+        }
     }
 
     [HttpPut]
