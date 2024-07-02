@@ -1,4 +1,4 @@
-﻿namespace Finansik.Domain.Identity;
+﻿namespace Finansik.Domain.Authentication;
 
 public interface IIdentityProvider
 {

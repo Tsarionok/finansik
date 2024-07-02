@@ -1,5 +1,6 @@
 using Finansik.Common;
 using Finansik.Domain;
+using Finansik.Domain.Authorization;
 using Finansik.Domain.UseCases.CreateCategory;
 using Finansik.Domain.UseCases.CreateGroup;
 using Finansik.Domain.UseCases.GetCategories;
@@ -22,6 +23,10 @@ builder.Services.AddScoped<ICreateCategoryUseCase, CreateCategoryUseCase>();
 builder.Services.AddScoped<ICreateGroupUseCase, CreateGroupUseCase>();
 builder.Services.AddScoped<IRenameCategoryUseCase, RenameCategoryUseCase>();
 builder.Services.AddScoped<IGetCategoriesByGroupIdUseCase, GetCategoriesByGroupIdUseCase>();
+
+builder.Services.AddScoped<ICreateCategoryStorage>();
+builder.Services.AddScoped<IIntentionResolver, CategoryIntentionResolver>();
+builder.Services.AddScoped<IIntentionManager, IntentionManager>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

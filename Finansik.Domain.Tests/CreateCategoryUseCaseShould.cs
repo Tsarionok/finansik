@@ -1,5 +1,6 @@
+using Finansik.Domain.Authentication;
+using Finansik.Domain.Authorization;
 using Finansik.Domain.Exceptions;
-using Finansik.Domain.Identity;
 using Finansik.Domain.Models;
 using Finansik.Domain.UseCases.CreateCategory;
 using FluentAssertions;
@@ -15,6 +16,8 @@ public class CreateCategoryUseCaseShould
     private readonly ISetup<ICreateCategoryStorage,Task<bool>> _isGroupExistsSetup;
     private readonly ISetup<ICreateCategoryStorage,Task<Category>> _createCategorySetup;
     private readonly ISetup<IIdentity,Guid> _getCurrentUserIdSetup;
+    private readonly ISetup<IIntentionManager,bool> _intentionIsAllowedSetup;
+    private readonly Mock<IIntentionManager> _intentionManager;
 
     public CreateCategoryUseCaseShould()
     {
@@ -27,14 +30,18 @@ public class CreateCategoryUseCaseShould
         var identityProvider = new Mock<IIdentityProvider>();
         identityProvider.Setup(p => p.Current).Returns(identity.Object);
         _getCurrentUserIdSetup = identity.Setup(i => i.UserId);
+        
+        _intentionManager = new Mock<IIntentionManager>();
+        _intentionIsAllowedSetup = _intentionManager.Setup(m => m.IsAllowed(It.IsAny<CategoryIntention>()));
 
-        _sut = new CreateCategoryUseCase(_storage.Object, identityProvider.Object);
+        _sut = new CreateCategoryUseCase(_storage.Object, identityProvider.Object, _intentionManager.Object);
     }
 
     [Fact]
     public async Task ThrowGroupNotFoundException_WhenNoMatchingGroup()
     {
         _isGroupExistsSetup.ReturnsAsync(false);
+        _intentionIsAllowedSetup.Returns(true);
         
         const string name = "TestCategory";
         const string icon = "testCategory.png";
@@ -48,6 +55,20 @@ public class CreateCategoryUseCaseShould
     }
 
     [Fact]
+    public async Task ThrowIntentionManagerException_WhenCreatingCategoryIsNotAllowed()
+    {
+        var groupId = Guid.Parse("69D3DA00-1C40-4FAC-9342-42CA8308674B");
+        
+        _intentionIsAllowedSetup.Returns(false);
+
+        await _sut.Invoking(sut => sut.Execute("Some category", groupId, null, CancellationToken.None))
+            .Should()
+            .ThrowAsync<IntentionManagerException>();
+        
+        _intentionManager.Verify(m => m.IsAllowed(CategoryIntention.Create));
+    }
+
+    [Fact]
     public async Task ReturnCreatedCategory_WhenMatchingGroupExists()
     {
         var groupId = Guid.Parse("3B1FCBBA-FE88-491A-843A-65E9716BD7FB");
@@ -55,6 +76,7 @@ public class CreateCategoryUseCaseShould
         const string categoryName = "New category";
         const string categoryIcon = "categoryIcon.png";
         
+        _intentionIsAllowedSetup.Returns(true);
         _isGroupExistsSetup.ReturnsAsync(true);
         _getCurrentUserIdSetup.Returns(userId);
         var expected = new Category();
