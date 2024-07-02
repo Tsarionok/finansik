@@ -1,4 +1,5 @@
 using Finansik.Domain.Exceptions;
+using Finansik.Domain.Identity;
 using Finansik.Domain.Models;
 using Finansik.Domain.UseCases.CreateCategory;
 using FluentAssertions;
@@ -13,15 +14,21 @@ public class CreateCategoryUseCaseShould
     private readonly Mock<ICreateCategoryStorage> _storage;
     private readonly ISetup<ICreateCategoryStorage,Task<bool>> _isGroupExistsSetup;
     private readonly ISetup<ICreateCategoryStorage,Task<Category>> _createCategorySetup;
+    private readonly ISetup<IIdentity,Guid> _getCurrentUserIdSetup;
 
     public CreateCategoryUseCaseShould()
     {
         _storage = new Mock<ICreateCategoryStorage>();
         _isGroupExistsSetup = _storage.Setup(s => s.IsGroupExists(It.IsAny<Guid>(), It.IsAny<CancellationToken>()));
         _createCategorySetup = _storage.Setup(s =>
-            s.CreateCategory(It.IsAny<string>(), It.IsAny<Guid>(), It.IsAny<string?>(), It.IsAny<CancellationToken>()));
+            s.CreateCategory(It.IsAny<string>(), It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<string?>(), It.IsAny<CancellationToken>()));
 
-        _sut = new CreateCategoryUseCase(_storage.Object);
+        var identity = new Mock<IIdentity>();
+        var identityProvider = new Mock<IIdentityProvider>();
+        identityProvider.Setup(p => p.Current).Returns(identity.Object);
+        _getCurrentUserIdSetup = identity.Setup(i => i.UserId);
+
+        _sut = new CreateCategoryUseCase(_storage.Object, identityProvider.Object);
     }
 
     [Fact]
@@ -43,17 +50,19 @@ public class CreateCategoryUseCaseShould
     [Fact]
     public async Task ReturnCreatedCategory_WhenMatchingGroupExists()
     {
+        var groupId = Guid.Parse("3B1FCBBA-FE88-491A-843A-65E9716BD7FB");
+        var userId = Guid.Parse("0B31EAFE-363F-4CA7-AB65-F453367F8444");
+        const string categoryName = "New category";
+        const string categoryIcon = "categoryIcon.png";
+        
         _isGroupExistsSetup.ReturnsAsync(true);
+        _getCurrentUserIdSetup.Returns(userId);
         var expected = new Category();
         _createCategorySetup.ReturnsAsync(expected);
         
-        var groupId = Guid.Parse("3B1FCBBA-FE88-491A-843A-65E9716BD7FB");
-        const string categoryName = "New category";
-        const string categoryIcon = "categoryIcon.png";
-
         var actual = await _sut.Execute(categoryName, groupId, categoryIcon, CancellationToken.None);
         actual.Should().Be(expected);
         
-        _storage.Verify(s => s.CreateCategory(categoryName, groupId, categoryIcon, It.IsAny<CancellationToken>()), Times.Once);
+        _storage.Verify(s => s.CreateCategory(categoryName, groupId, userId, categoryIcon, It.IsAny<CancellationToken>()), Times.Once);
     }
 }
