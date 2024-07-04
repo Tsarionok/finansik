@@ -30,6 +30,9 @@ namespace Finansik.Storage.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<Guid>("Creator")
+                        .HasColumnType("uuid");
+
                     b.Property<Guid>("GroupId")
                         .HasColumnType("uuid");
 
@@ -53,8 +56,10 @@ namespace Finansik.Storage.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<Guid>("Creator")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("Icon")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
