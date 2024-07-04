@@ -2,5 +2,6 @@
 
 public enum CategoryIntention
 {
-    Create
+    Create,
+    Rename
 }

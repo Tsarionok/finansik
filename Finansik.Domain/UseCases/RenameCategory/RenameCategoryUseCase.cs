@@ -1,29 +1,27 @@
+using Finansik.Domain.Authentication;
+using Finansik.Domain.Authorization;
 using Finansik.Domain.Exceptions;
 using Finansik.Domain.Models;
-using Finansik.Storage;
-using Microsoft.EntityFrameworkCore;
+using Finansik.Domain.UseCases.CreateCategory;
 
 namespace Finansik.Domain.UseCases.RenameCategory;
 
-public class RenameCategoryUseCase(FinansikDbContext dbContext) : IRenameCategoryUseCase
+public class RenameCategoryUseCase(
+    IRenameCategoryStorage storage,
+    IIdentityProvider identityProvider,
+    IIntentionManager intentionManager) : IRenameCategoryUseCase
 {
     public async Task<Category> Execute(Guid categoryId, string nextName, CancellationToken cancellationToken)
     {
-        if (!await dbContext.Categories.AnyAsync(c => c.Id == categoryId, cancellationToken))
-            throw new CategoryNotFoundException(categoryId);
+        intentionManager.ThrowIfForbidden(CategoryIntention.Rename);
+        
+        var categoryExists = await storage.IsCategoryExists(categoryId, cancellationToken);
 
-        // TODO: remove extra db request
-        var category = await dbContext.Categories.FirstAsync(c => c.Id == categoryId, cancellationToken);
-        category.Name = nextName;
-        dbContext.Categories.Update(category);
-        await dbContext.SaveChangesAsync(cancellationToken);
-
-        return new Category
+        if (!categoryExists)
         {
-            Id = category.Id,
-            Name = category.Name,
-            GroupId = category.GroupId,
-            Icon = category.Icon
-        };
+            throw new CategoryNotFoundException(categoryId);
+        }
+
+        return await storage.RenameCategory(categoryId, nextName, cancellationToken);
     }
 }

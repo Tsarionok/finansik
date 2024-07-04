@@ -1,26 +1,18 @@
+using Finansik.Domain.Authentication;
+using Finansik.Domain.Authorization;
 using Finansik.Domain.Models;
-using Finansik.Storage;
 
 namespace Finansik.Domain.UseCases.CreateGroup;
 
-public class CreateGroupUseCase(FinansikDbContext dbContext, IGuidFactory guidFactory) : ICreateGroupUseCase
+public class CreateGroupUseCase(
+    ICreateGroupStorage createGroupStorage,
+    IIntentionManager intentionManager,
+    IIdentityProvider identityProvider) : ICreateGroupUseCase
 {
     public async Task<Group> Execute(string name, string icon, CancellationToken cancellationToken)
     {
-        var addedGroup = (await dbContext.Groups.AddAsync(new Storage.Entities.Group
-        {
-            Id = guidFactory.Create(),
-            Name = name,
-            Icon = icon
-        }, cancellationToken)).Entity;
-
-        await dbContext.SaveChangesAsync(cancellationToken);
-
-        return new Group
-        {
-            Id = addedGroup.Id,
-            Name = addedGroup.Name,
-            Icon = addedGroup.Icon
-        };
+        intentionManager.ThrowIfForbidden(GroupIntention.Create);
+        
+        return await createGroupStorage.CreateGroup(name, identityProvider.Current.UserId, icon, cancellationToken);
     }
 }

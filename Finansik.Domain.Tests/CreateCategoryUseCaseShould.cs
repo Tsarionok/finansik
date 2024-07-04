@@ -11,7 +11,7 @@ namespace Finansik.Domain.Tests;
 
 public class CreateCategoryUseCaseShould
 {
-    private readonly CreateCategoryUseCase _sut;
+    private readonly ICreateCategoryUseCase _sut;
     private readonly Mock<ICreateCategoryStorage> _storage;
     private readonly ISetup<ICreateCategoryStorage,Task<bool>> _isGroupExistsSetup;
     private readonly ISetup<ICreateCategoryStorage,Task<Category>> _createCategorySetup;

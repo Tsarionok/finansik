@@ -8,6 +8,7 @@ public class CategoryIntentionResolver : IIntentionResolver<CategoryIntention>
     public bool IsAllowed(IIdentity subject, CategoryIntention intention) => intention switch
     {
         CategoryIntention.Create => subject.IsAuthenticated(),
+        CategoryIntention.Rename => subject.IsAuthenticated(),
         _ => false
     };
 }

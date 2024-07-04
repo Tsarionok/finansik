@@ -1,27 +1,19 @@
 using Finansik.Domain.Exceptions;
 using Finansik.Domain.Models;
-using Finansik.Storage;
-using Microsoft.EntityFrameworkCore;
 
 namespace Finansik.Domain.UseCases.GetCategories;
 
-public class GetCategoriesByGroupIdUseCase(FinansikDbContext dbContext) : IGetCategoriesByGroupIdUseCase
+public class GetCategoriesByGroupIdUseCase(IGetCategoriesByGroupIdStorage storage) : IGetCategoriesByGroupIdUseCase
 {
     public async Task<IEnumerable<Category>> Execute(Guid groupId, CancellationToken cancellationToken)
     {
-        if (!await dbContext.Groups.AnyAsync(g => g.Id == groupId, cancellationToken))
+        var groupExists = await storage.IsGroupExists(groupId, cancellationToken);
+        
+        if (!groupExists)
         {
             throw new GroupNotFoundException(groupId);
         }
 
-        var categories = await dbContext.Categories.Where(c => c.GroupId == groupId).ToListAsync(cancellationToken);
-        
-        return categories.Select(c => new Category
-        {
-            Id = c.Id,
-            GroupId = c.GroupId,
-            Name = c.Name,
-            Icon = c.Icon
-        });
+        return await storage.GetCategoriesByGroupId(groupId, cancellationToken);
     }
 }

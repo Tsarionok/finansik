@@ -7,6 +7,7 @@ using Finansik.Domain.UseCases.GetCategories;
 using Finansik.Domain.UseCases.GetGroups;
 using Finansik.Domain.UseCases.RenameCategory;
 using Finansik.Storage;
+using Finansik.Storage.Storages;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 
@@ -24,7 +25,7 @@ builder.Services.AddScoped<ICreateGroupUseCase, CreateGroupUseCase>();
 builder.Services.AddScoped<IRenameCategoryUseCase, RenameCategoryUseCase>();
 builder.Services.AddScoped<IGetCategoriesByGroupIdUseCase, GetCategoriesByGroupIdUseCase>();
 
-builder.Services.AddScoped<ICreateCategoryStorage>();
+builder.Services.AddScoped<ICreateCategoryStorage, CreateCategoryStorage>();
 builder.Services.AddScoped<IIntentionResolver, CategoryIntentionResolver>();
 builder.Services.AddScoped<IIntentionManager, IntentionManager>();
 

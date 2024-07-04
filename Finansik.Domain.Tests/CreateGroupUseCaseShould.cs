@@ -1,4 +1,7 @@
-﻿using Finansik.Domain.Models;
+﻿using Finansik.Domain.Authentication;
+using Finansik.Domain.Authorization;
+using Finansik.Domain.Exceptions;
+using Finansik.Domain.Models;
 using Finansik.Domain.UseCases.CreateGroup;
 using Finansik.Storage;
 using FluentAssertions;
@@ -14,6 +17,9 @@ public class CreateGroupUseCaseShould
     private readonly ICreateGroupUseCase _sut;
     private readonly FinansikDbContext _dbContext;
     private readonly ISetup<IGuidFactory, Guid>? _setup;
+    private readonly ISetup<ICreateGroupStorage, Task<Models.Group>> _createGroupSetup;
+    private readonly ISetup<IIntentionManager,bool> _isAllowedSetup;
+    private readonly ISetup<IIdentity,Guid> _getUserIdSetup;
 
     public CreateGroupUseCaseShould()
     {
@@ -23,7 +29,33 @@ public class CreateGroupUseCaseShould
             .UseInMemoryDatabase(nameof(CreateGroupUseCaseShould));
         _dbContext = new FinansikDbContext(dbContextOptionsBuilder.Options);
         _setup = guidFactory.Setup(g => g.Create());
-        _sut = new CreateGroupUseCase(_dbContext, guidFactory.Object);
+
+        var createGroupStorage = new Mock<ICreateGroupStorage>();
+        _createGroupSetup = createGroupStorage.Setup(s => s.CreateGroup(
+            It.IsAny<string>(), 
+            guidFactory.Object.Create(), 
+            It.IsAny<string>(),
+            It.IsAny<CancellationToken>()));
+        
+        var intentionManager = new Mock<IIntentionManager>();
+        _isAllowedSetup = intentionManager.Setup(m => m.IsAllowed(It.IsAny<GroupIntention>()));
+        
+        var identity = new Mock<IIdentity>();
+        _getUserIdSetup = identity.Setup(i => i.UserId);
+        var identityProvider = new Mock<IIdentityProvider>();
+        identityProvider.Setup(p => p.Current).Returns(identity.Object);
+        
+        _sut = new CreateGroupUseCase(createGroupStorage.Object, intentionManager.Object, identityProvider.Object);
+    }
+
+    [Fact]
+    public async Task ThrowIntentionManagerException_WhenCreatingGroupIsNotAllowed()
+    {
+        _isAllowedSetup.Returns(false);
+
+        await _sut.Invoking(sut => sut.Execute("Some group", "noIcon.png", CancellationToken.None))
+            .Should()
+            .ThrowAsync<IntentionManagerException>();
     }
 
     [Fact]

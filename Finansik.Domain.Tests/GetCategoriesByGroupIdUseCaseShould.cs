@@ -4,6 +4,8 @@ using Finansik.Storage;
 using Finansik.Storage.Entities;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
+using Moq;
+using Moq.Language.Flow;
 
 namespace Finansik.Domain.Tests;
 
@@ -11,31 +13,27 @@ public class GetCategoriesByGroupIdUseCaseShould
 {
     private readonly IGetCategoriesByGroupIdUseCase _sut;
     private readonly FinansikDbContext _dbContext;
+    private readonly ISetup<IGetCategoriesByGroupIdStorage,Task<bool>> _isGroupExistsSetup;
 
     public GetCategoriesByGroupIdUseCaseShould()
     {
         var dbContextOptionsBuilder =
             new DbContextOptionsBuilder().UseInMemoryDatabase(nameof(GetCategoriesByGroupIdUseCaseShould));
-        
+
         _dbContext = new FinansikDbContext(dbContextOptionsBuilder.Options);
-        _sut = new GetCategoriesByGroupIdUseCase(_dbContext);
+
+        var storage = new Mock<IGetCategoriesByGroupIdStorage>();
+        _isGroupExistsSetup = storage.Setup(s => s.IsGroupExists(It.IsAny<Guid>(), It.IsAny<CancellationToken>()));
+            
+        _sut = new GetCategoriesByGroupIdUseCase(storage.Object);
     }
 
     [Fact]
     public async Task ThrowGroupNotFoundException_WhenGroupIdNotMatched()
     {
-        var notExistingGroupId = Guid.Parse("6D2188FA-20F7-40C5-AB97-F9DE192482BA");
-        var existingGroup = new Group
-        {
-            Id = Guid.Parse("45CF1CEB-9E9D-4469-859C-9860DFE46525"),
-            Name = "Existing group",
-            Icon = "default.png"
-        };
+        _isGroupExistsSetup.ReturnsAsync(false);
 
-        await _dbContext.Groups.AddAsync(existingGroup, CancellationToken.None);
-        await _dbContext.SaveChangesAsync(CancellationToken.None);
-
-        await _sut.Invoking(sut => sut.Execute(notExistingGroupId, CancellationToken.None))
+        await _sut.Invoking(sut => sut.Execute(It.IsAny<Guid>(), CancellationToken.None))
             .Should()
             .ThrowAsync<GroupNotFoundException>();
     }

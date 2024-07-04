@@ -1,10 +1,15 @@
-﻿using Finansik.Domain.Exceptions;
+﻿using Finansik.Domain.Authentication;
+using Finansik.Domain.Authorization;
+using Finansik.Domain.Exceptions;
+using Finansik.Domain.UseCases.CreateCategory;
 using Finansik.Domain.UseCases.RenameCategory;
 using Finansik.Storage;
 using Finansik.Storage.Entities;
 using FluentAssertions;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
+using Moq;
+using Moq.Language.Flow;
 
 namespace Finansik.Domain.Tests;
 
@@ -13,6 +18,9 @@ public class RenameCategoryUseCaseShould
 {
     private readonly IRenameCategoryUseCase _sut;
     private readonly FinansikDbContext _dbContext;
+    private readonly ISetup<IRenameCategoryStorage,Task<bool>> _isCategoryExistsSetup;
+    private readonly ISetup<IIdentity,Guid> _getCurrentSetup;
+    private readonly ISetup<IIntentionManager,bool> _isAllowedSetup;
 
     public RenameCategoryUseCaseShould()
     {
@@ -20,7 +28,20 @@ public class RenameCategoryUseCaseShould
             .UseInMemoryDatabase(nameof(RenameCategoryUseCaseShould));
             
         _dbContext = new FinansikDbContext(dbContextOptionsBuilder.Options);
-        _sut = new RenameCategoryUseCase(_dbContext);
+
+        var storage = new Mock<IRenameCategoryStorage>();
+        _isCategoryExistsSetup = storage.Setup(s => s.IsCategoryExists(It.IsAny<Guid>(), It.IsAny<CancellationToken>()));
+
+        var identity = new Mock<IIdentity>();
+        _getCurrentSetup = identity.Setup(i => i.UserId);
+        
+        var identityProvider = new Mock<IIdentityProvider>();
+        identityProvider.Setup(p => p.Current).Returns(identity.Object);
+
+        var intentionManager = new Mock<IIntentionManager>();
+        _isAllowedSetup = intentionManager.Setup(m => m.IsAllowed(CategoryIntention.Rename));
+        
+        _sut = new RenameCategoryUseCase(storage.Object, identityProvider.Object, intentionManager.Object);
     }
 
     [Fact]

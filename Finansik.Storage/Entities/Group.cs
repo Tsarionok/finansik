@@ -11,5 +11,7 @@ public class Group : KeyedEntity
     
     public string Name { get; set; }
     
-    public string Icon { get; set; }
+    public string? Icon { get; set; }
+    
+    public Guid Creator { get; set; }
 }

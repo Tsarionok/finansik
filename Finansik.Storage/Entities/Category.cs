@@ -14,5 +14,7 @@ public class Category : KeyedEntity
     
     public required string Name { get; set; }
     
-    public string? Icon { get; set; } 
+    public string? Icon { get; set; }
+    
+    public Guid Creator { get; set; }
 }
