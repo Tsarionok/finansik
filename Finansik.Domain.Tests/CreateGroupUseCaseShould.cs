@@ -16,7 +16,6 @@ public class CreateGroupUseCaseShould
 {
     private readonly ICreateGroupUseCase _sut;
     private readonly FinansikDbContext _dbContext;
-    private readonly ISetup<IGuidFactory, Guid>? _setup;
     private readonly ISetup<ICreateGroupStorage, Task<Models.Group>> _createGroupSetup;
     private readonly ISetup<IIntentionManager,bool> _isAllowedSetup;
     private readonly ISetup<IIdentity,Guid> _getUserIdSetup;
@@ -28,7 +27,6 @@ public class CreateGroupUseCaseShould
         var dbContextOptionsBuilder = new DbContextOptionsBuilder(new DbContextOptions<FinansikDbContext>())
             .UseInMemoryDatabase(nameof(CreateGroupUseCaseShould));
         _dbContext = new FinansikDbContext(dbContextOptionsBuilder.Options);
-        _setup = guidFactory.Setup(g => g.Create());
 
         var createGroupStorage = new Mock<ICreateGroupStorage>();
         _createGroupSetup = createGroupStorage.Setup(s => s.CreateGroup(
@@ -65,7 +63,14 @@ public class CreateGroupUseCaseShould
         var groupIcon = "nopic.png";
         var groupId = Guid.Parse("3EE7CC2A-18C3-41C4-84D4-3B1B7ED9EE28");
 
-        _setup?.Returns(groupId);
+        _isAllowedSetup.Returns(true);
+        _createGroupSetup.ReturnsAsync(new Models.Group
+        {
+            Id = groupId,
+            Icon = groupIcon,
+            Name = groupName
+        });
+            
         var group = await _sut.Execute(groupName, groupIcon, CancellationToken.None);
 
         group.Should().BeEquivalentTo(new Finansik.Domain.Models.Group
@@ -85,8 +90,9 @@ public class CreateGroupUseCaseShould
         var groupName = "PersonalTest";
         var groupIcon = "person.png";
         var groupId = Guid.Parse("2B40A283-6ACD-4907-9B57-71B12714DA40");
+
+        _isAllowedSetup.Returns(true);
         
-        _setup?.Returns(groupId);
         await _sut.Execute(groupName, groupIcon, CancellationToken.None);
         
         var group = await _dbContext.Groups.FirstAsync(g => g.Id == groupId);
