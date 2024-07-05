@@ -10,9 +10,10 @@ public class CreateCategoryUseCase(
     IIdentityProvider identityProvider,
     IIntentionManager intentionManager) : ICreateCategoryUseCase
 {
-    public async Task<Category> Execute(string name, Guid groupId, string? icon = null,
-        CancellationToken cancellationToken = default)
+    public async Task<Category> Execute(CreateCategoryCommand command, CancellationToken cancellationToken = default)
     {
+        var (groupId, name, icon) = command;
+        
         intentionManager.ThrowIfForbidden(CategoryIntention.Create);
         
         var groupExists = await createCategoryStorage.IsGroupExists(groupId, cancellationToken);

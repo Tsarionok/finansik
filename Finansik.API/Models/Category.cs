@@ -8,3 +8,10 @@ public class Category
     
     public string? Icon { get; set; }
 }
+
+public class CreateCategory
+{
+    public string Name { get; set; }
+    
+    public string? Icon { get; set; }
+}

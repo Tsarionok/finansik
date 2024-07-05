@@ -1,5 +1,6 @@
 using Finansik.API.Models;
 using Finansik.Domain.Exceptions;
+using Finansik.Domain.UseCases.CreateCategory;
 using Finansik.Domain.UseCases.GetCategories;
 using Finansik.Domain.UseCases.RenameCategory;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +11,7 @@ namespace Finansik.API.Controllers;
 [Route("category")]
 public class CategoryController : ControllerBase
 {
-    [HttpGet]
+    [HttpGet(Name = nameof(GetCategories))]
     public async Task<IActionResult> GetCategories(
         Guid groupId,
         [FromServices] IGetCategoriesByGroupIdUseCase useCase,
@@ -53,6 +54,39 @@ public class CategoryController : ControllerBase
         catch (CategoryNotFoundException e)
         {
             return NotFound(e.Message);
+        }
+    }
+
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status410Gone)]
+    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Category))]
+    public async Task<IActionResult> CreateCategory(
+        Guid groupId,
+        [FromBody] CreateCategory request,
+        [FromServices] ICreateCategoryUseCase useCase,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            var command = new CreateCategoryCommand(groupId, request.Name, request.Icon);
+            var category = await useCase.Execute(command, cancellationToken);
+
+            return CreatedAtRoute(nameof(GetCategories), new Category
+            {
+                Id = category.Id,
+                Name = category.Name,
+                Icon = category.Icon
+            });
+        }
+        catch (Exception exception)
+        {
+            return exception switch
+            {
+                IntentionManagerException => Forbid(),
+                GroupNotFoundException => StatusCode(StatusCodes.Status410Gone),
+                _ => StatusCode(StatusCodes.Status500InternalServerError)
+            };
         }
     }
 }
