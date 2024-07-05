@@ -8,7 +8,7 @@ public class CreateCategoryCommandValidator : AbstractValidator<CreateCategoryCo
     public CreateCategoryCommandValidator()
     {
         RuleFor(c => c.GroupId).NotEmpty().WithErrorCode("Empty");
-        RuleFor(c => c.Name)
+        RuleFor(c => c.Name).Cascade(CascadeMode.Stop)
             .NotEmpty().WithErrorCode("Empty")
             .MaximumLength(30).WithErrorCode("TooLong");
     }

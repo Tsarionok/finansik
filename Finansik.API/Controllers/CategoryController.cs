@@ -4,6 +4,7 @@ using Finansik.Domain.UseCases.CreateCategory;
 using Finansik.Domain.UseCases.GetCategories;
 using Finansik.Domain.UseCases.RenameCategory;
 using Microsoft.AspNetCore.Mvc;
+using ValidationException = FluentValidation.ValidationException;
 
 namespace Finansik.API.Controllers;
 
@@ -17,20 +18,13 @@ public class CategoryController : ControllerBase
         [FromServices] IGetCategoriesByGroupIdUseCase useCase,
         CancellationToken cancellationToken)
     {
-        try
+        var categories = await useCase.Execute(groupId, cancellationToken);
+        return Ok(categories.Select(c => new Category
         {
-            var categories = await useCase.Execute(groupId, cancellationToken);
-            return Ok(categories.Select(c => new Category
-            {
-                Id = c.Id,
-                Name = c.Name,
-                Icon = c.Icon
-            }));
-        }
-        catch (GroupNotFoundException e)
-        {
-            return NotFound(e.Message);
-        }
+            Id = c.Id,
+            Name = c.Name,
+            Icon = c.Icon
+        }));
     }
 
     [HttpPut]
@@ -40,24 +34,18 @@ public class CategoryController : ControllerBase
         [FromServices] IRenameCategoryUseCase useCase,
         CancellationToken cancellationToken)
     {
-        try
-        {
-            var updatedCategory = await useCase.Execute(categoryId, name, cancellationToken);
+        var updatedCategory = await useCase.Execute(categoryId, name, cancellationToken);
 
-            return Ok(new Category
-            {
-                Id = updatedCategory.Id,
-                Icon = updatedCategory.Icon,
-                Name = updatedCategory.Name
-            });
-        }
-        catch (CategoryNotFoundException e)
+        return Ok(new Category
         {
-            return NotFound(e.Message);
-        }
+            Id = updatedCategory.Id,
+            Icon = updatedCategory.Icon,
+            Name = updatedCategory.Name
+        });
     }
 
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status410Gone)]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Category))]
@@ -67,26 +55,14 @@ public class CategoryController : ControllerBase
         [FromServices] ICreateCategoryUseCase useCase,
         CancellationToken cancellationToken)
     {
-        try
-        {
-            var command = new CreateCategoryCommand(groupId, request.Name, request.Icon);
-            var category = await useCase.Execute(command, cancellationToken);
+        var command = new CreateCategoryCommand(groupId, request.Name, request.Icon);
+        var category = await useCase.Execute(command, cancellationToken);
 
-            return CreatedAtRoute(nameof(GetCategories), new Category
-            {
-                Id = category.Id,
-                Name = category.Name,
-                Icon = category.Icon
-            });
-        }
-        catch (Exception exception)
+        return CreatedAtRoute(nameof(GetCategories), new Category
         {
-            return exception switch
-            {
-                IntentionManagerException => Forbid(),
-                GroupNotFoundException => StatusCode(StatusCodes.Status410Gone),
-                _ => StatusCode(StatusCodes.Status500InternalServerError)
-            };
-        }
+            Id = category.Id,
+            Name = category.Name,
+            Icon = category.Icon
+        });
     }
 }

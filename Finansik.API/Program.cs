@@ -1,3 +1,5 @@
+using Finansik.API.Middlewares;
+using Finansik.API.Models;
 using Finansik.Common;
 using Finansik.Domain;
 using Finansik.Domain.Authentication;
@@ -9,6 +11,7 @@ using Finansik.Domain.UseCases.GetGroups;
 using Finansik.Domain.UseCases.RenameCategory;
 using Finansik.Storage;
 using Finansik.Storage.Storages;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 
@@ -30,10 +33,11 @@ builder.Services.AddScoped<IRenameCategoryUseCase, RenameCategoryUseCase>();
 builder.Services.AddScoped<IRenameCategoryStorage, RenameCategoryStorage>();
 builder.Services.AddScoped<IGetCategoriesByGroupIdUseCase, GetCategoriesByGroupIdUseCase>();
 builder.Services.AddScoped<IGetCategoriesByGroupIdStorage, GetCategoriesByGroupIdStorage>();
-
 builder.Services.AddScoped<ICreateCategoryStorage, CreateCategoryStorage>();
 builder.Services.AddScoped<IIntentionResolver, CategoryIntentionResolver>();
 builder.Services.AddScoped<IIntentionManager, IntentionManager>();
+
+builder.Services.AddValidatorsFromAssemblyContaining<IDomain>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -49,6 +53,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseMiddleware<ErrorHandlingMiddleware>();
 app.UseAuthorization();
 app.MapControllers();
 
