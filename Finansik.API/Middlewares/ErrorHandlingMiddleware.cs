@@ -1,32 +1,35 @@
-﻿using Finansik.Domain;
-using Finansik.Domain.Exceptions;
+﻿using Finansik.Domain.Exceptions;
 using FluentValidation;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace Finansik.API.Middlewares;
 
 public class ErrorHandlingMiddleware(RequestDelegate next)
 {
-    public async Task InvokeAsync(HttpContext httpContent)
+    // ReSharper disable once UnusedMember.Global
+    public async Task InvokeAsync(
+        HttpContext httpContext, 
+        ProblemDetailsFactory problemDetailsFactory)
     {
         try
         {
-            await next.Invoke(httpContent);
+            await next.Invoke(httpContext);
         }
         catch (Exception exception)
         {
-            var statusCode = exception switch
+            var problemDetails = exception switch
             {
-                IntentionManagerException => StatusCodes.Status403Forbidden,
-                ValidationException => StatusCodes.Status400BadRequest,
-                DomainException domainException => domainException.ErrorCode switch
-                {
-                    ErrorCodes.Gone => StatusCodes.Status410Gone,
-                    ErrorCodes.Forbidden => StatusCodes.Status403Forbidden,
-                    _ => StatusCodes.Status500InternalServerError
-                },
-                _ => StatusCodes.Status500InternalServerError
+                IntentionManagerException intentionManagerException => 
+                    problemDetailsFactory.CreateFrom(httpContext, intentionManagerException),
+                ValidationException validationException => 
+                    problemDetailsFactory.CreateFrom(httpContext, validationException),
+                DomainException domainException => 
+                    problemDetailsFactory.CreateFrom(httpContext, domainException),
+                _ => problemDetailsFactory.CreateFrom(httpContext, exception)
             };
-            httpContent.Response.StatusCode = statusCode;
+            
+            httpContext.Response.StatusCode = problemDetails.Status ?? StatusCodes.Status500InternalServerError;
+            await httpContext.Response.WriteAsJsonAsync(problemDetails, problemDetails.GetType());
         }
     }
 }

@@ -1,3 +1,3 @@
 namespace Finansik.Domain.Exceptions;
 
-public class IntentionManagerException() : DomainException(ErrorCodes.Forbidden, "Action is not allowed");
+public class IntentionManagerException() : Exception("Action is not allowed");
