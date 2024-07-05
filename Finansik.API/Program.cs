@@ -48,6 +48,7 @@ builder.Services.AddScoped<IGetCategoriesByGroupIdUseCase, GetCategoriesByGroupI
 builder.Services.AddScoped<IGetCategoriesByGroupIdStorage, GetCategoriesByGroupIdStorage>();
 builder.Services.AddScoped<ICreateCategoryStorage, CreateCategoryStorage>();
 builder.Services.AddScoped<IIntentionResolver, CategoryIntentionResolver>();
+builder.Services.AddScoped<IIntentionResolver, GroupIntentionResolver>();
 builder.Services.AddScoped<IIntentionManager, IntentionManager>();
 
 builder.Services.AddValidatorsFromAssemblyContaining<IDomain>();
