@@ -1,5 +1,4 @@
 using Finansik.API.Middlewares;
-using Finansik.API.Models;
 using Finansik.Common;
 using Finansik.Domain;
 using Finansik.Domain.Authentication;
@@ -14,8 +13,22 @@ using Finansik.Storage.Storages;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
+using Serilog;
+using Serilog.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddLogging(b => b.AddSerilog(new LoggerConfiguration()
+    .MinimumLevel.Debug()
+    .Enrich.WithProperty("Application", "Finansik.API")
+    .Enrich.WithProperty("Environment", builder.Environment.EnvironmentName)
+    .WriteTo.Logger(lc => lc
+        .Filter.ByExcluding(Matching.FromSource("Microsoft"))
+        .WriteTo.OpenSearch(
+            builder.Configuration.GetConnectionString("Logs"),
+            "finansik-logs-{0:yyyy.MM.dd}"))
+    .WriteTo.Logger(lc => lc.WriteTo.Console())
+    .CreateLogger()));
 
 var connectionString = builder.Configuration.GetConnectionString("Postgres");
 var dataSourceBuilder = new NpgsqlDataSourceBuilder(connectionString);
