@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Finansik.Storage.Entities;
 
-public class Category : KeyedEntity
+public class Category : IdentifyingEntity
 {
     [InverseProperty(nameof(PeriodCategory.Category))]
     public ICollection<PeriodCategory> PeriodCategories { get; set; }

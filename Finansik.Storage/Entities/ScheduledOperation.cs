@@ -3,7 +3,7 @@ using Finansik.Common;
 
 namespace Finansik.Storage.Entities;
 
-public class ScheduledOperation : KeyedEntity
+public class ScheduledOperation : IdentifyingEntity
 {
     public Guid? PeriodCategoryId { get; set; }
     

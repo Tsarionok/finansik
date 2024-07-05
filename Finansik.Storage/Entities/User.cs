@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Finansik.Storage.Entities;
 
-public class User : KeyedEntity
+public class User : IdentifyingEntity
 {
     public ICollection<Group> Groups { get; set; }
     

@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Finansik.Storage.Entities;
 
-public class PeriodCategory : KeyedEntity
+public class PeriodCategory : IdentifyingEntity
 {
     public Guid CategoryId { get; set; }
     
