@@ -5,9 +5,9 @@ public interface IIdentity
     Guid UserId { get; }
 }
 
-public class User : IIdentity
+public class User(Guid userId) : IIdentity
 {
-    public Guid UserId => Guid.Parse("A12ED44F-4EA9-46A2-86FD-7F8F3900CFD3");
+    public Guid UserId { get; set; } = userId;
 }
 
 public static class IdentityExtensions

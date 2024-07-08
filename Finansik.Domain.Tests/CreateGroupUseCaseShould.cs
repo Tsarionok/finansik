@@ -5,6 +5,7 @@ using Finansik.Domain.Models;
 using Finansik.Domain.UseCases.CreateGroup;
 using Finansik.Storage;
 using FluentAssertions;
+using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using Moq.Language.Flow;
@@ -12,10 +13,10 @@ using Group = Finansik.Storage.Entities.Group;
 
 namespace Finansik.Domain.Tests;
 
+[TestSubject(typeof(CreateGroupUseCase))]
 public class CreateGroupUseCaseShould
 {
     private readonly ICreateGroupUseCase _sut;
-    private readonly FinansikDbContext _dbContext;
     private readonly ISetup<ICreateGroupStorage, Task<Models.Group>> _createGroupSetup;
     private readonly ISetup<IIntentionManager,bool> _isAllowedSetup;
     private readonly ISetup<IIdentity,Guid> _getUserIdSetup;
@@ -23,10 +24,6 @@ public class CreateGroupUseCaseShould
     public CreateGroupUseCaseShould()
     {
         var guidFactory = new Mock<IGuidFactory>();
-        
-        var dbContextOptionsBuilder = new DbContextOptionsBuilder(new DbContextOptions<FinansikDbContext>())
-            .UseInMemoryDatabase(nameof(CreateGroupUseCaseShould));
-        _dbContext = new FinansikDbContext(dbContextOptionsBuilder.Options);
 
         var createGroupStorage = new Mock<ICreateGroupStorage>();
         _createGroupSetup = createGroupStorage.Setup(s => s.CreateGroup(
@@ -82,26 +79,5 @@ public class CreateGroupUseCaseShould
             .Including(g => g.Id)
             .Including(g => g.Name)
             .Including(g => g.Icon));
-    }
-
-    [Fact]
-    public async Task SaveGroupObjectToDbContext()
-    {
-        var groupName = "PersonalTest";
-        var groupIcon = "person.png";
-        var groupId = Guid.Parse("2B40A283-6ACD-4907-9B57-71B12714DA40");
-
-        _isAllowedSetup.Returns(true);
-        
-        await _sut.Execute(groupName, groupIcon, CancellationToken.None);
-        
-        var group = await _dbContext.Groups.FirstAsync(g => g.Id == groupId);
-        
-        group.Should().BeEquivalentTo(new Group 
-        {
-            Id = groupId,
-            Icon = groupIcon,
-            Name = groupName
-        });
     }
 }

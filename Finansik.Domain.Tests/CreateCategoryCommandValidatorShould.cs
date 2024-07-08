@@ -1,8 +1,10 @@
 ﻿using Finansik.Domain.UseCases.CreateCategory;
 using FluentAssertions;
+using JetBrains.Annotations;
 
 namespace Finansik.Domain.Tests;
 
+[TestSubject(typeof(CreateCategoryCommandValidator))]
 public class CreateCategoryCommandValidatorShould
 {
     private readonly CreateCategoryCommandValidator _sut;

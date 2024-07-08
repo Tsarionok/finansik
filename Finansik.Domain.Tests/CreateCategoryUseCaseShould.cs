@@ -6,12 +6,13 @@ using Finansik.Domain.UseCases.CreateCategory;
 using FluentAssertions;
 using FluentValidation;
 using FluentValidation.Results;
+using JetBrains.Annotations;
 using Moq;
 using Moq.Language.Flow;
-using ValidationException = System.ComponentModel.DataAnnotations.ValidationException;
 
 namespace Finansik.Domain.Tests;
 
+[TestSubject(typeof(CreateCategoryUseCase))]
 public class CreateCategoryUseCaseShould
 {
     private readonly ICreateCategoryUseCase _sut;
