@@ -43,26 +43,4 @@ public class CategoryController : ControllerBase
             Name = updatedCategory.Name
         });
     }
-
-    [HttpPost]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    [ProducesResponseType(StatusCodes.Status410Gone)]
-    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Category))]
-    public async Task<IActionResult> CreateCategory(
-        Guid groupId,
-        [FromBody] CreateCategory request,
-        [FromServices] ICreateCategoryUseCase useCase,
-        CancellationToken cancellationToken)
-    {
-        var command = new CreateCategoryCommand(groupId, request.Name, request.Icon);
-        var category = await useCase.Execute(command, cancellationToken);
-
-        return CreatedAtRoute(nameof(GetCategories), new Category
-        {
-            Id = category.Id,
-            Name = category.Name,
-            Icon = category.Icon
-        });
-    }
 }

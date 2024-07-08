@@ -1,4 +1,5 @@
 using Finansik.API.Models;
+using Finansik.Domain.UseCases.CreateCategory;
 using Finansik.Domain.UseCases.CreateGroup;
 using Finansik.Domain.UseCases.GetGroups;
 using Microsoft.AspNetCore.Mvc;
@@ -39,6 +40,28 @@ public class GroupController : ControllerBase
             Id = addedGroup.Id,
             Name = addedGroup.Name,
             Icon = addedGroup.Icon
+        });
+    }
+    
+    [HttpPost("{groupId}/category")]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status410Gone)]
+    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Category))]
+    public async Task<IActionResult> CreateCategory(
+        Guid groupId,
+        [FromBody] CreateCategory request,
+        [FromServices] ICreateCategoryUseCase useCase,
+        CancellationToken cancellationToken)
+    {
+        var command = new CreateCategoryCommand(groupId, request.Name, request.Icon);
+        var category = await useCase.Execute(command, cancellationToken);
+
+        return CreatedAtRoute(nameof(CategoryController.GetCategories), new Category
+        {
+            Id = category.Id,
+            Name = category.Name,
+            Icon = category.Icon
         });
     }
 }
