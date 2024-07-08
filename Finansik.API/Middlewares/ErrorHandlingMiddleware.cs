@@ -34,7 +34,7 @@ public class ErrorHandlingMiddleware(RequestDelegate next)
                     break;
                 case DomainException domainException:
                     problemDetails = problemDetailsFactory.CreateFrom(httpContext, domainException);
-                    logger.LogError(domainException, "Domain exception occured");
+                    logger.LogWarning("Domain exception occured: {Message}", domainException.Message);
                     break;
                 default:
                     problemDetails = problemDetailsFactory.CreateFrom(httpContext, exception);

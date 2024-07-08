@@ -6,8 +6,9 @@ using Serilog.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddLogging(b => b.AddSerilog(new LoggerConfiguration()
-    .MinimumLevel.Debug()
+builder.Services.AddLogging(b => b.ClearProviders()
+    .AddSerilog(new LoggerConfiguration()
+    .MinimumLevel.Verbose()
     .Enrich.WithProperty("Application", "Finansik.API")
     .Enrich.WithProperty("Environment", builder.Environment.EnvironmentName)
     .WriteTo.Logger(lc => lc
