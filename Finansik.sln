@@ -16,6 +16,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finansik.API", "Finansik.AP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finansik.Domain.Tests", "Finansik.Domain.Tests\Finansik.Domain.Tests.csproj", "{7B4516F0-93D8-4030-92DA-DF17085773BD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finansik.Domain.DependencyInjection", "Finansik.Domain.DependencyInjection\Finansik.Domain.DependencyInjection.csproj", "{3C5518B0-0F67-49C4-BDE2-EDD4554D7AB5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finansik.Storage.DependencyInjection", "Finansik.Storage.DependencyInjection\Finansik.Storage.DependencyInjection.csproj", "{66578F63-4F37-4F34-A833-0B6F029A8D26}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +46,13 @@ Global
 		{7B4516F0-93D8-4030-92DA-DF17085773BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B4516F0-93D8-4030-92DA-DF17085773BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B4516F0-93D8-4030-92DA-DF17085773BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C5518B0-0F67-49C4-BDE2-EDD4554D7AB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C5518B0-0F67-49C4-BDE2-EDD4554D7AB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C5518B0-0F67-49C4-BDE2-EDD4554D7AB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C5518B0-0F67-49C4-BDE2-EDD4554D7AB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66578F63-4F37-4F34-A833-0B6F029A8D26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66578F63-4F37-4F34-A833-0B6F029A8D26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66578F63-4F37-4F34-A833-0B6F029A8D26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66578F63-4F37-4F34-A833-0B6F029A8D26}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

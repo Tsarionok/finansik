@@ -1,0 +1,33 @@
+using Finansik.Common;
+using Finansik.Domain.UseCases.CreateCategory;
+using Finansik.Domain.UseCases.CreateGroup;
+using Finansik.Domain.UseCases.GetCategories;
+using Finansik.Domain.UseCases.GetGroups;
+using Finansik.Domain.UseCases.RenameCategory;
+using Finansik.Storage.Storages;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Npgsql;
+
+namespace Finansik.Storage.DependencyInjection;
+
+public static class ServiceCollectionExtension
+{
+    public static IServiceCollection AddFinansikStorage(this IServiceCollection services, string connectionString)
+    {
+        services
+            .AddScoped<IGetGroupsStorage, GetGroupsStorage>()
+            .AddScoped<ICreateGroupStorage, CreateGroupStorage>()
+            .AddScoped<IRenameCategoryStorage, RenameCategoryStorage>()
+            .AddScoped<IGetCategoriesByGroupIdStorage, GetCategoriesByGroupIdStorage>()
+            .AddScoped<ICreateCategoryStorage, CreateCategoryStorage>();
+        
+        var dataSourceBuilder = new NpgsqlDataSourceBuilder(connectionString);
+        dataSourceBuilder.MapEnum<OperationDirection>();
+        var dataSource = dataSourceBuilder.Build();
+        
+        services.AddDbContextPool<FinansikDbContext>(options => options.UseNpgsql(dataSource));
+
+        return services;
+    }
+}
