@@ -1,5 +1,6 @@
 ﻿using System;
-using Finansik.Common;
+using Finansik.Domain.Models;
+using Finansik.Storage.Entities.Enums;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable

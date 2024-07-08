@@ -1,6 +1,10 @@
-using Finansik.Common;
+using Finansik.Domain.Models;
 using Finansik.Storage.Entities;
+using Finansik.Storage.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
+using Category = Finansik.Storage.Entities.Category;
+using Group = Finansik.Storage.Entities.Group;
+using ScheduledOperation = Finansik.Storage.Entities.ScheduledOperation;
 
 namespace Finansik.Storage;
 

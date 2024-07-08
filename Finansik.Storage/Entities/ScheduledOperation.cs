@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations.Schema;
-using Finansik.Common;
+using Finansik.Storage.Entities.Enums;
 
 namespace Finansik.Storage.Entities;
 

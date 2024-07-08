@@ -1,9 +1,10 @@
-using Finansik.Common;
+using Finansik.Domain.Models;
 using Finansik.Domain.UseCases.CreateCategory;
 using Finansik.Domain.UseCases.CreateGroup;
 using Finansik.Domain.UseCases.GetCategories;
 using Finansik.Domain.UseCases.GetGroups;
 using Finansik.Domain.UseCases.RenameCategory;
+using Finansik.Storage.Entities.Enums;
 using Finansik.Storage.Storages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
