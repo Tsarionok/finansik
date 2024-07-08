@@ -43,13 +43,13 @@ public class GroupController : ControllerBase
         });
     }
     
-    [HttpPost("{groupId}/category")]
+    [HttpPost("{groupId:guid}/category")]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status410Gone)]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Category))]
     public async Task<IActionResult> CreateCategory(
-        Guid groupId,
+        [FromRoute] Guid groupId,
         [FromBody] CreateCategory request,
         [FromServices] ICreateCategoryUseCase useCase,
         CancellationToken cancellationToken)

@@ -1,4 +1,3 @@
-using Finansik.Domain.Models;
 using Finansik.Domain.UseCases.CreateCategory;
 using Finansik.Domain.UseCases.CreateGroup;
 using Finansik.Domain.UseCases.GetCategories;
