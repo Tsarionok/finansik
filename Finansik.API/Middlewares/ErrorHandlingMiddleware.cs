@@ -31,8 +31,6 @@ public class ErrorHandlingMiddleware(RequestDelegate next)
                     break;
                 case ValidationException validationException:
                     problemDetails = problemDetailsFactory.CreateFrom(httpContext, validationException);
-                    // TODO: remove it after testing
-                    logger.LogError(validationException, "Somebody sent invalid request, oops");
                     break;
                 case DomainException domainException:
                     problemDetails = problemDetailsFactory.CreateFrom(httpContext, domainException);
