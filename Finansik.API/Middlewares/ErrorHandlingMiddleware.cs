@@ -15,8 +15,7 @@ public class ErrorHandlingMiddleware(RequestDelegate next)
     {
         try
         {
-            // TODO: remove it after testing
-            logger.LogInformation(
+            logger.LogDebug(
                 "Error handling started with path {RequestPath}",
                 httpContext.Request.Path.Value);
             

@@ -4,7 +4,7 @@ using Finansik.Domain.Models;
 
 namespace Finansik.Domain.UseCases.CreateGroup;
 
-public class CreateGroupUseCase(
+internal class CreateGroupUseCase(
     ICreateGroupStorage createGroupStorage,
     IIntentionManager intentionManager,
     IIdentityProvider identityProvider) : ICreateGroupUseCase

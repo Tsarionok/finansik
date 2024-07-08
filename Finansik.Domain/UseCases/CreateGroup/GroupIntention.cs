@@ -1,6 +1,6 @@
 ﻿namespace Finansik.Domain.UseCases.CreateGroup;
 
-public enum GroupIntention
+internal enum GroupIntention
 {
     Create,
     Get

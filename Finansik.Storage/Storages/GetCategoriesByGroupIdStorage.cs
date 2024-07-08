@@ -3,7 +3,7 @@ using Finansik.Domain.UseCases.GetCategories;
 
 namespace Finansik.Storage.Storages;
 
-public class GetCategoriesByGroupIdStorage : IGetCategoriesByGroupIdStorage
+internal class GetCategoriesByGroupIdStorage : IGetCategoriesByGroupIdStorage
 {
     public Task<bool> IsGroupExists(Guid groupId, CancellationToken cancellationToken)
     {

@@ -88,7 +88,10 @@ public class CreateCategoryUseCaseShould
         _intentionIsAllowedSetup.Returns(true);
         _isGroupExistsSetup.ReturnsAsync(true);
         _getCurrentUserIdSetup.Returns(userId);
-        var expected = new Category();
+        var expected = new Category
+        {
+            Name = "Hello world"
+        };
         _createCategorySetup.ReturnsAsync(expected);
         
         var actual = await _sut.Execute(new CreateCategoryCommand(groupId, categoryName , categoryIcon), CancellationToken.None);

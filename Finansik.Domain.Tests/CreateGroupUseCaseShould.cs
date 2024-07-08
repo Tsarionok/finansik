@@ -1,15 +1,11 @@
 ﻿using Finansik.Domain.Authentication;
 using Finansik.Domain.Authorization;
 using Finansik.Domain.Exceptions;
-using Finansik.Domain.Models;
 using Finansik.Domain.UseCases.CreateGroup;
-using Finansik.Storage;
 using FluentAssertions;
 using JetBrains.Annotations;
-using Microsoft.EntityFrameworkCore;
 using Moq;
 using Moq.Language.Flow;
-using Group = Finansik.Storage.Entities.Group;
 
 namespace Finansik.Domain.Tests;
 
@@ -23,12 +19,12 @@ public class CreateGroupUseCaseShould
 
     public CreateGroupUseCaseShould()
     {
-        var guidFactory = new Mock<IGuidFactory>();
+        // var guidFactory = new Mock<IGuidFactory>();
 
         var createGroupStorage = new Mock<ICreateGroupStorage>();
         _createGroupSetup = createGroupStorage.Setup(s => s.CreateGroup(
             It.IsAny<string>(), 
-            guidFactory.Object.Create(), 
+            It.IsAny<Guid>(), //guidFactory.Object.Create(), 
             It.IsAny<string>(),
             It.IsAny<CancellationToken>()));
         

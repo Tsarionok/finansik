@@ -3,7 +3,7 @@ using Finansik.Domain.Models;
 
 namespace Finansik.Domain.UseCases.GetCategories;
 
-public class GetCategoriesByGroupIdUseCase(IGetCategoriesByGroupIdStorage storage) : IGetCategoriesByGroupIdUseCase
+internal class GetCategoriesByGroupIdUseCase(IGetCategoriesByGroupIdStorage storage) : IGetCategoriesByGroupIdUseCase
 {
     public async Task<IEnumerable<Category>> Execute(Guid groupId, CancellationToken cancellationToken)
     {

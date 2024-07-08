@@ -3,7 +3,7 @@ using Finansik.Domain.Authorization;
 
 namespace Finansik.Domain.UseCases.CreateCategory;
 
-public class CategoryIntentionResolver : IIntentionResolver<CategoryIntention>
+internal class CategoryIntentionResolver : IIntentionResolver<CategoryIntention>
 {
     public bool IsAllowed(IIdentity subject, CategoryIntention intention) => intention switch
     {

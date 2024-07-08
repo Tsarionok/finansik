@@ -3,7 +3,7 @@ using FluentValidation.Results;
 
 namespace Finansik.Domain.UseCases.CreateCategory;
 
-public class CreateCategoryCommandValidator : AbstractValidator<CreateCategoryCommand>
+internal class CreateCategoryCommandValidator : AbstractValidator<CreateCategoryCommand>
 {
     public CreateCategoryCommandValidator()
     {

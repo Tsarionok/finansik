@@ -28,7 +28,6 @@
       <ProjectReference Include="..\Finansik.Domain.DependencyInjection\Finansik.Domain.DependencyInjection.csproj" />
       <ProjectReference Include="..\Finansik.Domain\Finansik.Domain.csproj" />
       <ProjectReference Include="..\Finansik.Storage.DependencyInjection\Finansik.Storage.DependencyInjection.csproj" />
-      <ProjectReference Include="..\Finansik.Storage\Finansik.Storage.csproj" />
     </ItemGroup>
 
 </Project>

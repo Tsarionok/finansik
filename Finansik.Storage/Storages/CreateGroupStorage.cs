@@ -1,11 +1,10 @@
-﻿using Finansik.Domain;
-using Finansik.Domain.Models;
+﻿using Finansik.Domain.Models;
 using Finansik.Domain.UseCases.CreateGroup;
 using Microsoft.EntityFrameworkCore;
 
 namespace Finansik.Storage.Storages;
 
-public class CreateGroupStorage(
+internal class CreateGroupStorage(
     FinansikDbContext dbContext,
     IGuidFactory guidFactory) : ICreateGroupStorage
 {

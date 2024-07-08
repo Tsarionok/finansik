@@ -1,6 +1,6 @@
 ﻿namespace Finansik.Domain.UseCases.CreateCategory;
 
-public enum CategoryIntention
+internal enum CategoryIntention
 {
     Create,
     Rename

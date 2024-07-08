@@ -6,7 +6,7 @@ using FluentValidation;
 
 namespace Finansik.Domain.UseCases.CreateCategory;
 
-public class CreateCategoryUseCase(
+internal class CreateCategoryUseCase(
     IValidator<CreateCategoryCommand> validator,
     ICreateCategoryStorage createCategoryStorage, 
     IIdentityProvider identityProvider,

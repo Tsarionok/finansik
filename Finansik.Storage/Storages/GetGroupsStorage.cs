@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Finansik.Storage.Storages;
 
-public class GetGroupsStorage(FinansikDbContext dbContext) : IGetGroupsStorage
+internal class GetGroupsStorage(FinansikDbContext dbContext) : IGetGroupsStorage
 {
     public async Task<IEnumerable<Group>> GetGroupsByUserId(Guid userId, CancellationToken cancellationToken) =>
         // TODO: implement filtrating by user id

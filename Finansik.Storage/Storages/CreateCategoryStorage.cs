@@ -1,11 +1,10 @@
-﻿using Finansik.Domain;
-using Finansik.Domain.Models;
+﻿using Finansik.Domain.Models;
 using Finansik.Domain.UseCases.CreateCategory;
 using Microsoft.EntityFrameworkCore;
 
 namespace Finansik.Storage.Storages;
 
-public class CreateCategoryStorage(FinansikDbContext dbContext, IGuidFactory guidFactory) : ICreateCategoryStorage
+internal class CreateCategoryStorage(FinansikDbContext dbContext, IGuidFactory guidFactory) : ICreateCategoryStorage
 {
     public Task<bool> IsGroupExists(Guid groupId, CancellationToken cancellationToken) => 
         dbContext.Groups.AnyAsync(g => g.Id == groupId, cancellationToken);

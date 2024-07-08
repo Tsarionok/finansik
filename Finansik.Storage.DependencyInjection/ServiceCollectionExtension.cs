@@ -16,6 +16,7 @@ public static class ServiceCollectionExtension
     public static IServiceCollection AddFinansikStorage(this IServiceCollection services, string connectionString)
     {
         services
+            .AddSingleton<IGuidFactory, GuidFactory>()
             .AddScoped<IGetGroupsStorage, GetGroupsStorage>()
             .AddScoped<ICreateGroupStorage, CreateGroupStorage>()
             .AddScoped<IRenameCategoryStorage, RenameCategoryStorage>()

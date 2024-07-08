@@ -6,7 +6,7 @@ using Finansik.Domain.UseCases.CreateCategory;
 
 namespace Finansik.Domain.UseCases.RenameCategory;
 
-public class RenameCategoryUseCase(
+internal class RenameCategoryUseCase(
     IRenameCategoryStorage storage,
     IIdentityProvider identityProvider,
     IIntentionManager intentionManager) : IRenameCategoryUseCase

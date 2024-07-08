@@ -16,22 +16,20 @@ public static class ServiceCollectionExtensions
     {
         // TODO: replace factory/provider/managers/resolvers dependencies to another module
         services
-            .AddSingleton<IGuidFactory, GuidFactory>()
             .AddScoped<IIdentityProvider, IdentityProvider>()
-            .AddScoped<IIntentionResolver, CategoryIntentionResolver>()
-            .AddScoped<IIntentionResolver, GroupIntentionResolver>()
             .AddScoped<IIntentionManager, IntentionManager>()
-            .AddScoped<IGetCategoriesByGroupIdUseCase, GetCategoriesByGroupIdUseCase>();
+            .AddScoped<IIntentionResolver, CategoryIntentionResolver>()
+            .AddScoped<IIntentionResolver, GroupIntentionResolver>();
             
         services
             .AddScoped<IGetGroupsUseCase, GetGroupsUseCase>()
             .AddScoped<ICreateCategoryUseCase, CreateCategoryUseCase>()
             .AddScoped<ICreateGroupUseCase, CreateGroupUseCase>()
-            .AddScoped<IRenameCategoryUseCase, RenameCategoryUseCase>();
+            .AddScoped<IRenameCategoryUseCase, RenameCategoryUseCase>()
+            .AddScoped<IGetCategoriesByGroupIdUseCase, GetCategoriesByGroupIdUseCase>();
 
-        // TODO: try to remove IDomain
-        services
-            .AddValidatorsFromAssemblyContaining<IFinansikDomain>();
+        // TODO: try to remove IFinansikDomain
+        services.AddValidatorsFromAssemblyContaining<IFinansikDomain>(includeInternalTypes: true);
         
         return services;
     }

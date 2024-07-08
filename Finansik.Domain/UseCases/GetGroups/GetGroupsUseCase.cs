@@ -5,7 +5,7 @@ using Finansik.Domain.UseCases.CreateGroup;
 
 namespace Finansik.Domain.UseCases.GetGroups;
 
-public class GetGroupsUseCase(
+internal class GetGroupsUseCase(
     IGetGroupsStorage storage,
     IIdentityProvider identityProvider,
     IIntentionManager intentionManager) : IGetGroupsUseCase
