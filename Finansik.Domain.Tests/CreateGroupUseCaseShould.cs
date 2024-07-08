@@ -2,6 +2,8 @@
 using Finansik.Domain.Authorization;
 using Finansik.Domain.Exceptions;
 using Finansik.Domain.UseCases.CreateGroup;
+using Finansik.Domain.Models;
+using Finansik.Storage;
 using FluentAssertions;
 using JetBrains.Annotations;
 using Moq;
@@ -13,18 +15,17 @@ namespace Finansik.Domain.Tests;
 public class CreateGroupUseCaseShould
 {
     private readonly ICreateGroupUseCase _sut;
-    private readonly ISetup<ICreateGroupStorage, Task<Models.Group>> _createGroupSetup;
+    private readonly ISetup<ICreateGroupStorage, Task<Group>> _createGroupSetup;
     private readonly ISetup<IIntentionManager,bool> _isAllowedSetup;
-    private readonly ISetup<IIdentity,Guid> _getUserIdSetup;
 
     public CreateGroupUseCaseShould()
     {
-        // var guidFactory = new Mock<IGuidFactory>();
+        var guidFactory = new Mock<IGuidFactory>();
 
         var createGroupStorage = new Mock<ICreateGroupStorage>();
         _createGroupSetup = createGroupStorage.Setup(s => s.CreateGroup(
             It.IsAny<string>(), 
-            It.IsAny<Guid>(), //guidFactory.Object.Create(), 
+            guidFactory.Object.Create(), 
             It.IsAny<string>(),
             It.IsAny<CancellationToken>()));
         
@@ -32,7 +33,6 @@ public class CreateGroupUseCaseShould
         _isAllowedSetup = intentionManager.Setup(m => m.IsAllowed(It.IsAny<GroupIntention>()));
         
         var identity = new Mock<IIdentity>();
-        _getUserIdSetup = identity.Setup(i => i.UserId);
         var identityProvider = new Mock<IIdentityProvider>();
         identityProvider.Setup(p => p.Current).Returns(identity.Object);
         
@@ -57,7 +57,7 @@ public class CreateGroupUseCaseShould
         var groupId = Guid.Parse("3EE7CC2A-18C3-41C4-84D4-3B1B7ED9EE28");
 
         _isAllowedSetup.Returns(true);
-        _createGroupSetup.ReturnsAsync(new Models.Group
+        _createGroupSetup.ReturnsAsync(new Group
         {
             Id = groupId,
             Icon = groupIcon,
@@ -66,7 +66,7 @@ public class CreateGroupUseCaseShould
             
         var group = await _sut.Execute(groupName, groupIcon, CancellationToken.None);
 
-        group.Should().BeEquivalentTo(new Finansik.Domain.Models.Group
+        group.Should().BeEquivalentTo(new Group
         {
             Id = groupId,
             Name = groupName,

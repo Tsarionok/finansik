@@ -1,6 +1,6 @@
 namespace Finansik.Storage;
 
-internal interface IGuidFactory
+public interface IGuidFactory
 { 
     Guid Create();
 }
