@@ -3,5 +3,6 @@
 internal enum CategoryIntention
 {
     Create,
-    Rename
+    Rename,
+    Delete
 }

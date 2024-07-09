@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using FluentValidation.Results;
 
 namespace Finansik.Domain.UseCases.CreateCategory;
 
@@ -7,9 +6,9 @@ internal class CreateCategoryCommandValidator : AbstractValidator<CreateCategory
 {
     public CreateCategoryCommandValidator()
     {
-        RuleFor(c => c.GroupId).NotEmpty().WithErrorCode("Empty");
+        RuleFor(c => c.GroupId).NotEmpty().WithErrorCode(ValidationErrorCodes.Empty);
         RuleFor(c => c.Name).Cascade(CascadeMode.Stop)
-            .NotEmpty().WithErrorCode("Empty")
-            .MaximumLength(30).WithErrorCode("TooLong");
+            .NotEmpty().WithErrorCode(ValidationErrorCodes.Empty)
+            .MaximumLength(30).WithErrorCode(ValidationErrorCodes.TooLong);
     }
 }

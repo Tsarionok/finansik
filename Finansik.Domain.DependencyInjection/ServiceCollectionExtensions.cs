@@ -1,9 +1,11 @@
 using System.ComponentModel.Design;
+using Finansik.Domain.Attributes;
 using Finansik.Domain.Authentication;
 using Finansik.Domain.Authorization;
 using Finansik.Domain.UseCases;
 using Finansik.Domain.UseCases.CreateCategory;
 using Finansik.Domain.UseCases.CreateGroup;
+using Finansik.Domain.UseCases.DeleteCategory;
 using Finansik.Domain.UseCases.GetCategories;
 using Finansik.Domain.UseCases.GetGroup;
 using Finansik.Domain.UseCases.GetGroups;
@@ -30,10 +32,10 @@ public static class ServiceCollectionExtensions
             .AddScoped<ICreateCategoryUseCase, CreateCategoryUseCase>()
             .AddScoped<ICreateGroupUseCase, CreateGroupUseCase>()
             .AddScoped<IRenameCategoryUseCase, RenameCategoryUseCase>()
-            .AddScoped<IGetCategoriesByGroupIdUseCase, GetCategoriesByGroupIdUseCase>();
-
-        // TODO: try to remove IFinansikDomain
-        services.AddValidatorsFromAssemblyContaining<IFinansikDomain>(includeInternalTypes: true);
+            .AddScoped<IGetCategoriesByGroupIdUseCase, GetCategoriesByGroupIdUseCase>()
+            .AddScoped<IDeleteCategoryUseCase, DeleteCategoryUseCase>();
+        
+        services.AddValidatorsFromAssemblyContaining<IUseCase>(includeInternalTypes: true);
         
         return services;
     }

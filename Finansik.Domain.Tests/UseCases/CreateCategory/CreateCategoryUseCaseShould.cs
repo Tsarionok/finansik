@@ -5,12 +5,11 @@ using Finansik.Domain.Models;
 using Finansik.Domain.UseCases.CreateCategory;
 using FluentAssertions;
 using FluentValidation;
-using FluentValidation.Results;
 using JetBrains.Annotations;
 using Moq;
 using Moq.Language.Flow;
 
-namespace Finansik.Domain.Tests;
+namespace Finansik.Domain.Tests.UseCases.CreateCategory;
 
 [TestSubject(typeof(CreateCategoryUseCase))]
 public class CreateCategoryUseCaseShould
@@ -22,7 +21,6 @@ public class CreateCategoryUseCaseShould
     private readonly ISetup<IIdentity,Guid> _getCurrentUserIdSetup;
     private readonly ISetup<IIntentionManager,bool> _intentionIsAllowedSetup;
     private readonly Mock<IIntentionManager> _intentionManager;
-    private readonly ISetup<IValidator<CreateCategoryCommand>,Task<ValidationResult>> _validateCommandSetup;
 
     public CreateCategoryUseCaseShould()
     {
@@ -40,7 +38,6 @@ public class CreateCategoryUseCaseShould
         _intentionIsAllowedSetup = _intentionManager.Setup(m => m.IsAllowed(It.IsAny<CategoryIntention>()));
 
         var commandValidator = new Mock<IValidator<CreateCategoryCommand>>();
-        _validateCommandSetup = commandValidator.Setup(v => v.ValidateAsync(It.IsAny<CreateCategoryCommand>(), It.IsAny<CancellationToken>()));
 
         _sut = new CreateCategoryUseCase(commandValidator.Object, _storage.Object, identityProvider.Object, _intentionManager.Object);
     }

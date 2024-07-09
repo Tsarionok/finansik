@@ -1,5 +1,6 @@
 ﻿using Finansik.Domain;
 using Finansik.Domain.Exceptions;
+using Finansik.Domain.Exceptions.ErrorCodes;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -36,7 +37,7 @@ public static class ProblemDetailsFactoryExtensions
         factory.CreateProblemDetails(httpContext,
             statusCode: exception.ErrorCode switch
             {
-                ErrorCodes.Gone => StatusCodes.Status410Gone,
+                DomainErrorCodes.Gone => StatusCodes.Status410Gone,
                 _ => StatusCodes.Status500InternalServerError
             },
             exception.Message);

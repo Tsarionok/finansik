@@ -1,3 +1,5 @@
+using Finansik.Domain.Attributes;
+
 namespace Finansik.Domain.UseCases;
 
 public interface IUseCase;

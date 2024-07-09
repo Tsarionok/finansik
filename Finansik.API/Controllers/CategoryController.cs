@@ -1,6 +1,7 @@
 using Finansik.API.Models;
 using Finansik.Domain.Exceptions;
 using Finansik.Domain.UseCases.CreateCategory;
+using Finansik.Domain.UseCases.DeleteCategory;
 using Finansik.Domain.UseCases.GetCategories;
 using Finansik.Domain.UseCases.RenameCategory;
 using Microsoft.AspNetCore.Mvc;
@@ -45,6 +46,23 @@ public class CategoryController : ControllerBase
             Id = updatedCategory.Id,
             Icon = updatedCategory.Icon,
             Name = updatedCategory.Name
+        });
+    }
+
+    [HttpDelete]
+    public async Task<IActionResult> DeleteCategory(
+        [FromBody] DeleteCategory category,
+        [FromServices] IDeleteCategoryUseCase useCase,
+        CancellationToken cancellationToken)
+    {
+        var deletedCategory = await useCase.ExecuteAsync(
+            new DeleteCategoryCommand(category.CategoryId), cancellationToken);
+        
+        return Ok(new Category
+        {
+            Id = deletedCategory.Id,
+            Name = deletedCategory.Name,
+            Icon = deletedCategory.Icon
         });
     }
 }

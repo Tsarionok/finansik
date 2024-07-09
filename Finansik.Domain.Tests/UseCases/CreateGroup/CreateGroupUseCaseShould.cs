@@ -1,15 +1,15 @@
 ﻿using Finansik.Domain.Authentication;
 using Finansik.Domain.Authorization;
 using Finansik.Domain.Exceptions;
-using Finansik.Domain.UseCases.CreateGroup;
 using Finansik.Domain.Models;
+using Finansik.Domain.UseCases.CreateGroup;
 using Finansik.Storage;
 using FluentAssertions;
 using JetBrains.Annotations;
 using Moq;
 using Moq.Language.Flow;
 
-namespace Finansik.Domain.Tests;
+namespace Finansik.Domain.Tests.UseCases.CreateGroup;
 
 [TestSubject(typeof(CreateGroupUseCase))]
 public class CreateGroupUseCaseShould

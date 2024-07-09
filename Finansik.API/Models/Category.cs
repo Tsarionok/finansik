@@ -15,3 +15,8 @@ public class CreateCategory
     
     public string? Icon { get; set; }
 }
+
+public class DeleteCategory
+{
+    public Guid CategoryId { get; set; }
+}

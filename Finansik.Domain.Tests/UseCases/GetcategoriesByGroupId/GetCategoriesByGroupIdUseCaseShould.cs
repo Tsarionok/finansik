@@ -6,7 +6,7 @@ using JetBrains.Annotations;
 using Moq;
 using Moq.Language.Flow;
 
-namespace Finansik.Domain.Tests;
+namespace Finansik.Domain.Tests.UseCases.GetcategoriesByGroupId;
 
 [TestSubject(typeof(GetCategoriesByGroupIdUseCase))]
 public class GetCategoriesByGroupIdUseCaseShould

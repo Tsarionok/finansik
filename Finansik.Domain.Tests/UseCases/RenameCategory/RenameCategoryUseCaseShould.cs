@@ -9,7 +9,7 @@ using JetBrains.Annotations;
 using Moq;
 using Moq.Language.Flow;
 
-namespace Finansik.Domain.Tests;
+namespace Finansik.Domain.Tests.UseCases.RenameCategory;
 
 [TestSubject(typeof(RenameCategoryUseCase))]
 public class RenameCategoryUseCaseShould

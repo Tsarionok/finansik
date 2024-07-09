@@ -9,6 +9,7 @@ internal class CategoryIntentionResolver : IIntentionResolver<CategoryIntention>
     {
         CategoryIntention.Create => subject.IsAuthenticated(),
         CategoryIntention.Rename => subject.IsAuthenticated(),
+        CategoryIntention.Delete => subject.IsAuthenticated(),
         _ => false
     };
 }

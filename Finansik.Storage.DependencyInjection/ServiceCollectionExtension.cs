@@ -1,5 +1,6 @@
 using Finansik.Domain.UseCases.CreateCategory;
 using Finansik.Domain.UseCases.CreateGroup;
+using Finansik.Domain.UseCases.DeleteCategory;
 using Finansik.Domain.UseCases.GetCategories;
 using Finansik.Domain.UseCases.GetGroups;
 using Finansik.Domain.UseCases.RenameCategory;
@@ -21,7 +22,8 @@ public static class ServiceCollectionExtension
             .AddScoped<ICreateGroupStorage, CreateGroupStorage>()
             .AddScoped<IRenameCategoryStorage, RenameCategoryStorage>()
             .AddScoped<IGetCategoriesByGroupIdStorage, GetCategoriesByGroupIdStorage>()
-            .AddScoped<ICreateCategoryStorage, CreateCategoryStorage>();
+            .AddScoped<ICreateCategoryStorage, CreateCategoryStorage>()
+            .AddScoped<IDeleteCategoryStorage, DeleteCategoryStorage>();
         
         var dataSourceBuilder = new NpgsqlDataSourceBuilder(connectionString);
         dataSourceBuilder.MapEnum<OperationDirection>();
