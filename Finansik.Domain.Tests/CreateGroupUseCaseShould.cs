@@ -44,7 +44,8 @@ public class CreateGroupUseCaseShould
     {
         _isAllowedSetup.Returns(false);
 
-        await _sut.Invoking(sut => sut.Execute("Some group", "noIcon.png", CancellationToken.None))
+        await _sut.Invoking(sut => sut.ExecuteAsync(
+                new CreateGroupCommand("Some group", "noIcon.png"), CancellationToken.None))
             .Should()
             .ThrowAsync<IntentionManagerException>();
     }
@@ -64,7 +65,8 @@ public class CreateGroupUseCaseShould
             Name = groupName
         });
             
-        var group = await _sut.Execute(groupName, groupIcon, CancellationToken.None);
+        var group = await _sut.ExecuteAsync(
+            new CreateGroupCommand(groupName, groupIcon), CancellationToken.None);
 
         group.Should().BeEquivalentTo(new Group
         {

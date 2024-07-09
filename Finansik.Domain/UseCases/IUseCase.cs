@@ -2,13 +2,20 @@ namespace Finansik.Domain.UseCases;
 
 public interface IUseCase;
 
-[Experimental]
-public interface IUseCase<in TCommand, TResult> : IUseCase
-    where TCommand : ICommand 
-    where TResult : IResult
+public interface IUseCase<TResult> : IUseCase
+    where TResult : class
 {
-    Task<TResult> Execute(TCommand command, CancellationToken cancellationToken);
+    Task<TResult> ExecuteAsync(CancellationToken cancellationToken);
 }
 
-public interface IResult;
-public interface ICommand;
+[Experimental]
+public interface IUseCase<in TInput, TResult> : IUseCase
+    where TInput : IInput
+    where TResult : class
+{
+    Task<TResult> ExecuteAsync(TInput command, CancellationToken cancellationToken);
+}
+
+public interface IInput;
+public interface ICommand : IInput;
+public interface IQuery : IInput;

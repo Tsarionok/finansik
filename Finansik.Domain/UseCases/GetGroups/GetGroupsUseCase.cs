@@ -10,7 +10,7 @@ internal class GetGroupsUseCase(
     IIdentityProvider identityProvider,
     IIntentionManager intentionManager) : IGetGroupsUseCase
 {
-    public async Task<IEnumerable<Group>> Execute(CancellationToken cancellationToken)
+    public async Task<IEnumerable<Group>> ExecuteAsync(CancellationToken cancellationToken)
     {
         intentionManager.ThrowIfForbidden(GroupIntention.Get);
         

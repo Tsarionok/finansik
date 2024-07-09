@@ -33,7 +33,7 @@ public class RenameCategoryUseCaseShould
         var intentionManager = new Mock<IIntentionManager>();
         _isAllowedSetup = intentionManager.Setup(m => m.IsAllowed(CategoryIntention.Rename));
         
-        _sut = new RenameCategoryUseCase(storage.Object, identityProvider.Object, intentionManager.Object);
+        _sut = new RenameCategoryUseCase(storage.Object, intentionManager.Object);
     }
 
     [Fact]
@@ -41,7 +41,7 @@ public class RenameCategoryUseCaseShould
     {
         _isAllowedSetup.Returns(false);
 
-        await _sut.Invoking(sut => sut.Execute(It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
+        await _sut.Invoking(sut => sut.ExecuteAsync(It.IsAny<RenameCategoryCommand>(), It.IsAny<CancellationToken>()))
             .Should()
             .ThrowAsync<IntentionManagerException>();
     }
@@ -52,7 +52,8 @@ public class RenameCategoryUseCaseShould
         _isAllowedSetup.Returns(true);
         _isCategoryExistsSetup.ReturnsAsync(false);
 
-        await _sut.Invoking(sut => sut.Execute(It.IsAny<Guid>(), It.IsAny<string>(), CancellationToken.None))
+        await _sut.Invoking(sut => sut.ExecuteAsync(
+                new RenameCategoryCommand(It.IsAny<Guid>(), It.IsAny<string>()), CancellationToken.None))
             .Should()
             .ThrowAsync<CategoryNotFoundException>();
     }
@@ -76,7 +77,8 @@ public class RenameCategoryUseCaseShould
             Icon = icon
         });
         
-        var updatedCategory = await _sut.Execute(categoryId, categoryName, CancellationToken.None);
+        var updatedCategory = await _sut.ExecuteAsync(
+            new RenameCategoryCommand(categoryId, categoryName), CancellationToken.None);
         updatedCategory.Should().BeEquivalentTo(new Category
         {
             Id = categoryId,

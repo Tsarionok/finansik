@@ -12,7 +12,7 @@ internal class CreateCategoryUseCase(
     IIdentityProvider identityProvider,
     IIntentionManager intentionManager) : ICreateCategoryUseCase
 {
-    public async Task<Category> Execute(CreateCategoryCommand command, CancellationToken cancellationToken = default)
+    public async Task<Category> ExecuteAsync(CreateCategoryCommand command, CancellationToken cancellationToken)
     {
         await validator.ValidateAndThrowAsync(command, cancellationToken);
         

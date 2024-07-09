@@ -8,3 +8,5 @@ public class Group
     
     public string? Icon { get; set; }
 }
+
+public record CreateGroup(string Name, string? Icon);

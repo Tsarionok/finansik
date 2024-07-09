@@ -18,7 +18,9 @@ public class CategoryController : ControllerBase
         [FromServices] IGetCategoriesByGroupIdUseCase useCase,
         CancellationToken cancellationToken)
     {
-        var categories = await useCase.Execute(groupId, cancellationToken);
+        var categories = await useCase.ExecuteAsync(
+            command: new GetCategoriesByGroupIdCommand(groupId), 
+            cancellationToken);
         return Ok(categories.Select(c => new Category
         {
             Id = c.Id,
@@ -34,7 +36,9 @@ public class CategoryController : ControllerBase
         [FromServices] IRenameCategoryUseCase useCase,
         CancellationToken cancellationToken)
     {
-        var updatedCategory = await useCase.Execute(categoryId, name, cancellationToken);
+        var updatedCategory = await useCase.ExecuteAsync(
+            command: new RenameCategoryCommand(categoryId, name), 
+            cancellationToken);
 
         return Ok(new Category
         {

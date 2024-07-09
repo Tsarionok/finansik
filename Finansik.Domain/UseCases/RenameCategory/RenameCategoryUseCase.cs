@@ -1,4 +1,3 @@
-using Finansik.Domain.Authentication;
 using Finansik.Domain.Authorization;
 using Finansik.Domain.Exceptions;
 using Finansik.Domain.Models;
@@ -8,20 +7,19 @@ namespace Finansik.Domain.UseCases.RenameCategory;
 
 internal class RenameCategoryUseCase(
     IRenameCategoryStorage storage,
-    IIdentityProvider identityProvider,
     IIntentionManager intentionManager) : IRenameCategoryUseCase
 {
-    public async Task<Category> Execute(Guid categoryId, string nextName, CancellationToken cancellationToken)
+    public async Task<Category> ExecuteAsync(RenameCategoryCommand command, CancellationToken cancellationToken)
     {
         intentionManager.ThrowIfForbidden(CategoryIntention.Rename);
         
-        var categoryExists = await storage.IsCategoryExists(categoryId, cancellationToken);
+        var categoryExists = await storage.IsCategoryExists(command.CategoryId, cancellationToken);
 
         if (!categoryExists)
         {
-            throw new CategoryNotFoundException(categoryId);
+            throw new CategoryNotFoundException(command.CategoryId);
         }
 
-        return await storage.RenameCategory(categoryId, nextName, cancellationToken);
+        return await storage.RenameCategory(command.CategoryId, command.NextName, cancellationToken);
     }
 }

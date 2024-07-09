@@ -2,7 +2,4 @@
 
 namespace Finansik.Domain.UseCases.RenameCategory;
 
-public interface IRenameCategoryUseCase
-{
-    Task<Category> Execute(Guid categoryId, string nextName, CancellationToken cancellationToken);
-}
+public interface IRenameCategoryUseCase : IUseCase<RenameCategoryCommand, Category>;

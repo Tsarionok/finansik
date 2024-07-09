@@ -29,7 +29,7 @@ public class GetCategoriesByGroupIdUseCaseShould
     {
         _isGroupExistsSetup.ReturnsAsync(false);
 
-        await _sut.Invoking(sut => sut.Execute(It.IsAny<Guid>(), CancellationToken.None))
+        await _sut.Invoking(sut => sut.ExecuteAsync(new GetCategoriesByGroupIdCommand(It.IsAny<Guid>()), CancellationToken.None))
             .Should()
             .ThrowAsync<GroupNotFoundException>();
     }

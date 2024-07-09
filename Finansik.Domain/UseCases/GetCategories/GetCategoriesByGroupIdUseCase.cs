@@ -5,15 +5,15 @@ namespace Finansik.Domain.UseCases.GetCategories;
 
 internal class GetCategoriesByGroupIdUseCase(IGetCategoriesByGroupIdStorage storage) : IGetCategoriesByGroupIdUseCase
 {
-    public async Task<IEnumerable<Category>> Execute(Guid groupId, CancellationToken cancellationToken)
+    public async Task<IEnumerable<Category>> ExecuteAsync(GetCategoriesByGroupIdCommand command, CancellationToken cancellationToken)
     {
-        var groupExists = await storage.IsGroupExists(groupId, cancellationToken);
+        var groupExists = await storage.IsGroupExists(command.GroupId, cancellationToken);
         
         if (!groupExists)
         {
-            throw new GroupNotFoundException(groupId);
+            throw new GroupNotFoundException(command.GroupId);
         }
 
-        return await storage.GetCategoriesByGroupId(groupId, cancellationToken);
+        return await storage.GetCategoriesByGroupId(command.GroupId, cancellationToken);
     }
 }

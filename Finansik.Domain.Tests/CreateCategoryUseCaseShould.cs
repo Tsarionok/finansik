@@ -56,7 +56,7 @@ public class CreateCategoryUseCaseShould
         var groupId = Guid.Parse("3B5C4772-7086-41AB-BF78-4B370064B05A");
         var command = new CreateCategoryCommand(groupId, name, icon);
 
-        await _sut.Invoking(sut => sut.Execute(command, CancellationToken.None))
+        await _sut.Invoking(sut => sut.ExecuteAsync(command, CancellationToken.None))
             .Should()
             .ThrowAsync<GroupNotFoundException>();
         
@@ -70,7 +70,7 @@ public class CreateCategoryUseCaseShould
         
         _intentionIsAllowedSetup.Returns(false);
 
-        await _sut.Invoking(sut => sut.Execute(new CreateCategoryCommand(groupId, "Some category", null), CancellationToken.None))
+        await _sut.Invoking(sut => sut.ExecuteAsync(new CreateCategoryCommand(groupId, "Some category", null), CancellationToken.None))
             .Should()
             .ThrowAsync<IntentionManagerException>();
         
@@ -94,7 +94,7 @@ public class CreateCategoryUseCaseShould
         };
         _createCategorySetup.ReturnsAsync(expected);
         
-        var actual = await _sut.Execute(new CreateCategoryCommand(groupId, categoryName , categoryIcon), CancellationToken.None);
+        var actual = await _sut.ExecuteAsync(new CreateCategoryCommand(groupId, categoryName , categoryIcon), CancellationToken.None);
         actual.Should().Be(expected);
         
         _storage.Verify(s => s.CreateCategory(categoryName, groupId, userId, categoryIcon, It.IsAny<CancellationToken>()), Times.Once);

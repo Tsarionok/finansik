@@ -1,3 +1,4 @@
+using System.ComponentModel.Design;
 using Finansik.Domain.Authentication;
 using Finansik.Domain.Authorization;
 using Finansik.Domain.UseCases;
@@ -22,10 +23,9 @@ public static class ServiceCollectionExtensions
             .AddScoped<IIntentionManager, IntentionManager>()
             .AddScoped<IIntentionResolver, CategoryIntentionResolver>()
             .AddScoped<IIntentionResolver, GroupIntentionResolver>();
-            
+
         services
-            //.AddScopedUseCase<GetGroupCommand, GetGroupResult, GetGroupUseCase>()
-            .AddScopedUseCase<GetGroupUseCase>()
+            .AddScoped<IGetGroupUseCase, GetGroupUseCase>()
             .AddScoped<IGetGroupsUseCase, GetGroupsUseCase>()
             .AddScoped<ICreateCategoryUseCase, CreateCategoryUseCase>()
             .AddScoped<ICreateGroupUseCase, CreateGroupUseCase>()
@@ -39,6 +39,7 @@ public static class ServiceCollectionExtensions
     }
     
     [Experimental]
+    [Obsolete]
     private static IServiceCollection AddScopedUseCase<TImplementation>(this IServiceCollection services)
         where TImplementation : class, IUseCase
     {
@@ -49,10 +50,20 @@ public static class ServiceCollectionExtensions
             throw new RegisterUseCaseException();
             return services.AddScoped<IUseCase, TImplementation>();
         }
-
-        Type[] typeArgs = [genericArguments[0], genericArguments[1]];
-        var constructed = typeof(IUseCase<,>).MakeGenericType(typeArgs);
-
+        
+        Type constructed;
+        
+        if (genericArguments.Length == 1)
+        {
+            var genericType = genericArguments[0];
+            constructed = typeof(IUseCase<>).MakeGenericType(genericType);
+        }
+        else
+        {
+            Type[] genericTypes = [genericArguments[0], genericArguments[1]];
+            constructed = typeof(IUseCase<,>).MakeGenericType(genericTypes);
+        }
+        
         return services.AddScoped(constructed, typeof(TImplementation));
     }
 }

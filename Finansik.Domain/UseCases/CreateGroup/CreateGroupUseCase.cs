@@ -9,10 +9,10 @@ internal class CreateGroupUseCase(
     IIntentionManager intentionManager,
     IIdentityProvider identityProvider) : ICreateGroupUseCase
 {
-    public async Task<Group> Execute(string name, string icon, CancellationToken cancellationToken)
+    public async Task<Group> ExecuteAsync(CreateGroupCommand command, CancellationToken cancellationToken)
     {
         intentionManager.ThrowIfForbidden(GroupIntention.Create);
         
-        return await createGroupStorage.CreateGroup(name, identityProvider.Current.UserId, icon, cancellationToken);
+        return await createGroupStorage.CreateGroup(command.Name, identityProvider.Current.UserId, command.Icon, cancellationToken);
     }
 }

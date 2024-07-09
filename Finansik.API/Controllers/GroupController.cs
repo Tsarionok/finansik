@@ -17,7 +17,7 @@ public class GroupController : ControllerBase
         [FromServices] IGetGroupsUseCase useCase,
         CancellationToken cancellationToken)
     {
-        var groups = (await useCase.Execute(cancellationToken)).Select(g => new Group
+        var groups = (await useCase.ExecuteAsync(cancellationToken)).Select(g => new Group
         {
             Id = g.Id,
             Name = g.Name,
@@ -27,15 +27,16 @@ public class GroupController : ControllerBase
     }
 
     [HttpPost]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Group))]
-    public async Task<IActionResult> AddGroup(
-        // TODO: replace "name" and "icon" from request parameters to body
-        string name, string icon,
+    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Group))]
+    public async Task<IActionResult> CreateGroup(
+        [FromBody] CreateGroup request,
         [FromServices] ICreateGroupUseCase useCase, 
         CancellationToken cancellationToken)
     {
-        var addedGroup = await useCase.Execute(name, icon, cancellationToken);
-        return Ok(new Group
+        var addedGroup = await useCase.ExecuteAsync(
+            new CreateGroupCommand(request.Name, request.Icon), 
+            cancellationToken);
+        return CreatedAtRoute(nameof(GetGroups), new Group
         {
             Id = addedGroup.Id,
             Name = addedGroup.Name,
@@ -55,7 +56,7 @@ public class GroupController : ControllerBase
         CancellationToken cancellationToken)
     {
         var command = new CreateCategoryCommand(groupId, request.Name, request.Icon);
-        var category = await useCase.Execute(command, cancellationToken);
+        var category = await useCase.ExecuteAsync(command, cancellationToken);
 
         return CreatedAtRoute(nameof(CategoryController.GetCategories), new Category
         {
