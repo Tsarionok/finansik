@@ -1,3 +1,4 @@
+using System.Reflection;
 using Finansik.Domain.UseCases.CreateCategory;
 using Finansik.Domain.UseCases.CreateGroup;
 using Finansik.Domain.UseCases.DeleteCategory;
@@ -30,6 +31,9 @@ public static class ServiceCollectionExtension
         var dataSource = dataSourceBuilder.Build();
         
         services.AddDbContextPool<FinansikDbContext>(options => options.UseNpgsql(dataSource));
+
+        services.AddAutoMapper(cfg => cfg.AddMaps(
+            Assembly.GetAssembly(typeof(FinansikDbContext))));
 
         return services;
     }

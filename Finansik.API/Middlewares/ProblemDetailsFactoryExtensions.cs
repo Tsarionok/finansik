@@ -1,5 +1,4 @@
-﻿using Finansik.Domain;
-using Finansik.Domain.Exceptions;
+﻿using Finansik.Domain.Exceptions;
 using Finansik.Domain.Exceptions.ErrorCodes;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;

@@ -27,6 +27,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Finansik.API\Finansik.API.csproj" />
+      <ProjectReference Include="..\Finansik.Storage\Finansik.Storage.csproj" />
     </ItemGroup>
 
 </Project>

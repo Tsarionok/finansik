@@ -1,4 +1,3 @@
-using System.ComponentModel.Design;
 using Finansik.Domain.Attributes;
 using Finansik.Domain.Authentication;
 using Finansik.Domain.Authorization;

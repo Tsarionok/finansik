@@ -1,11 +1,8 @@
 using Finansik.API.Models;
-using Finansik.Domain.Exceptions;
-using Finansik.Domain.UseCases.CreateCategory;
 using Finansik.Domain.UseCases.DeleteCategory;
 using Finansik.Domain.UseCases.GetCategories;
 using Finansik.Domain.UseCases.RenameCategory;
 using Microsoft.AspNetCore.Mvc;
-using ValidationException = FluentValidation.ValidationException;
 
 namespace Finansik.API.Controllers;
 
