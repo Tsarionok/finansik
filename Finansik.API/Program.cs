@@ -42,3 +42,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+// Used for E2E testing
+public abstract partial class Program;

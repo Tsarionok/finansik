@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finansik.Domain.DependencyI
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finansik.Storage.DependencyInjection", "Finansik.Storage.DependencyInjection\Finansik.Storage.DependencyInjection.csproj", "{66578F63-4F37-4F34-A833-0B6F029A8D26}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finansik.E2E", "Finansik.E2E\Finansik.E2E.csproj", "{5CD25A27-D96A-49FE-A73D-158C99EA0AAF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,5 +51,9 @@ Global
 		{66578F63-4F37-4F34-A833-0B6F029A8D26}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{66578F63-4F37-4F34-A833-0B6F029A8D26}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{66578F63-4F37-4F34-A833-0B6F029A8D26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CD25A27-D96A-49FE-A73D-158C99EA0AAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CD25A27-D96A-49FE-A73D-158C99EA0AAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CD25A27-D96A-49FE-A73D-158C99EA0AAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CD25A27-D96A-49FE-A73D-158C99EA0AAF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
