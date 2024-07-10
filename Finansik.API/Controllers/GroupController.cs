@@ -10,7 +10,7 @@ namespace Finansik.API.Controllers;
 [Route("group")]
 public class GroupController : ControllerBase
 {
-    [HttpGet]
+    [HttpGet(Name = nameof(GetGroups))]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Group[]))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(string))]
     public async Task<IActionResult> GetGroups(
