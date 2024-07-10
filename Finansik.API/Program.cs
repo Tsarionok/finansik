@@ -16,7 +16,8 @@ builder.Services.AddLogging(b => b.ClearProviders()
         .WriteTo.OpenSearch(
             builder.Configuration.GetConnectionString("Logs"),
             "finansik-logs-{0:yyyy.MM.dd}"))
-    .WriteTo.Logger(lc => lc.WriteTo.Console())
+    .WriteTo.Logger(lc => lc.WriteTo.Console(
+        outputTemplate: "[{Timestamp:HH:mm:ss.fff} {Level:u3}] {Message:lj}{NewLine}{Exception}"))
     .CreateLogger()));
 
 var connectionString = builder.Configuration.GetConnectionString("Postgres");

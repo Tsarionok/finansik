@@ -1,17 +1,21 @@
-﻿using Finansik.Domain.Models;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Finansik.Domain.Models;
 using Finansik.Domain.UseCases.GetCategories;
+using Microsoft.EntityFrameworkCore;
 
 namespace Finansik.Storage.Storages;
 
-internal class GetCategoriesByGroupIdStorage : IGetCategoriesByGroupIdStorage
+internal class GetCategoriesByGroupIdStorage (
+    FinansikDbContext dbContext,
+    IMapper mapper) : IGetCategoriesByGroupIdStorage
 {
-    public Task<bool> IsGroupExists(Guid groupId, CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<bool> IsGroupExists(Guid groupId, CancellationToken cancellationToken) => 
+        await dbContext.Groups.AnyAsync(g => g.Id == groupId, cancellationToken);
 
-    public Task<IEnumerable<Category>> GetCategoriesByGroupId(Guid groupId, CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<IEnumerable<Category>> GetCategoriesByGroupId(Guid groupId, CancellationToken cancellationToken) =>
+        await dbContext.Categories
+            .ProjectTo<Category>(mapper.ConfigurationProvider)
+            .Where(c => c.GroupId == groupId)
+            .ToArrayAsync(cancellationToken);
 }
