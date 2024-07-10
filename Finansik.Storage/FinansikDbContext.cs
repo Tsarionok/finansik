@@ -1,4 +1,3 @@
-using Finansik.Domain.Models;
 using Finansik.Storage.Entities;
 using Finansik.Storage.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
