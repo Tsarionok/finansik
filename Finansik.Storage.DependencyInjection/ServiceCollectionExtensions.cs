@@ -13,7 +13,7 @@ using Npgsql;
 
 namespace Finansik.Storage.DependencyInjection;
 
-public static class ServiceCollectionExtension
+public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddFinansikStorage(this IServiceCollection services, string connectionString)
     {

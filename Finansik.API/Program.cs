@@ -1,33 +1,17 @@
 using System.Reflection;
 using AutoMapper;
+using Finansik.API.DependencyInjection;
 using Finansik.API.Middlewares;
 using Finansik.API.Models.Mapping;
 using Finansik.Domain.DependencyInjection;
 using Finansik.Storage.DependencyInjection;
-using Serilog;
-using Serilog.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddLogging(b => b.ClearProviders()
-    .AddSerilog(new LoggerConfiguration()
-    .MinimumLevel.Verbose()
-    .Enrich.WithProperty("Application", "Finansik.API")
-    .Enrich.WithProperty("Environment", builder.Environment.EnvironmentName)
-    .WriteTo.Logger(lc => lc
-        .Filter.ByExcluding(Matching.FromSource("Microsoft"))
-        .WriteTo.OpenSearch(
-            builder.Configuration.GetConnectionString("Logs"),
-            "finansik-logs-{0:yyyy.MM.dd}"))
-    .WriteTo.Logger(lc => lc.WriteTo.Console(
-        outputTemplate: "[{Timestamp:HH:mm:ss.fff} {Level:u3}] {Message:lj}{NewLine}{Exception}"))
-    .CreateLogger()));
-
-var connectionString = builder.Configuration.GetConnectionString("Postgres");
-
 builder.Services
+    .AddApiLogger(builder.Environment, builder.Configuration)
     .AddFinansikDomain()
-    .AddFinansikStorage(connectionString!);
+    .AddFinansikStorage(builder.Configuration.GetConnectionString("Postgres")!);
 
 builder.Services.AddAutoMapper(Assembly.GetAssembly(typeof(ApiMappingProfile)));
 
