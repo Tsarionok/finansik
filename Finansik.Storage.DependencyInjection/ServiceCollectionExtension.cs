@@ -32,6 +32,8 @@ public static class ServiceCollectionExtension
         
         services.AddDbContextPool<FinansikDbContext>(options => options.UseNpgsql(dataSource));
 
+        services.AddMemoryCache();
+        
         services.AddAutoMapper(cfg => cfg.AddMaps(
             Assembly.GetAssembly(typeof(FinansikDbContext))));
 
