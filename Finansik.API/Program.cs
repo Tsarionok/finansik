@@ -1,4 +1,7 @@
+using System.Reflection;
+using AutoMapper;
 using Finansik.API.Middlewares;
+using Finansik.API.Models.Mapping;
 using Finansik.Domain.DependencyInjection;
 using Finansik.Storage.DependencyInjection;
 using Serilog;
@@ -26,6 +29,8 @@ builder.Services
     .AddFinansikDomain()
     .AddFinansikStorage(connectionString!);
 
+builder.Services.AddAutoMapper(Assembly.GetAssembly(typeof(ApiMappingProfile)));
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -37,6 +42,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+var mapper = app.Services.GetRequiredService<IMapper>();
+mapper.ConfigurationProvider.AssertConfigurationIsValid();
 
 app.UseMiddleware<ErrorHandlingMiddleware>();
 app.UseAuthorization();

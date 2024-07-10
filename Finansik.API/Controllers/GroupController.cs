@@ -1,3 +1,4 @@
+using AutoMapper;
 using Finansik.API.Models;
 using Finansik.Domain.UseCases.CreateCategory;
 using Finansik.Domain.UseCases.CreateGroup;
@@ -15,33 +16,25 @@ public class GroupController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(string))]
     public async Task<IActionResult> GetGroups(
         [FromServices] IGetGroupsUseCase useCase,
+        [FromServices] IMapper mapper,
         CancellationToken cancellationToken)
     {
-        var groups = (await useCase.ExecuteAsync(cancellationToken)).Select(g => new Group
-        {
-            Id = g.Id,
-            Name = g.Name,
-            Icon = g.Icon
-        });
-        return Ok(groups);
+        var groups = await useCase.ExecuteAsync(cancellationToken);
+        return Ok(groups.Select(mapper.Map<Group>));
     }
 
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Group))]
     public async Task<IActionResult> CreateGroup(
         [FromBody] CreateGroup request,
-        [FromServices] ICreateGroupUseCase useCase, 
+        [FromServices] ICreateGroupUseCase useCase,
+        [FromServices] IMapper mapper,
         CancellationToken cancellationToken)
     {
         var addedGroup = await useCase.ExecuteAsync(
             new CreateGroupCommand(request.Name, request.Icon), 
             cancellationToken);
-        return CreatedAtRoute(nameof(GetGroups), new Group
-        {
-            Id = addedGroup.Id,
-            Name = addedGroup.Name,
-            Icon = addedGroup.Icon
-        });
+        return CreatedAtRoute(nameof(GetGroups), mapper.Map<Group>(addedGroup));
     }
     
     [HttpPost("{groupId:guid}/category")]
@@ -53,16 +46,12 @@ public class GroupController : ControllerBase
         [FromRoute] Guid groupId,
         [FromBody] CreateCategory request,
         [FromServices] ICreateCategoryUseCase useCase,
+        [FromServices] IMapper mapper,
         CancellationToken cancellationToken)
     {
         var command = new CreateCategoryCommand(groupId, request.Name, request.Icon);
         var category = await useCase.ExecuteAsync(command, cancellationToken);
 
-        return CreatedAtRoute(nameof(CategoryController.GetCategories), new Category
-        {
-            Id = category.Id,
-            Name = category.Name,
-            Icon = category.Icon
-        });
+        return CreatedAtRoute(nameof(CategoryController.GetCategories), mapper.Map<Group>(category));
     }
 }

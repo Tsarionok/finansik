@@ -1,3 +1,4 @@
+using AutoMapper;
 using Finansik.API.Models;
 using Finansik.Domain.UseCases.DeleteCategory;
 using Finansik.Domain.UseCases.GetCategories;
@@ -14,17 +15,14 @@ public class CategoryController : ControllerBase
     public async Task<IActionResult> GetCategories(
         Guid groupId,
         [FromServices] IGetCategoriesByGroupIdUseCase useCase,
+        [FromServices] IMapper mapper,
         CancellationToken cancellationToken)
     {
         var categories = await useCase.ExecuteAsync(
             command: new GetCategoriesByGroupIdCommand(groupId), 
             cancellationToken);
-        return Ok(categories.Select(c => new Category
-        {
-            Id = c.Id,
-            Name = c.Name,
-            Icon = c.Icon
-        }));
+        
+        return Ok(categories.Select(mapper.Map<IEnumerable<Category>>));
     }
 
     [HttpPut]
@@ -32,34 +30,26 @@ public class CategoryController : ControllerBase
         Guid categoryId,
         string name,
         [FromServices] IRenameCategoryUseCase useCase,
+        [FromServices] IMapper mapper,
         CancellationToken cancellationToken)
     {
         var updatedCategory = await useCase.ExecuteAsync(
             command: new RenameCategoryCommand(categoryId, name), 
             cancellationToken);
 
-        return Ok(new Category
-        {
-            Id = updatedCategory.Id,
-            Icon = updatedCategory.Icon,
-            Name = updatedCategory.Name
-        });
+        return Ok(mapper.Map<Category>(updatedCategory));
     }
 
     [HttpDelete]
     public async Task<IActionResult> DeleteCategory(
         [FromBody] DeleteCategory category,
         [FromServices] IDeleteCategoryUseCase useCase,
+        [FromServices] IMapper mapper,
         CancellationToken cancellationToken)
     {
         var deletedCategory = await useCase.ExecuteAsync(
             new DeleteCategoryCommand(category.CategoryId), cancellationToken);
         
-        return Ok(new Category
-        {
-            Id = deletedCategory.Id,
-            Name = deletedCategory.Name,
-            Icon = deletedCategory.Icon
-        });
+        return Ok(mapper.Map<Category>(deletedCategory));
     }
 }
