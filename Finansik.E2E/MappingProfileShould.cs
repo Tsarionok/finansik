@@ -1,14 +1,15 @@
 using AutoMapper;
 using FluentAssertions;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Finansik.E2E;
 
-public class MappingProfileShould : IClassFixture<FinansikApiApplicationFactory>
+public class MappingProfileShould : IClassFixture<WebApplicationFactory<Program>>
 {
-    private readonly FinansikApiApplicationFactory _factory;
+    private readonly WebApplicationFactory<Program> _factory;
 
-    public MappingProfileShould(FinansikApiApplicationFactory factory)
+    public MappingProfileShould(WebApplicationFactory<Program> factory)
     {
         _factory = factory;
     }
