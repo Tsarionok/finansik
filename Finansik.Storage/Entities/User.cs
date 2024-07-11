@@ -8,4 +8,10 @@ public class User : IdentifyingEntity
     
     [MaxLength(32)]
     public required string Login { get; set; }
+    
+    [MaxLength(120)]
+    public string Salt { get; set; }
+    
+    [MaxLength(300)]
+    public string PasswordHash { get; set; }
 }
