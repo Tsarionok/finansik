@@ -27,11 +27,11 @@ public class CreateCategoryCommandValidatorShould
     {
         var validCommand = new CreateCategoryCommand(Guid.Parse("26F10649-823A-4DA7-A96A-4602B0EF4270"), "Personal", "person.png");
 
-        yield return [validCommand with { GroupId = Guid.Empty }, nameof(CreateCategoryCommand.GroupId), ValidationErrorCodes.Empty];
-        yield return [validCommand with { Name = string.Empty }, nameof(CreateCategoryCommand.Name), ValidationErrorCodes.Empty];
-        yield return [validCommand with { GroupId = Guid.Empty, Name = string.Empty }, nameof(CreateCategoryCommand.GroupId), ValidationErrorCodes.Empty];
-        yield return [validCommand with { Name = "             " }, nameof(CreateCategoryCommand.Name), ValidationErrorCodes.Empty];
-        yield return [validCommand with { Name = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." }, nameof(CreateCategoryCommand.Name), ValidationErrorCodes.TooLong];
+        yield return [validCommand with { GroupId = Guid.Empty }, nameof(CreateCategoryCommand.GroupId), ValidationErrorCode.Empty];
+        yield return [validCommand with { Name = string.Empty }, nameof(CreateCategoryCommand.Name), ValidationErrorCode.Empty];
+        yield return [validCommand with { GroupId = Guid.Empty, Name = string.Empty }, nameof(CreateCategoryCommand.GroupId), ValidationErrorCode.Empty];
+        yield return [validCommand with { Name = "             " }, nameof(CreateCategoryCommand.Name), ValidationErrorCode.Empty];
+        yield return [validCommand with { Name = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." }, nameof(CreateCategoryCommand.Name), ValidationErrorCode.TooLong];
     }
     
     [Theory]

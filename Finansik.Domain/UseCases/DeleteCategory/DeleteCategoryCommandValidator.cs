@@ -6,6 +6,6 @@ internal class DeleteCategoryCommandValidator : AbstractValidator<DeleteCategory
 {
     public DeleteCategoryCommandValidator()
     {
-        RuleFor(c => c.CategoryId).NotEmpty().WithErrorCode(ValidationErrorCodes.Empty);
+        RuleFor(c => c.CategoryId).NotEmpty().WithErrorCode(ValidationErrorCode.Empty);
     }
 }

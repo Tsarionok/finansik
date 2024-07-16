@@ -6,9 +6,9 @@ internal class CreateCategoryCommandValidator : AbstractValidator<CreateCategory
 {
     public CreateCategoryCommandValidator()
     {
-        RuleFor(c => c.GroupId).NotEmpty().WithErrorCode(ValidationErrorCodes.Empty);
+        RuleFor(c => c.GroupId).NotEmpty().WithErrorCode(ValidationErrorCode.Empty);
         RuleFor(c => c.Name).Cascade(CascadeMode.Stop)
-            .NotEmpty().WithErrorCode(ValidationErrorCodes.Empty)
-            .MaximumLength(30).WithErrorCode(ValidationErrorCodes.TooLong);
+            .NotEmpty().WithErrorCode(ValidationErrorCode.Empty)
+            .MaximumLength(30).WithErrorCode(ValidationErrorCode.TooLong);
     }
 }

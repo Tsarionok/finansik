@@ -1,6 +1,6 @@
-namespace Finansik.Domain.Authentication;
+namespace Finansik.Domain.Authentication.Cryptography;
 
-public interface IEncryptor
+public interface ISymmetricEncryptor
 {
     Task<string> Encrypt(string text, byte[] key, CancellationToken cancellationToken);
 }

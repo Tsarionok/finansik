@@ -1,5 +1,6 @@
 using Finansik.Domain.Attributes;
 using Finansik.Domain.Authentication;
+using Finansik.Domain.Authentication.Cryptography;
 using Finansik.Domain.Authorization;
 using Finansik.Domain.UseCases;
 using Finansik.Domain.UseCases.CreateCategory;
@@ -9,6 +10,8 @@ using Finansik.Domain.UseCases.GetCategories;
 using Finansik.Domain.UseCases.GetGroup;
 using Finansik.Domain.UseCases.GetGroups;
 using Finansik.Domain.UseCases.RenameCategory;
+using Finansik.Domain.UseCases.SignIn;
+using Finansik.Domain.UseCases.SignOn;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -22,6 +25,10 @@ public static class ServiceCollectionExtensions
         services
             .AddScoped<IIdentityProvider, IdentityProvider>()
             .AddScoped<IIntentionManager, IntentionManager>()
+            .AddScoped<IPasswordManager, PasswordManager>()
+            .AddScoped<IAuthenticationService, AuthenticationService>()
+            .AddScoped<ISymmetricDecryptor, AesSymmetricEncryptorDecryptor>()
+            .AddScoped<ISymmetricEncryptor, AesSymmetricEncryptorDecryptor>()
             .AddScoped<IIntentionResolver, CategoryIntentionResolver>()
             .AddScoped<IIntentionResolver, GroupIntentionResolver>();
 
@@ -32,7 +39,9 @@ public static class ServiceCollectionExtensions
             .AddScoped<ICreateGroupUseCase, CreateGroupUseCase>()
             .AddScoped<IRenameCategoryUseCase, RenameCategoryUseCase>()
             .AddScoped<IGetCategoriesByGroupIdUseCase, GetCategoriesByGroupIdUseCase>()
-            .AddScoped<IDeleteCategoryUseCase, DeleteCategoryUseCase>();
+            .AddScoped<IDeleteCategoryUseCase, DeleteCategoryUseCase>()
+            .AddScoped<ISignInUseCase, SignInUseCase>()
+            .AddScoped<ISignOnUseCase, SignOnUseCase>();
         
         services.AddValidatorsFromAssemblyContaining<IUseCase>(includeInternalTypes: true);
         

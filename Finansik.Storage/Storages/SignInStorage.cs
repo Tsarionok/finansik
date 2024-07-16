@@ -1,13 +1,15 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Finansik.Domain.Authentication;
+using Finansik.Domain.Models;
+using Finansik.Domain.UseCases.SignIn;
 using Microsoft.EntityFrameworkCore;
 
 namespace Finansik.Storage.Storages;
 
-public class AuthenticationStorage(
+public class SignInStorage(
     FinansikDbContext dbContext, 
-    IMapper mapper) : IAuthenticationStorage
+    IMapper mapper) : ISignInStorage
 {
     public async Task<RecognisedUser?> FindUser(string login, CancellationToken cancellationToken) =>
         await dbContext.Users

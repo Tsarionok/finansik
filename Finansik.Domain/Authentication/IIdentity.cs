@@ -5,9 +5,11 @@ public interface IIdentity
     Guid UserId { get; }
 }
 
-internal class User(Guid userId) : IIdentity
+public class User(Guid userId) : IIdentity
 {
     public Guid UserId { get; set; } = userId;
+
+    public static User Guest => new User(Guid.Empty);
 }
 
 internal static class IdentityExtensions

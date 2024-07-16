@@ -2,5 +2,5 @@
 
 public interface IIdentityProvider
 {
-    public IIdentity Current { get; }
+    public IIdentity Current { get; set; }
 }
