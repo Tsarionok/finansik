@@ -26,7 +26,7 @@ public class AccountEndpointsShould(FinansikApiApplicationFactory factory) : ICl
         }));
         signInResponse.IsSuccessStatusCode.Should().BeTrue();
         signInResponse.Headers.Should().ContainKey("Finansik-Auth-Token");
-        var signedInUser = await signOnResponse.Content.ReadFromJsonAsync<User>();
+        var signedInUser = await signInResponse.Content.ReadFromJsonAsync<User>();
 
         signedInUser.Should()
             .NotBeNull().And

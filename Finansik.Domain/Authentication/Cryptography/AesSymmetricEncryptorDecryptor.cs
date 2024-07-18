@@ -6,7 +6,7 @@ namespace Finansik.Domain.Authentication.Cryptography;
 public class AesSymmetricEncryptorDecryptor : ISymmetricEncryptor, ISymmetricDecryptor
 {
     private const int IvSize = 16;
-    private readonly Lazy<Aes> _aes = new Lazy<Aes>(Aes.Create);
+    private readonly Lazy<Aes> _aes = new(Aes.Create);
     
     public async Task<string> Encrypt(string text, byte[] key, CancellationToken cancellationToken)
     {

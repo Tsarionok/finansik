@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using Finansik.Domain.Authentication;
 using Finansik.Domain.Models;
 using Finansik.Domain.UseCases.SignIn;
 using Microsoft.EntityFrameworkCore;

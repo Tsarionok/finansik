@@ -1,4 +1,5 @@
-﻿using Finansik.Storage;
+﻿using System.Security.Cryptography;
+using Finansik.Storage;
 using Finansik.Storage.Entities.Enums;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -19,6 +20,7 @@ public class FinansikApiApplicationFactory : WebApplicationFactory<Program>, IAs
             .AddInMemoryCollection(new Dictionary<string, string?>
             {
                 ["ConnectionStrings:Postgres"] = _dbContainer.GetConnectionString(),
+                ["Authentication:Base64Key"] = Convert.ToBase64String(RandomNumberGenerator.GetBytes(32))
             }).Build();
         builder.UseConfiguration(configuration);
         

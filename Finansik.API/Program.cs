@@ -4,12 +4,14 @@ using Finansik.API.Authentication;
 using Finansik.API.DependencyInjection;
 using Finansik.API.Middlewares;
 using Finansik.API.Models.Mapping;
+using Finansik.Domain.Authentication;
 using Finansik.Domain.DependencyInjection;
 using Finansik.Storage.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApiLogger(builder.Environment, builder.Configuration);
+builder.Services.Configure<AuthenticationConfiguration>(builder.Configuration.GetSection("Authentication").Bind);
 builder.Services.AddScoped<IAuthTokenStorage, AuthTokenStorage>();
     
 builder.Services

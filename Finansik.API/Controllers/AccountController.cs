@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Finansik.API.Controllers;
 
-
 [ApiController]
 [Route("account")]
 public class AccountController : ControllerBase

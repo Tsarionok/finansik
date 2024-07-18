@@ -5,6 +5,8 @@ using Finansik.Domain.UseCases.DeleteCategory;
 using Finansik.Domain.UseCases.GetCategories;
 using Finansik.Domain.UseCases.GetGroups;
 using Finansik.Domain.UseCases.RenameCategory;
+using Finansik.Domain.UseCases.SignIn;
+using Finansik.Domain.UseCases.SignOn;
 using Finansik.Storage.Entities.Enums;
 using Finansik.Storage.Storages;
 using Microsoft.EntityFrameworkCore;
@@ -24,7 +26,9 @@ public static class ServiceCollectionExtensions
             .AddScoped<IRenameCategoryStorage, RenameCategoryStorage>()
             .AddScoped<IGetCategoriesByGroupIdStorage, GetCategoriesByGroupIdStorage>()
             .AddScoped<ICreateCategoryStorage, CreateCategoryStorage>()
-            .AddScoped<IDeleteCategoryStorage, DeleteCategoryStorage>();
+            .AddScoped<IDeleteCategoryStorage, DeleteCategoryStorage>()
+            .AddScoped<ISignInStorage, SignInStorage>()
+            .AddScoped<ISignOnStorage, SignOnStorage>();
         
         var dataSourceBuilder = new NpgsqlDataSourceBuilder(connectionString);
         dataSourceBuilder.MapEnum<OperationDirection>();

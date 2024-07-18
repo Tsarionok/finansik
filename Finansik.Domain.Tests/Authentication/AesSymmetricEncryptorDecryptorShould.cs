@@ -1,11 +1,13 @@
 ﻿using System.Security.Cryptography;
 using Finansik.Domain.Authentication.Cryptography;
 using FluentAssertions;
+using Xunit.Abstractions;
 
 namespace Finansik.Domain.Tests.Authentication;
 
-public class AesSymmetricEncryptorDecryptorShould
+public class AesSymmetricEncryptorDecryptorShould(ITestOutputHelper testOutputHelper)
 {
+    private readonly ITestOutputHelper _testOutputHelper = testOutputHelper;
     private readonly AesSymmetricEncryptorDecryptor _sut = new();
 
     [Fact]
@@ -37,5 +39,11 @@ public class AesSymmetricEncryptorDecryptorShould
         var encrypted = await _sut.Encrypt(text, RandomNumberGenerator.GetBytes(32), CancellationToken.None);
         await _sut.Invoking(sut => sut.Decrypt(encrypted, RandomNumberGenerator.GetBytes(32), CancellationToken.None))
             .Should().ThrowAsync<CryptographicException>();
+    }
+
+    [Fact]
+    public void GiveMeBase64Key()
+    {
+        _testOutputHelper.WriteLine(Convert.ToBase64String(RandomNumberGenerator.GetBytes(32)));
     }
 }
