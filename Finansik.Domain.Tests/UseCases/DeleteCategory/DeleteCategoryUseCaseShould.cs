@@ -1,5 +1,6 @@
 ﻿using Finansik.Domain.Authorization;
 using Finansik.Domain.Exceptions;
+using Finansik.Domain.Exceptions.ErrorCodes;
 using Finansik.Domain.Models;
 using Finansik.Domain.UseCases.CreateCategory;
 using Finansik.Domain.UseCases.DeleteCategory;
@@ -50,12 +51,15 @@ public class DeleteCategoryUseCaseShould
         _isDeletionAllowedSetup.Returns(true);
         _isCategoryExistsSetup.ReturnsAsync(false);
 
-        await _sut.Invoking(sut => sut
+        var actual = await _sut.Invoking(sut => sut
                 .ExecuteAsync(
                     new DeleteCategoryCommand(Guid.Parse("8ADAE1BD-A5BB-438E-B260-1CB00968D985")),
                     CancellationToken.None))
             .Should()
             .ThrowAsync<CategoryNotFoundException>();
+            
+        actual.Which.ErrorCode.Should().Be(DomainErrorCodes.Gone);
+        actual.Which.Message.Should().NotBeEmpty();
     }
 
     [Fact]

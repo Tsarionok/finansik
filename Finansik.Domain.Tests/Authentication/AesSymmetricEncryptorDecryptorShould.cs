@@ -34,9 +34,7 @@ public class AesSymmetricEncryptorDecryptorShould(ITestOutputHelper testOutputHe
     [Fact]
     public async Task ThrowCryptographicException_WhenDecryptingWithDifferentKey()
     {
-        const string text = "Hello, world!";
-        
-        var encrypted = await _sut.Encrypt(text, RandomNumberGenerator.GetBytes(32), CancellationToken.None);
+        var encrypted = await _sut.Encrypt("Hello, world!", RandomNumberGenerator.GetBytes(32), CancellationToken.None);
         await _sut.Invoking(sut => sut.Decrypt(encrypted, RandomNumberGenerator.GetBytes(32), CancellationToken.None))
             .Should().ThrowAsync<CryptographicException>();
     }

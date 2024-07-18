@@ -1,6 +1,7 @@
 using Finansik.Domain.Authentication;
 using Finansik.Domain.Authorization;
 using Finansik.Domain.Exceptions;
+using Finansik.Domain.Exceptions.ErrorCodes;
 using Finansik.Domain.Models;
 using Finansik.Domain.UseCases.CreateCategory;
 using FluentAssertions;
@@ -53,9 +54,11 @@ public class CreateCategoryUseCaseShould
         var groupId = Guid.Parse("3B5C4772-7086-41AB-BF78-4B370064B05A");
         var command = new CreateCategoryCommand(groupId, name, icon);
 
-        await _sut.Invoking(sut => sut.ExecuteAsync(command, CancellationToken.None))
-            .Should()
-            .ThrowAsync<GroupNotFoundException>();
+        var actual = await _sut.Invoking(sut => sut.ExecuteAsync(command, CancellationToken.None))
+            .Should().ThrowAsync<GroupNotFoundException>();
+        
+        actual.Which.ErrorCode.Should().Be(DomainErrorCodes.Gone);
+        actual.Which.Message.Should().NotBeEmpty();
         
         _storage.Verify(s => s.IsGroupExists(groupId, It.IsAny<CancellationToken>()));
     }

@@ -1,4 +1,5 @@
 using Finansik.Domain.Authentication;
+using Finansik.Domain.Exceptions;
 using FluentValidation;
 
 
@@ -13,9 +14,10 @@ internal class SignOnUseCase(
     {
         await validator.ValidateAndThrowAsync(command, cancellationToken);
 
+        // TODO: remake to ThrowIfLoginAlreadyUsed
         if (await storage.IsLoginAlreadyUsed(command.Login, cancellationToken))
         {
-            throw new Exception();
+            throw new LoginAlreadyUsedException(command.Login);
         }
         
         var (salt, hash) = passwordManager.GeneratePasswordParts(command.Password);
