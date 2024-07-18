@@ -2,7 +2,6 @@
 
 await Task.Delay(1000);
 
-
 public class FuncManager
 {
     public static void Execute()
