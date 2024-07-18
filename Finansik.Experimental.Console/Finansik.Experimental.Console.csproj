@@ -8,4 +8,8 @@
         <RootNamespace>Finansik.Experimental.Console</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Docker.DotNet" Version="3.125.15" />
+    </ItemGroup>
+
 </Project>
