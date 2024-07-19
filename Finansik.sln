@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finansik.Storage.Dependency
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finansik.E2E", "Finansik.E2E\Finansik.E2E.csproj", "{5CD25A27-D96A-49FE-A73D-158C99EA0AAF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finansik.Storage.Tests", "Finansik.Storage.Tests\Finansik.Storage.Tests.csproj", "{633C5FEB-DC06-4BF5-B33E-5FC5E81ED211}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,5 +57,9 @@ Global
 		{5CD25A27-D96A-49FE-A73D-158C99EA0AAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5CD25A27-D96A-49FE-A73D-158C99EA0AAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5CD25A27-D96A-49FE-A73D-158C99EA0AAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{633C5FEB-DC06-4BF5-B33E-5FC5E81ED211}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{633C5FEB-DC06-4BF5-B33E-5FC5E81ED211}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{633C5FEB-DC06-4BF5-B33E-5FC5E81ED211}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{633C5FEB-DC06-4BF5-B33E-5FC5E81ED211}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
