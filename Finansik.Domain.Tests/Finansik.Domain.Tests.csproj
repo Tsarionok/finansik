@@ -28,4 +28,8 @@
       <ProjectReference Include="..\Finansik.Domain\Finansik.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Authorization\Category\" />
+    </ItemGroup>
+
 </Project>

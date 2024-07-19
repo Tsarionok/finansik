@@ -1,4 +1,4 @@
-﻿namespace Finansik.Domain.UseCases.CreateGroup;
+﻿namespace Finansik.Domain.Authorization.Group;
 
 internal enum GroupIntention
 {

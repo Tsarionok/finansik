@@ -1,7 +1,6 @@
 ﻿using Finansik.Domain.Authentication;
-using Finansik.Domain.Authorization;
 
-namespace Finansik.Domain.UseCases.CreateCategory;
+namespace Finansik.Domain.Authorization.Category;
 
 internal class CategoryIntentionResolver : IIntentionResolver<CategoryIntention>
 {

@@ -1,5 +1,6 @@
 using Finansik.Domain.Authentication;
 using Finansik.Domain.Authorization;
+using Finansik.Domain.Authorization.Category;
 using Finansik.Domain.Exceptions;
 using Finansik.Domain.Exceptions.ErrorCodes;
 using Finansik.Domain.Models;

@@ -1,7 +1,7 @@
 using Finansik.Domain.Authentication;
 using Finansik.Domain.Authorization;
+using Finansik.Domain.Authorization.Group;
 using Finansik.Domain.Models;
-using Finansik.Domain.UseCases.CreateGroup;
 
 namespace Finansik.Domain.UseCases.GetGroups;
 

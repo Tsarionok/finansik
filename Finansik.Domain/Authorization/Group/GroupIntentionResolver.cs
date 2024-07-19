@@ -1,7 +1,7 @@
 ﻿using Finansik.Domain.Authentication;
-using Finansik.Domain.Authorization;
+using Finansik.Domain.UseCases.CreateGroup;
 
-namespace Finansik.Domain.UseCases.CreateGroup;
+namespace Finansik.Domain.Authorization.Group;
 
 internal class GroupIntentionResolver : IIntentionResolver<GroupIntention>
 {

@@ -1,5 +1,6 @@
 using Finansik.Domain.Authentication;
 using Finansik.Domain.Authentication.Cryptography;
+using Finansik.Domain.Exceptions;
 using FluentValidation;
 using Microsoft.Extensions.Options;
 
@@ -20,19 +21,17 @@ internal class SignInUseCase(
     {
         await validator.ValidateAndThrowAsync(command, cancellationToken);
 
+        // TODO: remake to ThrowIfUserNotRecognizedAsync
         var recognizedUser = await storage.FindUser(command.Login, cancellationToken);
         if (recognizedUser is null)
-        {
-            throw new Exception();
-        }
+            throw new UserNotRecognizedException(command.Login);
 
+        // TODO: remake to ThrowIfPasswordNotMatched
         var passwordsMatch = passwordManager.ComparePasswords(
             command.Password, recognizedUser.Salt, recognizedUser.PasswordHash);
 
         if (!passwordsMatch)
-        {
-            throw new Exception();
-        }
+            throw new PasswordNotMatchedException();
         
         var token = await encryptor.Encrypt(recognizedUser.UserId.ToString(), _configuration.Key, cancellationToken);
 

@@ -1,4 +1,5 @@
 using Finansik.Domain.Authorization;
+using Finansik.Domain.Authorization.Category;
 using Finansik.Domain.Exceptions;
 using Finansik.Domain.Models;
 using Finansik.Domain.UseCases.CreateCategory;
