@@ -1,6 +1,5 @@
 using System.Reflection;
 using AutoMapper;
-using Finansik.Storage.Entities.Mapping;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Testcontainers.PostgreSql;

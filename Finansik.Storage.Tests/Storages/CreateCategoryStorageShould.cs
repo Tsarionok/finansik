@@ -1,5 +1,4 @@
 using System.Security.Cryptography;
-using AutoMapper;
 using Finansik.Storage.Entities;
 using Finansik.Storage.Storages;
 using FluentAssertions;
