@@ -1,8 +1,9 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using Finansik.Storage.Entities.Abstractions;
 
 namespace Finansik.Storage.Entities;
 
-public class Category : IdentifyingEntity
+public class Category : PrimaryKeyEntity<Guid>
 {
     [InverseProperty(nameof(PeriodCategory.Category))]
     public ICollection<PeriodCategory> PeriodCategories { get; set; }

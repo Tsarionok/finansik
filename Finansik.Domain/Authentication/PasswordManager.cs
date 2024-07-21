@@ -1,19 +1,26 @@
 using System.Security.Cryptography;
 using System.Text;
+using Finansik.Domain.Exceptions;
 
 namespace Finansik.Domain.Authentication;
 
 internal class PasswordManager : IPasswordManager
 {
-    private const int SaltLenght = 100;
+    private const int SaltLength = 100;
     private readonly Lazy<SHA256> _hashAlgorithm = new(SHA256.Create);
     
     public bool ComparePasswords(string password, byte[] salt, byte[] passwordHash) => 
         ComputeHash(password, salt).SequenceEqual(passwordHash);
 
+    public void ThrowIfPasswordNotMatched(string password, byte[] salt, byte[] passwordHash)
+    {
+        if (!ComparePasswords(password, salt, passwordHash))
+            throw new PasswordNotMatchedException();
+    }
+
     public (byte[] salt, byte[] hash) GeneratePasswordParts(string password)
     {
-        var salt = RandomNumberGenerator.GetBytes(SaltLenght);
+        var salt = RandomNumberGenerator.GetBytes(SaltLength);
         var hash = ComputeHash(password, salt);
         return (salt, hash.ToArray());
     }

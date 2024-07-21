@@ -1,8 +1,9 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using Finansik.Storage.Entities.Abstractions;
 
 namespace Finansik.Storage.Entities;
 
-public class Group : IdentifyingEntity
+public class Group : PrimaryKeyEntity<Guid>
 {
     public ICollection<User> Users { get; set; }
     

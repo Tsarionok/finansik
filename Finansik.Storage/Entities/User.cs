@@ -1,17 +1,22 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Finansik.Storage.Entities.Abstractions;
 
 namespace Finansik.Storage.Entities;
 
-public class User : IdentifyingEntity
+public class User : PrimaryKeyEntity<Guid>
 {
-    public ICollection<Group> Groups { get; set; }
+    public ICollection<Group>? Groups { get; set; }
     
     [MaxLength(32)]
     public required string Login { get; set; }
     
     [MaxLength(120)]
-    public byte[] Salt { get; set; }
+    public required byte[] Salt { get; set; }
     
     [MaxLength(300)]
-    public byte[] PasswordHash { get; set; }
+    public required byte[] PasswordHash { get; set; }
+    
+    [InverseProperty(nameof(Session.User))]
+    public ICollection<Session>? Sessions { get; set; }
 }

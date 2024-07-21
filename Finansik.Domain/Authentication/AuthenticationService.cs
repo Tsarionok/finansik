@@ -14,6 +14,6 @@ internal class AuthenticationService(
     {
         var userIdString = await decryptor.Decrypt(authToken, _configuration.Key, cancellationToken);
         // TODO: verify user identifier
-        return new User(Guid.Parse(userIdString));
+        return new User(Guid.Parse(userIdString), Guid.Empty);
     }
 }

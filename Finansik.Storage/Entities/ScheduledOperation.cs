@@ -1,9 +1,10 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using Finansik.Storage.Entities.Abstractions;
 using Finansik.Storage.Entities.Enums;
 
 namespace Finansik.Storage.Entities;
 
-public class ScheduledOperation : IdentifyingEntity
+public class ScheduledOperation : PrimaryKeyEntity<Guid>
 {
     public Guid? PeriodCategoryId { get; set; }
     

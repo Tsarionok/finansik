@@ -1,8 +1,9 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using Finansik.Storage.Entities.Abstractions;
 
 namespace Finansik.Storage.Entities;
 
-public class PeriodCategory : IdentifyingEntity
+public class PeriodCategory : PrimaryKeyEntity<Guid>
 {
     public Guid CategoryId { get; set; }
     

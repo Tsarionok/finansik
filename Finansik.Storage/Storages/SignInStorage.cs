@@ -15,4 +15,9 @@ public class SignInStorage(
             .Where(u => u.Login.Equals(login))
             .ProjectTo<RecognisedUser>(mapper.ConfigurationProvider)
             .FirstOrDefaultAsync(cancellationToken);
+
+    public Task<Guid> CreateSession(Guid userId, DateTimeOffset expireAt, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
 }

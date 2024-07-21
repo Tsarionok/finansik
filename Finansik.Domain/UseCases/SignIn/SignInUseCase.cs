@@ -20,21 +20,20 @@ internal class SignInUseCase(
         CancellationToken cancellationToken)
     {
         await validator.ValidateAndThrowAsync(command, cancellationToken);
-
-        // TODO: remake to ThrowIfUserNotRecognizedAsync
+        
         var recognizedUser = await storage.FindUser(command.Login, cancellationToken);
         if (recognizedUser is null)
             throw new UserNotRecognizedException(command.Login);
-
-        // TODO: remake to ThrowIfPasswordNotMatched
-        var passwordsMatch = passwordManager.ComparePasswords(
+        
+        passwordManager.ThrowIfPasswordNotMatched(
             command.Password, recognizedUser.Salt, recognizedUser.PasswordHash);
 
-        if (!passwordsMatch)
-            throw new PasswordNotMatchedException();
+        // TODO: remake const expiry date
+        var sessionId = await storage.CreateSession(
+            recognizedUser.UserId, DateTimeOffset.Now.AddHours(1), cancellationToken);
         
-        var token = await encryptor.Encrypt(recognizedUser.UserId.ToString(), _configuration.Key, cancellationToken);
+        var token = await encryptor.Encrypt(sessionId.ToString(), _configuration.Key, cancellationToken);
 
-        return (new User(recognizedUser.UserId), token);
+        return (new User(recognizedUser.UserId, sessionId), token);
     }
 }
