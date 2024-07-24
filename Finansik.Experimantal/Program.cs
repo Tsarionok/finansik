@@ -1,33 +1,16 @@
-﻿Person.Execute();
+﻿var person = new Person();
 
-internal record Person
+var type = person.GetType();
+var typeOfType = type.GetType();
+var typeOfTypeOfType = typeOfType.GetType();
+
+Console.WriteLine(type);
+Console.WriteLine(typeOfType);
+Console.WriteLine(typeOfTypeOfType);
+
+
+
+struct Person
 {
     public string Name { get; set; }
-
-    public static void Execute()
-    {
-        Person person = new Stuff("ST", 334);
-
-        Type type = person.GetType();
-
-        type.Assembly.GetType();
-
-        Console.WriteLine(type.BaseType.Name);
-    }
-}
-
-internal record Stuff : Person
-{
-    public Stuff(string name, int salary)
-    {
-        Name = name;
-        Salary = salary;
-    }
-    
-    public int Salary { get; set; }
-}
-
-internal class Car
-{
-    public string Model { get; set; }
 }

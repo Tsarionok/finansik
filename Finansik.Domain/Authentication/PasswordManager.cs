@@ -8,9 +8,6 @@ internal class PasswordManager : IPasswordManager
 {
     private const int SaltLength = 100;
     private readonly Lazy<SHA256> _hashAlgorithm = new(SHA256.Create);
-    
-    public bool ComparePasswords(string password, byte[] salt, byte[] passwordHash) => 
-        ComputeHash(password, salt).SequenceEqual(passwordHash);
 
     public void ThrowIfPasswordNotMatched(string password, byte[] salt, byte[] passwordHash)
     {
@@ -24,6 +21,9 @@ internal class PasswordManager : IPasswordManager
         var hash = ComputeHash(password, salt);
         return (salt, hash.ToArray());
     }
+    
+    private bool ComparePasswords(string password, byte[] salt, byte[] passwordHash) => 
+        ComputeHash(password, salt).SequenceEqual(passwordHash);
 
     private ReadOnlySpan<byte> ComputeHash(string plainText, byte[] salt)
     {

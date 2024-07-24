@@ -7,7 +7,7 @@ public class Session : PrimaryKeyEntity<Guid>
 {
     public required Guid UserId { get; set; }
     
-    public DateTimeOffset ExpireAt { get; set; }
+    public DateTimeOffset ExpiresAt { get; set; }
     
     [ForeignKey(nameof(UserId))]
     public required User User { get; set; }

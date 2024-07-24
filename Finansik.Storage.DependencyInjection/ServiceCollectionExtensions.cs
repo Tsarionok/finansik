@@ -1,4 +1,5 @@
 using System.Reflection;
+using Finansik.Domain.Authentication;
 using Finansik.Domain.UseCases.CreateCategory;
 using Finansik.Domain.UseCases.CreateGroup;
 using Finansik.Domain.UseCases.DeleteCategory;
@@ -27,6 +28,7 @@ public static class ServiceCollectionExtensions
             .AddScoped<IGetCategoriesByGroupIdStorage, GetCategoriesByGroupIdStorage>()
             .AddScoped<ICreateCategoryStorage, CreateCategoryStorage>()
             .AddScoped<IDeleteCategoryStorage, DeleteCategoryStorage>()
+            .AddScoped<IAuthenticationStorage, AuthenticationStorage>()
             .AddScoped<ISignInStorage, SignInStorage>()
             .AddScoped<ISignOnStorage, SignOnStorage>();
         

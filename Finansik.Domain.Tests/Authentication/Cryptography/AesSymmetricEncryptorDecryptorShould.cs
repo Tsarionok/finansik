@@ -3,7 +3,7 @@ using Finansik.Domain.Authentication.Cryptography;
 using FluentAssertions;
 using Xunit.Abstractions;
 
-namespace Finansik.Domain.Tests.Authentication;
+namespace Finansik.Domain.Tests.Authentication.Cryptography;
 
 public class AesSymmetricEncryptorDecryptorShould(ITestOutputHelper testOutputHelper)
 {

@@ -17,6 +17,7 @@ public class SignOnUseCaseShould
     private readonly ISetup<IPasswordManager,bool> _comparePasswordsSetup;
     private readonly ISetup<ISignOnStorage,Task<Guid>> _createUserSetup;
     private readonly ISetup<IPasswordManager,(byte[] salt, byte[] hash)> _generatePasswordPartsSetup;
+    private readonly ISetup<IPasswordManager> _passwordNotMatchedSetup;
 
     public SignOnUseCaseShould()
     {
@@ -28,8 +29,8 @@ public class SignOnUseCaseShould
             s.CreateUser(It.IsAny<string>(), It.IsAny<byte[]>(), It.IsAny<byte[]>(), It.IsAny<CancellationToken>()));
 
         var passwordManager = new Mock<IPasswordManager>();
-        _comparePasswordsSetup = passwordManager.Setup(m => 
-            m.ComparePasswords(It.IsAny<string>(), It.IsAny<byte[]>(), It.IsAny<byte[]>()));
+        _passwordNotMatchedSetup = passwordManager.Setup(m =>
+            m.ThrowIfPasswordNotMatched(It.IsAny<string>(), It.IsAny<byte[]>(), It.IsAny<byte[]>()));
         _generatePasswordPartsSetup = passwordManager.Setup(m => m.GeneratePasswordParts(It.IsAny<string>()));
         
         _sut = new SignOnUseCase(validator.Object, storage.Object, passwordManager.Object);

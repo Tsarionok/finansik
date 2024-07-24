@@ -23,6 +23,8 @@ public class FinansikDbContext(DbContextOptions options) : DbContext(options)
     
     public DbSet<ScheduledOperation> ScheduledOperations { get; set; }
     
+    public DbSet<Session> Sessions { get; set; }
+    
     protected override void OnModelCreating(ModelBuilder builder)
         => builder.HasPostgresEnum<OperationDirection>();
 }
