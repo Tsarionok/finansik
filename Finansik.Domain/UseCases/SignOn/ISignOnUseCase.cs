@@ -4,5 +4,5 @@ namespace Finansik.Domain.UseCases.SignOn;
 
 public interface ISignOnUseCase
 {
-    Task<Guid> Execute(SignOnCommand command, CancellationToken cancellationToken);
+    Task<IIdentity> Execute(SignOnCommand command, CancellationToken cancellationToken);
 }

@@ -30,7 +30,7 @@ internal class SignInUseCase(
 
         // TODO: remake const expiry date
         var sessionId = await storage.CreateSession(
-            recognizedUser.UserId, DateTimeOffset.Now.AddHours(1), cancellationToken);
+            recognizedUser.UserId, DateTimeOffset.UtcNow.AddHours(1), cancellationToken);
         
         var token = await encryptor.Encrypt(sessionId.ToString(), _configuration.Key, cancellationToken);
 

@@ -10,5 +10,5 @@ public class Session : PrimaryKeyEntity<Guid>
     public DateTimeOffset ExpiresAt { get; set; }
     
     [ForeignKey(nameof(UserId))]
-    public required User User { get; set; }
+    public User? User { get; set; }
 }

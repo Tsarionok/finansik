@@ -10,7 +10,7 @@ internal class SignOnUseCase(
     ISignOnStorage storage,
     IPasswordManager passwordManager) : ISignOnUseCase
 {
-    public async Task<Guid> Execute(SignOnCommand command, CancellationToken cancellationToken)
+    public async Task<IIdentity> Execute(SignOnCommand command, CancellationToken cancellationToken)
     {
         await validator.ValidateAndThrowAsync(command, cancellationToken);
 
@@ -23,6 +23,7 @@ internal class SignOnUseCase(
         var (salt, hash) = passwordManager.GeneratePasswordParts(command.Password);
         var userId = await storage.CreateUser(command.Login, salt, hash, cancellationToken);
         
-        return userId;
+        // TODO: fix Guid.Empty as session ID
+        return new User(userId, Guid.Empty);
     }
 }

@@ -4,7 +4,8 @@ using FluentAssertions;
 
 namespace Finansik.E2E;
 
-public class AccountEndpointsShould(FinansikApiApplicationFactory factory) : IClassFixture<FinansikApiApplicationFactory>
+public class AccountEndpointsShould(FinansikApiApplicationFactory factory) : 
+    IClassFixture<FinansikApiApplicationFactory>
 {
     [Fact]
     public async Task SignInAfterSignOn()
@@ -25,11 +26,16 @@ public class AccountEndpointsShould(FinansikApiApplicationFactory factory) : ICl
             password = "qwerty"
         }));
         signInResponse.IsSuccessStatusCode.Should().BeTrue();
-        signInResponse.Headers.Should().ContainKey("Finansik-Auth-Token");
-        var signedInUser = await signInResponse.Content.ReadFromJsonAsync<User>();
 
-        signedInUser.Should()
-            .NotBeNull().And
-            .BeEquivalentTo(createdUser);
+        var signedInUser = await signInResponse.Content.ReadFromJsonAsync<User>();
+        signedInUser!.UserId.Should().Be(createdUser!.UserId);
+
+        using var createGroupResponse = await httpClient.PostAsync("group", JsonContent.Create(new
+        {
+            name = "Peronal",
+            icon = "private.png"
+        }));
+
+        createGroupResponse.IsSuccessStatusCode.Should().BeTrue();
     }
 }

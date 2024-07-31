@@ -10,5 +10,6 @@ internal class MappingProfile : Profile
         CreateMap<Category, Domain.Models.Category>();
         CreateMap<User, RecognisedUser>()
             .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
+        CreateMap<Session, Domain.Models.Session>();
     }
 }
