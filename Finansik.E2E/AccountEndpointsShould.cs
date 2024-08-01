@@ -10,6 +10,7 @@ public class AccountEndpointsShould(FinansikApiApplicationFactory factory) :
     [Fact]
     public async Task SignInAfterSignOn()
     {
+        // TODO: refactor to Given-When-Then style (BDD, Gherkin)
         using var httpClient = factory.CreateClient();
 
         using var signOnResponse = await httpClient.PostAsync("account/signon", JsonContent.Create(new

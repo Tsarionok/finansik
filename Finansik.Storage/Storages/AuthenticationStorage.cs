@@ -13,6 +13,7 @@ public class AuthenticationStorage(
 {
     public async Task<Session?> FindSession(Guid sessionId, CancellationToken cancellationToken) 
         => await dbContext.Sessions
+            .Where(session => session.Id == sessionId)
             .ProjectTo<Session>(mapper.ConfigurationProvider)
-            .FirstOrDefaultAsync(session => session.Id.Equals(sessionId), cancellationToken);
+            .FirstOrDefaultAsync(cancellationToken);
 }
