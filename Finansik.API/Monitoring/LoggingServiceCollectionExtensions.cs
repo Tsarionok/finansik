@@ -1,9 +1,9 @@
 using Serilog;
 using Serilog.Filters;
 
-namespace Finansik.API.DependencyInjection;
+namespace Finansik.API.Monitoring;
 
-public static class ServiceCollectionExtensions
+public static class LoggingServiceCollectionExtensions
 {
     public static IServiceCollection AddApiLogger(this IServiceCollection services, 
         IWebHostEnvironment environment, IConfiguration configuration) =>

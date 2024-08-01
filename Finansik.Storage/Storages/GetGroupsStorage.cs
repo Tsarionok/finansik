@@ -10,14 +10,17 @@ internal class GetGroupsStorage(
     IMemoryCache cache) : IGetGroupsStorage
 {
     public async Task<IEnumerable<Group>> GetGroupsByUserId(Guid userId, CancellationToken cancellationToken) =>
-        (await cache.GetOrCreateAsync<Group[]>(nameof(GetGroupsByUserId), f =>
-        {
-            // TODO: implement filtrating by user id
-            return dbContext.Groups.Select(g => new Group
+        (await cache.GetOrCreateAsync<Group[]>(
+            nameof(GetGroupsByUserId), 
+            cacheEntry =>
             {
-                Id = g.Id,
-                Name = g.Name,
-                Icon = g.Icon
-            }).ToArrayAsync(cancellationToken);
-        }))!;
+                cacheEntry.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(10);
+                // TODO: implement filtrating by user id
+                return dbContext.Groups.Select(g => new Group
+                {
+                    Id = g.Id,
+                    Name = g.Name,
+                    Icon = g.Icon
+                }).ToArrayAsync(cancellationToken);
+            }))!;
 }

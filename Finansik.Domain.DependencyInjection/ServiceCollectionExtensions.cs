@@ -4,6 +4,7 @@ using Finansik.Domain.Authentication.Cryptography;
 using Finansik.Domain.Authorization;
 using Finansik.Domain.Authorization.Category;
 using Finansik.Domain.Authorization.Group;
+using Finansik.Domain.Monitoring;
 using Finansik.Domain.UseCases;
 using Finansik.Domain.UseCases.CreateCategory;
 using Finansik.Domain.UseCases.CreateGroup;
@@ -46,6 +47,8 @@ public static class ServiceCollectionExtensions
             .AddScoped<ISignOnUseCase, SignOnUseCase>();
         
         services.AddValidatorsFromAssemblyContaining<IUseCase>(includeInternalTypes: true);
+
+        services.AddSingleton<DomainMetrics>();
         
         return services;
     }
