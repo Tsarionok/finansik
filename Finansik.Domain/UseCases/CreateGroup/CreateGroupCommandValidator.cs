@@ -2,4 +2,10 @@ using FluentValidation;
 
 namespace Finansik.Domain.UseCases.CreateGroup;
 
-public class CreateGroupCommandValidator : AbstractValidator<CreateGroupCommand>;
+internal class CreateGroupCommandValidator : AbstractValidator<CreateGroupCommand>
+{
+    public CreateGroupCommandValidator()
+    {
+        RuleFor(command => command.Name).NotNull().NotEmpty();
+    }
+}
