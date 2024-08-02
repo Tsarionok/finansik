@@ -6,6 +6,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		docker-compose.yml = docker-compose.yml
 		Directory.Build.props = Directory.Build.props
 		.github\workflows\loc.yml = .github\workflows\loc.yml
+		prometheus.yml = prometheus.yml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finansik.Domain", "Finansik.Domain\Finansik.Domain.csproj", "{6FEB58E6-8922-4BFD-B65C-4FDF6B07131E}"

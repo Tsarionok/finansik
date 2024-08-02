@@ -5,8 +5,10 @@ networks:
     name: 'finansik'
 
 volumes:
-  finansik-db:
+  finansik-pg:
   finansik-logs:
+  finansik-prometheus:
+  finansik-grafana:
 
 services:
   postgres:
@@ -17,7 +19,7 @@ services:
     environment:
       POSTGRES_PASSWORD: 'postgres'
     volumes:
-      - finansik-db:/var/lib/postgresql/data
+      - finansik-pg:/var/lib/postgresql/data
 
   opensearch:
     container_name: 'finansik-opensearch'
@@ -42,3 +44,25 @@ services:
       DISABLE_SECURITY_DASHBOARDS_PLUGIN: 'true'
     depends_on:
       - opensearch
+
+  prometheus:
+    container_name: 'finansik-prometheus'
+    image: 'prom/prometheus'
+    ports:
+      - '9090:9090'
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - finansik-prometheus:/prometheus
+  
+  grafana:
+    container_name: 'finansik-grafana'
+    image: 'grafana/grafana'
+    restart: 'unless-stopped'
+    environment:
+      GF_INSTALL_PLUGINS: 'grafana-clock-panel,grafana-simple-json-datasource'
+    volumes:
+      - finansik-grafana:/var/lib/grafana
+    ports:
+      - '3000:3000'
+    depends_on:
+      - prometheus
