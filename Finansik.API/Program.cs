@@ -12,7 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
     .AddApiLogger(builder.Environment, builder.Configuration)
-    .AddApiMetrics();
+    .AddApiMetrics(builder.Configuration);
 builder.Services.Configure<AuthenticationConfiguration>(builder.Configuration.GetSection("Authentication").Bind);
 builder.Services.AddScoped<IAuthTokenStorage, AuthTokenStorage>();
     

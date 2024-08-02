@@ -1,14 +1,12 @@
 using Finansik.Domain.Authentication;
 using Finansik.Domain.Authentication.Cryptography;
 using Finansik.Domain.Exceptions;
-using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Options;
 
 namespace Finansik.Domain.UseCases.SignIn;
 
 internal class SignInUseCase(
-    IValidator<SignInCommand> validator, 
     ISignInStorage storage,
     IPasswordManager passwordManager,
     ISymmetricEncryptor encryptor,
@@ -21,8 +19,6 @@ internal class SignInUseCase(
         SignInCommand command, 
         CancellationToken cancellationToken)
     {
-        await validator.ValidateAndThrowAsync(command, cancellationToken);
-        
         var recognizedUser = await storage.FindUser(command.Login, cancellationToken);
         if (recognizedUser is null)
             throw new UserNotRecognizedException(command.Login);

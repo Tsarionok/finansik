@@ -3,11 +3,8 @@ using Finansik.Domain.Authorization.Category;
 using Finansik.Domain.Exceptions;
 using Finansik.Domain.Exceptions.ErrorCodes;
 using Finansik.Domain.Models;
-using Finansik.Domain.UseCases.CreateCategory;
 using Finansik.Domain.UseCases.DeleteCategory;
 using FluentAssertions;
-using FluentValidation;
-using FluentValidation.Results;
 using Moq;
 using Moq.Language.Flow;
 
@@ -23,7 +20,6 @@ public class DeleteCategoryUseCaseShould
 
     public DeleteCategoryUseCaseShould()
     {
-        var validator = new Mock<IValidator<DeleteCategoryCommand>>();
         var intentionManager = new Mock<IIntentionManager>();
         _isDeletionAllowedSetup = intentionManager.Setup(m => m.IsAllowed(CategoryIntention.Delete));
 
@@ -31,7 +27,7 @@ public class DeleteCategoryUseCaseShould
         _isCategoryExistsSetup = _storage.Setup(s => s.IsCategoryExists(It.IsAny<Guid>(), It.IsAny<CancellationToken>()));
         _deleteCategorySetup = _storage.Setup(s => s.DeleteCategory(It.IsAny<Guid>(), It.IsAny<CancellationToken>()));
         
-        _sut = new DeleteCategoryUseCase(validator.Object, intentionManager.Object, _storage.Object);
+        _sut = new DeleteCategoryUseCase(intentionManager.Object, _storage.Object);
     }
 
     [Fact]

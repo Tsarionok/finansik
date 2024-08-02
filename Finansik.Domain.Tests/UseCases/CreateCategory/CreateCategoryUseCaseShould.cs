@@ -6,7 +6,6 @@ using Finansik.Domain.Exceptions.ErrorCodes;
 using Finansik.Domain.Models;
 using Finansik.Domain.UseCases.CreateCategory;
 using FluentAssertions;
-using FluentValidation;
 using JetBrains.Annotations;
 using Moq;
 using Moq.Language.Flow;
@@ -39,9 +38,7 @@ public class CreateCategoryUseCaseShould
         _intentionManager = new Mock<IIntentionManager>();
         _intentionIsAllowedSetup = _intentionManager.Setup(m => m.IsAllowed(It.IsAny<CategoryIntention>()));
 
-        var commandValidator = new Mock<IValidator<CreateCategoryCommand>>();
-
-        _sut = new CreateCategoryUseCase(commandValidator.Object, _storage.Object, identityProvider.Object, _intentionManager.Object);
+        _sut = new CreateCategoryUseCase(_storage.Object, identityProvider.Object, _intentionManager.Object);
     }
 
     [Fact]

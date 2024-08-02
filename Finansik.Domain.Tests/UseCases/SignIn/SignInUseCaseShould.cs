@@ -1,12 +1,10 @@
 using System.Security.Cryptography;
-using System.Text;
 using Finansik.Domain.Authentication;
 using Finansik.Domain.Authentication.Cryptography;
 using Finansik.Domain.Exceptions;
 using Finansik.Domain.Models;
 using Finansik.Domain.UseCases.SignIn;
 using FluentAssertions;
-using FluentValidation;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Options;
 using Moq;
@@ -25,7 +23,6 @@ public class SignInUseCaseShould
 
     public SignInUseCaseShould()
     {
-        var validator = new Mock<IValidator<SignInCommand>>();
         var storage = new Mock<ISignInStorage>();
         var passwordManager = new Mock<IPasswordManager>();
         var encryptor = new Mock<ISymmetricEncryptor>();
@@ -46,7 +43,7 @@ public class SignInUseCaseShould
         });
         
         _sut = new SignInUseCase(
-            validator.Object, storage.Object, passwordManager.Object, encryptor.Object, authenticationConfig.Object);
+            storage.Object, passwordManager.Object, encryptor.Object, authenticationConfig.Object);
     }
 
     [Fact]

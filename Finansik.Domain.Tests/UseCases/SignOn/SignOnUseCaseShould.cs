@@ -2,7 +2,6 @@ using Finansik.Domain.Authentication;
 using Finansik.Domain.Exceptions;
 using Finansik.Domain.UseCases.SignOn;
 using FluentAssertions;
-using FluentValidation;
 using JetBrains.Annotations;
 using Moq;
 using Moq.Language.Flow;
@@ -21,7 +20,6 @@ public class SignOnUseCaseShould
 
     public SignOnUseCaseShould()
     {
-        var validator = new Mock<IValidator<SignOnCommand>>();
         var storage = new Mock<ISignOnStorage>();
         _userExistsSetup = storage.Setup(s => 
             s.IsLoginAlreadyUsed(It.IsAny<string>(), It.IsAny<CancellationToken>()));
@@ -33,7 +31,7 @@ public class SignOnUseCaseShould
             m.ThrowIfPasswordNotMatched(It.IsAny<string>(), It.IsAny<byte[]>(), It.IsAny<byte[]>()));
         _generatePasswordPartsSetup = passwordManager.Setup(m => m.GeneratePasswordParts(It.IsAny<string>()));
         
-        _sut = new SignOnUseCase(validator.Object, storage.Object, passwordManager.Object);
+        _sut = new SignOnUseCase(storage.Object, passwordManager.Object);
     }
 
     [Fact]

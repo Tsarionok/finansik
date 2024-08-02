@@ -13,7 +13,7 @@ internal class GetGroupsUseCase(
 {
     public async Task<IEnumerable<Group>> Handle(GetGroupsQuery query, CancellationToken cancellationToken)
     {
-        intentionManager.ThrowIfForbidden(GroupIntention.Get);
+        // intentionManager.ThrowIfForbidden(GroupIntention.Get);
         return await storage.GetGroupsByUserId(identityProvider.Current.UserId, cancellationToken);
     }
 }
