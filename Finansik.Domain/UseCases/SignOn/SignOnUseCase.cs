@@ -1,16 +1,16 @@
 using Finansik.Domain.Authentication;
 using Finansik.Domain.Exceptions;
 using FluentValidation;
-
+using MediatR;
 
 namespace Finansik.Domain.UseCases.SignOn;
 
 internal class SignOnUseCase(
     IValidator<SignOnCommand> validator,
     ISignOnStorage storage,
-    IPasswordManager passwordManager) : ISignOnUseCase
+    IPasswordManager passwordManager) : IRequestHandler<SignOnCommand, IIdentity>
 {
-    public async Task<IIdentity> Execute(SignOnCommand command, CancellationToken cancellationToken)
+    public async Task<IIdentity> Handle(SignOnCommand command, CancellationToken cancellationToken)
     {
         await validator.ValidateAndThrowAsync(command, cancellationToken);
 

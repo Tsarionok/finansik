@@ -40,7 +40,7 @@ public class SignOnUseCaseShould
     public async Task ThrowLoginAlreadyUsedException_WhenLoginAlreadyExists()
     {
         _userExistsSetup.ReturnsAsync(true);
-        await _sut.Invoking(sut => sut.Execute(new SignOnCommand("admin", "admin"), CancellationToken.None))
+        await _sut.Invoking(sut => sut.Handle(new SignOnCommand("admin", "admin"), CancellationToken.None))
             .Should().ThrowAsync<LoginAlreadyUsedException>();
     }
 
@@ -51,7 +51,7 @@ public class SignOnUseCaseShould
         _userExistsSetup.ReturnsAsync(false);
         _createUserSetup.ReturnsAsync(userId);
 
-        var actual = await _sut.Execute(new SignOnCommand("operator", "qwerty1234"), CancellationToken.None);
+        var actual = await _sut.Handle(new SignOnCommand("operator", "qwerty1234"), CancellationToken.None);
         actual.Should().Be(userId);
     }
 }

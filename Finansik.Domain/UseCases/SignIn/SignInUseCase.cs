@@ -2,6 +2,7 @@ using Finansik.Domain.Authentication;
 using Finansik.Domain.Authentication.Cryptography;
 using Finansik.Domain.Exceptions;
 using FluentValidation;
+using MediatR;
 using Microsoft.Extensions.Options;
 
 namespace Finansik.Domain.UseCases.SignIn;
@@ -11,11 +12,12 @@ internal class SignInUseCase(
     ISignInStorage storage,
     IPasswordManager passwordManager,
     ISymmetricEncryptor encryptor,
-    IOptions<AuthenticationConfiguration> options) : ISignInUseCase
+    IOptions<AuthenticationConfiguration> options) : 
+        IRequestHandler<SignInCommand, (IIdentity identity, string token)>
 {
     private readonly AuthenticationConfiguration _configuration = options.Value;
     
-    public async Task<(IIdentity identity, string token)> Execute(
+    public async Task<(IIdentity identity, string token)> Handle(
         SignInCommand command, 
         CancellationToken cancellationToken)
     {

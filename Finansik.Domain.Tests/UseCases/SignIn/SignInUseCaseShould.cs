@@ -55,7 +55,7 @@ public class SignInUseCaseShould
         _findUserSetup.ReturnsAsync((RecognisedUser?) null);
 
         var actual = _sut.Invoking(
-            async sut => await sut.Execute(new SignInCommand("superMegaUser", "12345"), CancellationToken.None));
+            async sut => await sut.Handle(new SignInCommand("superMegaUser", "12345"), CancellationToken.None));
 
         await actual.Should().ThrowAsync<UserNotRecognizedException>();
     }
@@ -72,7 +72,7 @@ public class SignInUseCaseShould
         _passwordNotMatchedSetup.Throws<PasswordNotMatchedException>();
 
         var actual = _sut.Invoking(async sut => 
-            await sut.Execute(new SignInCommand("registered", "brutforcedPass"), CancellationToken.None));
+            await sut.Handle(new SignInCommand("registered", "brutforcedPass"), CancellationToken.None));
 
         await actual.Should().ThrowAsync<PasswordNotMatchedException>();
     }
@@ -94,7 +94,7 @@ public class SignInUseCaseShould
         _createSessionSetup.ReturnsAsync(sessionId);
         
         var (actualIdentity, actualToken) = 
-            await _sut.Execute(new SignInCommand("admin", "admin"), CancellationToken.None);
+            await _sut.Handle(new SignInCommand("admin", "admin"), CancellationToken.None);
 
         actualIdentity.UserId.Should().Be(userId);
         actualIdentity.SessionId.Should().Be(sessionId);

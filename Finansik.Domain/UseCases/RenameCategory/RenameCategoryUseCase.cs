@@ -2,15 +2,15 @@ using Finansik.Domain.Authorization;
 using Finansik.Domain.Authorization.Category;
 using Finansik.Domain.Exceptions;
 using Finansik.Domain.Models;
-using Finansik.Domain.UseCases.CreateCategory;
+using MediatR;
 
 namespace Finansik.Domain.UseCases.RenameCategory;
 
 internal class RenameCategoryUseCase(
     IRenameCategoryStorage storage,
-    IIntentionManager intentionManager) : IRenameCategoryUseCase
+    IIntentionManager intentionManager) : IRequestHandler<RenameCategoryCommand, Category>
 {
-    public async Task<Category> ExecuteAsync(RenameCategoryCommand command, CancellationToken cancellationToken)
+    public async Task<Category> Handle(RenameCategoryCommand command, CancellationToken cancellationToken)
     {
         intentionManager.ThrowIfForbidden(CategoryIntention.Rename);
         

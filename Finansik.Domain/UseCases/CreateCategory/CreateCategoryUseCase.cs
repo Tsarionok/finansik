@@ -4,6 +4,7 @@ using Finansik.Domain.Authorization.Category;
 using Finansik.Domain.Exceptions;
 using Finansik.Domain.Models;
 using FluentValidation;
+using MediatR;
 
 namespace Finansik.Domain.UseCases.CreateCategory;
 
@@ -11,9 +12,9 @@ internal class CreateCategoryUseCase(
     IValidator<CreateCategoryCommand> validator,
     ICreateCategoryStorage createCategoryStorage, 
     IIdentityProvider identityProvider,
-    IIntentionManager intentionManager) : ICreateCategoryUseCase
+    IIntentionManager intentionManager) : IRequestHandler<CreateCategoryCommand, Category>
 {
-    public async Task<Category> ExecuteAsync(CreateCategoryCommand command, CancellationToken cancellationToken)
+    public async Task<Category> Handle(CreateCategoryCommand command, CancellationToken cancellationToken)
     {
         await validator.ValidateAndThrowAsync(command, cancellationToken);
         

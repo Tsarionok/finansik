@@ -15,7 +15,7 @@ namespace Finansik.Domain.Tests.UseCases.DeleteCategory;
 
 public class DeleteCategoryUseCaseShould
 {
-    private readonly IDeleteCategoryUseCase _sut;
+    private readonly DeleteCategoryUseCase _sut;
     private readonly ISetup<IIntentionManager,bool> _isDeletionAllowedSetup;
     private readonly ISetup<IDeleteCategoryStorage,Task<Category>> _deleteCategorySetup;
     private readonly ISetup<IDeleteCategoryStorage,Task<bool>> _isCategoryExistsSetup;
@@ -39,7 +39,7 @@ public class DeleteCategoryUseCaseShould
     {
         _isDeletionAllowedSetup.Returns(false);
 
-        await _sut.Invoking(sut => sut.ExecuteAsync(
+        await _sut.Invoking(sut => sut.Handle(
                 new DeleteCategoryCommand(
                     Guid.Parse("34B67E0E-6A27-4DDC-8F49-70E4F68575A3")), CancellationToken.None))
             .Should()
@@ -53,7 +53,7 @@ public class DeleteCategoryUseCaseShould
         _isCategoryExistsSetup.ReturnsAsync(false);
 
         var actual = await _sut.Invoking(sut => sut
-                .ExecuteAsync(
+                .Handle(
                     new DeleteCategoryCommand(Guid.Parse("8ADAE1BD-A5BB-438E-B260-1CB00968D985")),
                     CancellationToken.None))
             .Should()
@@ -76,7 +76,7 @@ public class DeleteCategoryUseCaseShould
             Name = "Deleted"
         });
 
-        var actual = await _sut.ExecuteAsync(new DeleteCategoryCommand(categoryId), CancellationToken.None);
+        var actual = await _sut.Handle(new DeleteCategoryCommand(categoryId), CancellationToken.None);
         actual.Id.Should().Be(categoryId);
         
         _storage.Verify(s => s.DeleteCategory(categoryId, It.IsAny<CancellationToken>()), Times.Once);

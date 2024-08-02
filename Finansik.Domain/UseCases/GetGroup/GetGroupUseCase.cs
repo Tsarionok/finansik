@@ -1,14 +1,12 @@
 using Finansik.Domain.Models;
+using MediatR;
 
 namespace Finansik.Domain.UseCases.GetGroup;
 
-internal class GetGroupUseCase : IGetGroupUseCase
+internal class GetGroupUseCase : IRequestHandler<GetGroupQuery, Group>
 {
-    public async Task<Group> ExecuteAsync(GetGroupQuery query, CancellationToken cancellationToken)
+    public async Task<Group> Handle(GetGroupQuery query, CancellationToken cancellationToken)
     {
-        return new Group
-        {
-            Name = ""
-        };
+        throw new NotImplementedException();
     }
 }

@@ -34,7 +34,7 @@ public class SignOutUseCaseShould
         _removeSessionSetup.Returns(Task.CompletedTask);
         _currentIdentitySetup.Returns(new User(Guid.Parse("D0C40570-5DD9-4818-8262-25E80C667951"), sessionId));
         
-        await _sut.Execute(new SignOutCommand(), CancellationToken.None);
+        await _sut.Handle(new SignOutCommand(), CancellationToken.None);
         
         _storage.Verify(s => s.RemoveSession(sessionId, It.IsAny<CancellationToken>()), Times.Once);
     }

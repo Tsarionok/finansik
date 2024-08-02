@@ -15,7 +15,7 @@ namespace Finansik.Domain.Tests.UseCases.RenameCategory;
 [TestSubject(typeof(RenameCategoryUseCase))]
 public class RenameCategoryUseCaseShould
 {
-    private readonly IRenameCategoryUseCase _sut;
+    private readonly RenameCategoryUseCase _sut;
     private readonly ISetup<IRenameCategoryStorage,Task<bool>> _isCategoryExistsSetup;
     private readonly ISetup<IIntentionManager,bool> _isAllowedSetup;
     private readonly ISetup<IRenameCategoryStorage,Task<Category>> _renameCategorySetup;
@@ -42,7 +42,7 @@ public class RenameCategoryUseCaseShould
     {
         _isAllowedSetup.Returns(false);
 
-        await _sut.Invoking(sut => sut.ExecuteAsync(It.IsAny<RenameCategoryCommand>(), It.IsAny<CancellationToken>()))
+        await _sut.Invoking(sut => sut.Handle(It.IsAny<RenameCategoryCommand>(), It.IsAny<CancellationToken>()))
             .Should()
             .ThrowAsync<IntentionManagerException>();
     }
@@ -53,7 +53,7 @@ public class RenameCategoryUseCaseShould
         _isAllowedSetup.Returns(true);
         _isCategoryExistsSetup.ReturnsAsync(false);
 
-        await _sut.Invoking(sut => sut.ExecuteAsync(
+        await _sut.Invoking(sut => sut.Handle(
                 new RenameCategoryCommand(It.IsAny<Guid>(), It.IsAny<string>()), CancellationToken.None))
             .Should()
             .ThrowAsync<CategoryNotFoundException>();
@@ -78,7 +78,7 @@ public class RenameCategoryUseCaseShould
             Icon = icon
         });
         
-        var updatedCategory = await _sut.ExecuteAsync(
+        var updatedCategory = await _sut.Handle(
             new RenameCategoryCommand(categoryId, categoryName), CancellationToken.None);
         updatedCategory.Should().BeEquivalentTo(new Category
         {

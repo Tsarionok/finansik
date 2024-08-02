@@ -2,15 +2,16 @@ using Finansik.Domain.Authentication;
 using Finansik.Domain.Authorization;
 using Finansik.Domain.Authorization.Group;
 using Finansik.Domain.Models;
+using MediatR;
 
 namespace Finansik.Domain.UseCases.CreateGroup;
 
 internal class CreateGroupUseCase(
     ICreateGroupStorage createGroupStorage,
     IIntentionManager intentionManager,
-    IIdentityProvider identityProvider) : ICreateGroupUseCase
+    IIdentityProvider identityProvider) : IRequestHandler<CreateGroupCommand, Group>
 {
-    public async Task<Group> ExecuteAsync(CreateGroupCommand command, CancellationToken cancellationToken)
+    public async Task<Group> Handle(CreateGroupCommand command, CancellationToken cancellationToken)
     {
         intentionManager.ThrowIfForbidden(GroupIntention.Create);
         

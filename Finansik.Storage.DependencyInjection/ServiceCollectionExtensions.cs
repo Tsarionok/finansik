@@ -8,6 +8,7 @@ using Finansik.Domain.UseCases.GetGroups;
 using Finansik.Domain.UseCases.RenameCategory;
 using Finansik.Domain.UseCases.SignIn;
 using Finansik.Domain.UseCases.SignOn;
+using Finansik.Domain.UseCases.SignOut;
 using Finansik.Storage.Entities.Enums;
 using Finansik.Storage.Storages;
 using Microsoft.EntityFrameworkCore;
@@ -30,7 +31,8 @@ public static class ServiceCollectionExtensions
             .AddScoped<IDeleteCategoryStorage, DeleteCategoryStorage>()
             .AddScoped<IAuthenticationStorage, AuthenticationStorage>()
             .AddScoped<ISignInStorage, SignInStorage>()
-            .AddScoped<ISignOnStorage, SignOnStorage>();
+            .AddScoped<ISignOnStorage, SignOnStorage>()
+            .AddScoped<ISignOutStorage, SignOutStorage>();
         
         var dataSourceBuilder = new NpgsqlDataSourceBuilder(connectionString);
         dataSourceBuilder.MapEnum<OperationDirection>();

@@ -1,3 +1,5 @@
+using MediatR;
+
 namespace Finansik.Domain.UseCases.SignOut;
 
-public record SignOutCommand;
+public record SignOutCommand : IRequest;

@@ -1,3 +1,6 @@
+using Finansik.Domain.Models;
+using MediatR;
+
 namespace Finansik.Domain.UseCases.GetGroup;
 
-public class GetGroupQuery : IQuery;
+public class GetGroupQuery : IRequest<Group>;

@@ -1,3 +1,6 @@
-﻿namespace Finansik.Domain.UseCases.SignIn;
+﻿using Finansik.Domain.Authentication;
+using MediatR;
 
-public record SignInCommand(string Login, string Password);
+namespace Finansik.Domain.UseCases.SignIn;
+
+public record SignInCommand(string Login, string Password) : IRequest<(IIdentity identity, string token)>;

@@ -1,5 +1,6 @@
 using Finansik.Domain.Models;
+using MediatR;
 
 namespace Finansik.Domain.UseCases.GetGroups;
 
-public interface IGetGroupsUseCase : IUseCase<IEnumerable<Group>>;
+public record GetGroupsQuery : IRequest<IEnumerable<Group>>;

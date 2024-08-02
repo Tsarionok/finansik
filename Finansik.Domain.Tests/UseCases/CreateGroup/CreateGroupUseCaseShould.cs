@@ -14,7 +14,7 @@ namespace Finansik.Domain.Tests.UseCases.CreateGroup;
 [TestSubject(typeof(CreateGroupUseCase))]
 public class CreateGroupUseCaseShould
 {
-    private readonly ICreateGroupUseCase _sut;
+    private readonly CreateGroupUseCase _sut;
     private readonly ISetup<ICreateGroupStorage, Task<Group>> _createGroupSetup;
     private readonly ISetup<IIntentionManager,bool> _isAllowedSetup;
 
@@ -42,7 +42,7 @@ public class CreateGroupUseCaseShould
     {
         _isAllowedSetup.Returns(false);
 
-        await _sut.Invoking(sut => sut.ExecuteAsync(
+        await _sut.Invoking(sut => sut.Handle(
                 new CreateGroupCommand("Some group", "noIcon.png"), CancellationToken.None))
             .Should()
             .ThrowAsync<IntentionManagerException>();
@@ -63,7 +63,7 @@ public class CreateGroupUseCaseShould
             Name = groupName
         });
             
-        var group = await _sut.ExecuteAsync(
+        var group = await _sut.Handle(
             new CreateGroupCommand(groupName, groupIcon), CancellationToken.None);
 
         group.Should().BeEquivalentTo(new Group

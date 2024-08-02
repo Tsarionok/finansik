@@ -3,23 +3,24 @@ using Finansik.API.Models;
 using Finansik.Domain.UseCases.CreateCategory;
 using Finansik.Domain.UseCases.CreateGroup;
 using Finansik.Domain.UseCases.GetGroups;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Finansik.API.Controllers;
 
 [ApiController]
 [Route("group")]
-public class GroupController : ControllerBase
+public class GroupController(IMediator mediator) : ControllerBase
 {
     [HttpGet(Name = nameof(GetGroups))]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Group[]))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(string))]
     public async Task<IActionResult> GetGroups(
-        [FromServices] IGetGroupsUseCase useCase,
         [FromServices] IMapper mapper,
         CancellationToken cancellationToken)
     {
-        var groups = await useCase.ExecuteAsync(cancellationToken);
+        var groups = await mediator.Send(new GetGroupsQuery(), cancellationToken);
+        
         return Ok(groups.Select(mapper.Map<Group>));
     }
 
@@ -27,13 +28,13 @@ public class GroupController : ControllerBase
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Group))]
     public async Task<IActionResult> CreateGroup(
         [FromBody] CreateGroup request,
-        [FromServices] ICreateGroupUseCase useCase,
         [FromServices] IMapper mapper,
         CancellationToken cancellationToken)
     {
-        var addedGroup = await useCase.ExecuteAsync(
+        var addedGroup = await mediator.Send(
             new CreateGroupCommand(request.Name, request.Icon), 
             cancellationToken);
+        
         return CreatedAtRoute(nameof(GetGroups), mapper.Map<Group>(addedGroup));
     }
     
@@ -45,13 +46,12 @@ public class GroupController : ControllerBase
     public async Task<IActionResult> CreateCategory(
         [FromRoute] Guid groupId,
         [FromBody] CreateCategory request,
-        [FromServices] ICreateCategoryUseCase useCase,
         [FromServices] IMapper mapper,
         CancellationToken cancellationToken)
     {
         var command = new CreateCategoryCommand(groupId, request.Name, request.Icon);
-        var category = await useCase.ExecuteAsync(command, cancellationToken);
+        var category = await mediator.Send(command, cancellationToken);
 
-        return CreatedAtRoute(nameof(CategoryController.GetCategories), mapper.Map<Group>(category));
+        return CreatedAtRoute(nameof(CategoryController.GetCategories), mapper.Map<Category>(category));
     }
 }

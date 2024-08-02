@@ -11,7 +11,7 @@ namespace Finansik.Domain.Tests.UseCases.GetCategoriesByGroupId;
 [TestSubject(typeof(GetCategoriesByGroupIdUseCase))]
 public class GetCategoriesByGroupIdUseCaseShould
 {
-    private readonly IGetCategoriesByGroupIdUseCase _sut;
+    private readonly GetCategoriesByGroupIdUseCase _sut;
     private readonly ISetup<IGetCategoriesByGroupIdStorage,Task<bool>> _isGroupExistsSetup;
     private readonly ISetup<IGetCategoriesByGroupIdStorage,Task<IEnumerable<Category>>> _getCategoriesByGroupIdSetup;
 
@@ -29,7 +29,7 @@ public class GetCategoriesByGroupIdUseCaseShould
     {
         _isGroupExistsSetup.ReturnsAsync(false);
 
-        await _sut.Invoking(sut => sut.ExecuteAsync(new GetCategoriesByGroupIdCommand(It.IsAny<Guid>()), CancellationToken.None))
+        await _sut.Invoking(sut => sut.Handle(new GetCategoriesByGroupIdQuery(It.IsAny<Guid>()), CancellationToken.None))
             .Should()
             .ThrowAsync<GroupNotFoundException>();
     }
@@ -54,8 +54,8 @@ public class GetCategoriesByGroupIdUseCaseShould
         _isGroupExistsSetup.ReturnsAsync(true);
         _getCategoriesByGroupIdSetup.ReturnsAsync(categories);
 
-        var actual = await _sut.ExecuteAsync(
-                new GetCategoriesByGroupIdCommand(Guid.Parse("4C0545DF-4096-4420-8237-733B0A2490ED")),
+        var actual = await _sut.Handle(
+                new GetCategoriesByGroupIdQuery(Guid.Parse("4C0545DF-4096-4420-8237-733B0A2490ED")),
                 CancellationToken.None);
 
         actual.Should().BeEquivalentTo(categories, a => a
