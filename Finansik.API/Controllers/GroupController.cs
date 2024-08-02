@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Finansik.API.Controllers;
 
 [ApiController]
-[Route("group")]
+[Route("groups")]
 public class GroupController(IMediator mediator) : ControllerBase
 {
     [HttpGet(Name = nameof(GetGroups))]

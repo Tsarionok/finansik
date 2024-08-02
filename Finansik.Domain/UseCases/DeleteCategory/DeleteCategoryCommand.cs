@@ -1,6 +1,8 @@
 ﻿using Finansik.Domain.Models;
+using Finansik.Domain.Monitoring;
 using MediatR;
 
 namespace Finansik.Domain.UseCases.DeleteCategory;
 
-public record DeleteCategoryCommand(Guid CategoryId) : IRequest<Category>;
+public record DeleteCategoryCommand(Guid CategoryId) : 
+    DefaultMonitoredRequest("categories.deleted"), IRequest<Category>;

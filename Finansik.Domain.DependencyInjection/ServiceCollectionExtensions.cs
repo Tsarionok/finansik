@@ -4,6 +4,7 @@ using Finansik.Domain.Authorization;
 using Finansik.Domain.Authorization.Category;
 using Finansik.Domain.Authorization.Group;
 using Finansik.Domain.Monitoring;
+using Finansik.Domain.UseCases;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,7 +15,10 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddFinansikDomain(this IServiceCollection services)
     {
         // TODO: unshackle from DomainMetrics for add MediatR
-        services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<DomainMetrics>());
+        services.AddMediatR(cfg => cfg
+            .AddOpenBehavior(typeof(MonitoringPipelineBehavior<,>))
+            .AddOpenBehavior(typeof(ValidationPipelineBehavior<,>))
+            .RegisterServicesFromAssemblyContaining<DomainMetrics>());
         
         // TODO: replace factory/provider/managers/resolvers dependencies to another module
         services

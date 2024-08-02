@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Net.Http.Json;
+using System.Text;
 using Finansik.Storage;
 using FluentAssertions;
 using Moq;
@@ -28,23 +29,40 @@ public class GroupEndpointsShould : IClassFixture<FinansikApiApplicationFactory>
         _guidCreateSetup.Returns(groupId);
         
         using var httpClient = _factory.CreateClient();
-        using var response = await httpClient.GetAsync("group");
-        response.Invoking(res => res.EnsureSuccessStatusCode()).Should().NotThrow<HttpRequestException>();
 
+        // Sign-on
+        using var signOnResponse = await httpClient.PostAsync("account/signon", JsonContent.Create(new
+        {
+            login = "tester",
+            password = "qwerty"
+        }));
+        signOnResponse.Invoking(res => res.EnsureSuccessStatusCode()).Should().NotThrow<HttpRequestException>();
+        
+        // Sign-in
+        using var signInResponse = await httpClient.PostAsync("account/signin", JsonContent.Create(new
+        {
+            login = "tester",
+            password = "qwerty"
+        }));
+        signInResponse.Invoking(res => res.EnsureSuccessStatusCode()).Should().NotThrow<HttpRequestException>();
+        
+        // Get groups
+        using var response = await httpClient.GetAsync("groups");
+        response.Invoking(res => res.EnsureSuccessStatusCode()).Should().NotThrow<HttpRequestException>();
+        
+        // Post group
         var content = JObject.FromObject(new
         {
             name = "E2E_testing",
             icon = "etoe"
         }).ToString();
-
         var request = new StringContent(content, Encoding.UTF8, "application/json");
-        
-        using var postResponse = await httpClient.PostAsync("group", request);
+        using var postResponse = await httpClient.PostAsync("groups", request);
         postResponse.Invoking(res => res.EnsureSuccessStatusCode()).Should().NotThrow<HttpRequestException>();
         
-        using var actual = await httpClient.GetAsync("group");
+        // Get groups
+        using var actual = await httpClient.GetAsync("groups");
         actual.Invoking(res => res.EnsureSuccessStatusCode()).Should().NotThrow<HttpRequestException>();
-
         var result = await actual.Content.ReadAsStringAsync();
         JArray.Parse(result).First
             .Should()

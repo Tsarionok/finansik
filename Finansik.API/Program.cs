@@ -38,7 +38,7 @@ var mapper = app.Services.GetRequiredService<IMapper>();
 mapper.ConfigurationProvider.AssertConfigurationIsValid();
 
 app.UseMiddleware<ErrorHandlingMiddleware>();
-app.UseMiddleware<AuthenticationMiddleware>();
+// app.UseMiddleware<AuthenticationMiddleware>();
 
 app.UseAuthorization();
 

@@ -1,6 +1,7 @@
 using Finansik.Domain.Models;
+using Finansik.Domain.Monitoring;
 using MediatR;
 
 namespace Finansik.Domain.UseCases.GetGroup;
 
-public class GetGroupQuery : IRequest<Group>;
+public record GetGroupQuery() : DefaultMonitoredRequest("categories.fetched"), IRequest<Group>;

@@ -52,6 +52,6 @@ public class SignOnUseCaseShould
         _createUserSetup.ReturnsAsync(userId);
 
         var actual = await _sut.Handle(new SignOnCommand("operator", "qwerty1234"), CancellationToken.None);
-        actual.Should().Be(userId);
+        actual.UserId.Should().Be(userId);
     }
 }

@@ -31,7 +31,7 @@ public class AccountEndpointsShould(FinansikApiApplicationFactory factory) :
         var signedInUser = await signInResponse.Content.ReadFromJsonAsync<User>();
         signedInUser!.UserId.Should().Be(createdUser!.UserId);
 
-        using var createGroupResponse = await httpClient.PostAsync("group", JsonContent.Create(new
+        using var createGroupResponse = await httpClient.PostAsync("groups", JsonContent.Create(new
         {
             name = "Peronal",
             icon = "private.png"
