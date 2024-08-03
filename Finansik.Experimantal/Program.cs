@@ -9,7 +9,6 @@ Console.WriteLine(typeOfType);
 Console.WriteLine(typeOfTypeOfType);
 
 
-
 struct Person
 {
     public string Name { get; set; }

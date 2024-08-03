@@ -21,30 +21,6 @@ services:
     volumes:
       - finansik-pg:/var/lib/postgresql/data
 
-  opensearch:
-    container_name: 'finansik-opensearch'
-    image: 'opensearchproject/opensearch:2'
-    ports:
-      - '9200:9200'
-      - '9600:9600'
-    environment:
-      OPENSEARCH_INITIAL_ADMIN_PASSWORD: 'e16He]fK8)}R'
-      discovery.type: 'single-node'
-      plugins.security.disabled: true
-    volumes:
-      - finansik-logs:/usr/share/opensearch/data
-  
-  opensearch-dashboards:
-    container_name: 'finansik-opensearch-dashboards'
-    image: 'opensearchproject/opensearch-dashboards:latest'
-    ports:
-      - '5601:5601'
-    environment:
-      OPENSEARCH_HOSTS: '["http://finansik-opensearch:9200"]'
-      DISABLE_SECURITY_DASHBOARDS_PLUGIN: 'true'
-    depends_on:
-      - opensearch
-
   prometheus:
     container_name: 'finansik-prometheus'
     image: 'prom/prometheus'
@@ -53,7 +29,16 @@ services:
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
       - finansik-prometheus:/prometheus
-  
+        
+  loki:
+    container_name: 'finansik-loki'
+    image: 'grafana/loki'
+    ports:
+      - '3100:3100'
+    volumes:
+      - ./loki-config.yml:/mnt/config/loki-config.yaml
+    command: --config.file=/mnt/config/loki-config.yaml
+    
   grafana:
     container_name: 'finansik-grafana'
     image: 'grafana/grafana'

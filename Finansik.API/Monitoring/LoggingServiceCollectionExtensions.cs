@@ -1,5 +1,6 @@
 using Serilog;
 using Serilog.Filters;
+using Serilog.Sinks.Grafana.Loki;
 
 namespace Finansik.API.Monitoring;
 
@@ -14,9 +15,10 @@ public static class LoggingServiceCollectionExtensions
                 .Enrich.WithProperty("Environment", environment.EnvironmentName)
                 .WriteTo.Logger(lc => lc
                     .Filter.ByExcluding(Matching.FromSource("Microsoft"))
-                    .WriteTo.OpenSearch(
-                        configuration.GetConnectionString("Logs"),
-                        "finansik-logs-{0:yyyy.MM.dd}"))
+                    .WriteTo.GrafanaLoki(
+                        configuration.GetConnectionString("Logs")!,
+                        propertiesAsLabels: ["level", "Application", "Environment", "SourceContext"],
+                        leavePropertiesIntact: true))
                 .WriteTo.Logger(lc => lc.WriteTo.Console(
                     outputTemplate: "[{Timestamp:HH:mm:ss.fff} {Level:u3}] {Message:lj}{NewLine}{Exception}"))
                 .CreateLogger()));

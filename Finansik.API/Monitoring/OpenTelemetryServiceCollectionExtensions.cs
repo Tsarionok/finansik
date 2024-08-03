@@ -17,7 +17,7 @@ public static class OpenTelemetryServiceCollectionExtensions
                 .AddAspNetCoreInstrumentation()
                 .AddPrometheusExporter())
             .WithTracing(builder => builder
-                .ConfigureResource(r => r.AddService("TFA"))
+                .ConfigureResource(r => r.AddService("Finansik"))
                 .AddAspNetCoreInstrumentation(options =>
                 {
                     options.Filter += context =>
