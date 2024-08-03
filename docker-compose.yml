@@ -68,3 +68,15 @@ services:
       - '14268:14268'
       - '14269:14269'
       - '9411:9411'
+        
+  api:
+    build:
+      context: .
+    container_name: 'finansik-api'
+    ports:
+      - '8080:8080'
+    environment:
+      ConnectionStrings__Postgres: "User ID=postgres;Password=postgres;Host=finansik-pg;Port=5432;Database=finansik;Pooling=true;MinPoolSize=0;MaxPoolSize=100;Connection Idle Lifetime=60;"
+      ConnectionStrings__Logs: "http://finansik-loki:3100"
+      ConnectionStrings__Tracing: "http://finansik-jaeger:14268/api/traces"
+        

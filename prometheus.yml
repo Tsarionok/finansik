@@ -4,7 +4,7 @@ scrape_configs:
     scrape_timeout: 3s
     static_configs: 
       - targets: 
-          - host.docker.internal:5073
+          - finansik-api:8080
         labels: 
           app: finansik
     
