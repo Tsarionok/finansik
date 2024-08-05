@@ -1,6 +1,5 @@
 using Finansik.Domain.Authentication;
 using Finansik.Domain.Authorization;
-using Finansik.Domain.Authorization.Group;
 using Finansik.Domain.Models;
 using MediatR;
 

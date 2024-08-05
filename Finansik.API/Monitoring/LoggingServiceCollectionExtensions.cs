@@ -1,5 +1,4 @@
 using System.Diagnostics;
-using System.Security.Cryptography;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;

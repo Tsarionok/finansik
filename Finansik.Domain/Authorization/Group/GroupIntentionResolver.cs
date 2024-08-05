@@ -1,5 +1,4 @@
 ﻿using Finansik.Domain.Authentication;
-using Finansik.Domain.UseCases.CreateGroup;
 
 namespace Finansik.Domain.Authorization.Group;
 
