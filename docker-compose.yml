@@ -43,8 +43,8 @@ services:
     container_name: 'finansik-grafana'
     image: 'grafana/grafana'
     restart: 'unless-stopped'
-    environment:
-      GF_INSTALL_PLUGINS: 'grafana-clock-panel,grafana-simple-json-datasource'
+#    environment:
+#      GF_INSTALL_PLUGINS: 'grafana-clock-panel,grafana-simple-json-datasource'
     volumes:
       - finansik-grafana:/var/lib/grafana
     ports:

@@ -24,7 +24,7 @@ public static class LoggingServiceCollectionExtensions
                     .Filter.ByExcluding(Matching.FromSource("Microsoft"))
                     .WriteTo.GrafanaLoki(
                         configuration.GetConnectionString("Logs")!,
-                        propertiesAsLabels: ["level", "Application", "Environment", "SourceContext"],
+                        propertiesAsLabels: ["Application", "Environment"],
                         leavePropertiesIntact: true))
                 .WriteTo.Logger(lc => lc.WriteTo.Console(
                     outputTemplate: "[{Timestamp:HH:mm:ss.fff} {Level:u3}] {Message:lj}{NewLine}{Exception}"))
