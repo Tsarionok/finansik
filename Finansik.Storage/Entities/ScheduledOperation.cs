@@ -4,6 +4,7 @@ using Finansik.Storage.Entities.Enums;
 
 namespace Finansik.Storage.Entities;
 
+// TODO: try to join in performed operations
 public class ScheduledOperation : PrimaryKeyEntity<Guid>
 {
     public Guid? PeriodCategoryId { get; set; }
