@@ -4,5 +4,5 @@ using MediatR;
 
 namespace Finansik.Domain.UseCases.CreateGroup;
 
-public record CreateGroupCommand(string Name, string? Icon) : 
+public sealed record CreateGroupCommand(string Name, string? Icon) : 
     DefaultMonitoredRequest("groups.created"), IRequest<Group>;

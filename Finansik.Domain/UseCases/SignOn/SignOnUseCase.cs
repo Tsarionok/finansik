@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Finansik.Domain.UseCases.SignOn;
 
-internal class SignOnUseCase(
+internal sealed class SignOnUseCase(
     ISignOnStorage storage,
     IPasswordManager passwordManager) : IRequestHandler<SignOnCommand, IIdentity>
 {

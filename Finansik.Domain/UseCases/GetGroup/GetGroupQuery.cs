@@ -4,4 +4,4 @@ using MediatR;
 
 namespace Finansik.Domain.UseCases.GetGroup;
 
-public record GetGroupQuery() : DefaultMonitoredRequest("categories.fetched"), IRequest<Group>;
+public sealed record GetGroupQuery() : DefaultMonitoredRequest("categories.fetched"), IRequest<Group>;

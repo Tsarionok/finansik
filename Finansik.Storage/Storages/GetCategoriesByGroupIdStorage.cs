@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Finansik.Storage.Storages;
 
-internal class GetCategoriesByGroupIdStorage (
+internal sealed class GetCategoriesByGroupIdStorage (
     FinansikDbContext dbContext,
     IMapper mapper) : IGetCategoriesByGroupIdStorage
 {

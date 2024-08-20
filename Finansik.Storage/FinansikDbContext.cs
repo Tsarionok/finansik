@@ -7,7 +7,7 @@ using ScheduledOperation = Finansik.Storage.Entities.ScheduledOperation;
 
 namespace Finansik.Storage;
 
-public class FinansikDbContext(DbContextOptions options) : DbContext(options)
+public sealed class FinansikDbContext(DbContextOptions options) : DbContext(options)
 {
     public DbSet<User> Users { get; set; }
     

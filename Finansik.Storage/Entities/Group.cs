@@ -3,7 +3,7 @@ using Finansik.Storage.Entities.Abstractions;
 
 namespace Finansik.Storage.Entities;
 
-public class Group : PrimaryKeyEntity<Guid>
+public sealed class Group : PrimaryKeyEntity<Guid>
 {
     public ICollection<User> Users { get; set; }
     

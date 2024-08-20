@@ -1,6 +1,6 @@
 ﻿namespace Finansik.API.Models;
 
-public class Category
+public sealed class Category
 {
     public Guid Id { get; set; }
     
@@ -9,14 +9,14 @@ public class Category
     public string? Icon { get; set; }
 }
 
-public class CreateCategory
+public sealed class CreateCategory
 {
     public string Name { get; set; }
     
     public string? Icon { get; set; }
 }
 
-public class DeleteCategory
+public sealed class DeleteCategory
 {
     public Guid CategoryId { get; set; }
 }

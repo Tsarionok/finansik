@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Finansik.Domain.UseCases.GetCategories;
 
-internal class GetCategoriesByGroupIdUseCase(IGetCategoriesByGroupIdStorage storage) : 
+internal sealed class GetCategoriesByGroupIdUseCase(IGetCategoriesByGroupIdStorage storage) : 
     IRequestHandler<GetCategoriesByGroupIdQuery, IEnumerable<Category>>
 {
     public async Task<IEnumerable<Category>> Handle(GetCategoriesByGroupIdQuery query, CancellationToken cancellationToken)

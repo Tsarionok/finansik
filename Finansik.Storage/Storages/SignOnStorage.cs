@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Finansik.Storage.Storages;
 
-public class SignOnStorage(
+public sealed class SignOnStorage(
     FinansikDbContext dbContext,
     IGuidFactory guidFactory) : ISignOnStorage
 {

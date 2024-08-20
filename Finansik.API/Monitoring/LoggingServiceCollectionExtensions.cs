@@ -29,7 +29,7 @@ public static class LoggingServiceCollectionExtensions
                     outputTemplate: "[{Timestamp:HH:mm:ss.fff} {Level:u3}] {Message:lj}{NewLine}{Exception}"))
                 .CreateLogger()));
     
-    private class TracingContextEnricher : ILogEventEnricher
+    private sealed class TracingContextEnricher : ILogEventEnricher
     {
         public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
         {

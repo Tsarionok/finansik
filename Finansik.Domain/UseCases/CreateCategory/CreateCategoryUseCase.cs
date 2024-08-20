@@ -7,7 +7,7 @@ using MediatR;
 
 namespace Finansik.Domain.UseCases.CreateCategory;
 
-internal class CreateCategoryUseCase(
+internal sealed class CreateCategoryUseCase(
     ICreateCategoryStorage createCategoryStorage, 
     IIdentityProvider identityProvider,
     IIntentionManager intentionManager) : IRequestHandler<CreateCategoryCommand, Category>

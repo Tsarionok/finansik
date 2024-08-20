@@ -1,6 +1,6 @@
 namespace Finansik.Domain.Models;
 
-public class ScheduledOperation
+public sealed class ScheduledOperation
 {
     public Guid? PeriodCategoryId { get; set; }
     

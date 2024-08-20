@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Finansik.Domain.UseCases;
 
-public class ValidationPipelineBehavior<TRequest, TResponse>(IValidator<TRequest> validator) : 
+public sealed class ValidationPipelineBehavior<TRequest, TResponse>(IValidator<TRequest> validator) : 
     IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
 {
     public async Task<TResponse> Handle(

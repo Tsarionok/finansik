@@ -3,4 +3,4 @@ using MediatR;
 
 namespace Finansik.Domain.UseCases.SignOut;
 
-public record SignOutCommand() : DefaultMonitoredRequest("user.sign-out"), IRequest;
+public sealed record SignOutCommand() : DefaultMonitoredRequest("user.sign-out"), IRequest;

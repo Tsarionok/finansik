@@ -4,7 +4,7 @@ using Finansik.Storage.Entities.Enums;
 
 namespace Finansik.Storage.Entities;
 
-public class PerformedOperation : PrimaryKeyEntity<Guid>
+public sealed class PerformedOperation : PrimaryKeyEntity<Guid>
 {
     public Guid? ScheduledOperationId { get; set; }
     

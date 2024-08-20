@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace Finansik.API.Middlewares;
 
-public class ErrorHandlingMiddleware(RequestDelegate next)
+public sealed class ErrorHandlingMiddleware(RequestDelegate next)
 {
     // ReSharper disable once UnusedMember.Global
     public async Task InvokeAsync(

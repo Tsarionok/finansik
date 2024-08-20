@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Finansik.Domain.UseCases.GetGroup;
 
-internal class GetGroupUseCase : IRequestHandler<GetGroupQuery, Group>
+internal sealed class GetGroupUseCase : IRequestHandler<GetGroupQuery, Group>
 {
     public async Task<Group> Handle(GetGroupQuery query, CancellationToken cancellationToken)
     {

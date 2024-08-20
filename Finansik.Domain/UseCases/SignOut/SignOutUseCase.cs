@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Finansik.Domain.UseCases.SignOut;
 
-public class SignOutUseCase(
+public sealed class SignOutUseCase(
     ISignOutStorage storage, 
     IIdentityProvider identityProvider) : IRequestHandler<SignOutCommand>
 {

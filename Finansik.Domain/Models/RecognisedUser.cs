@@ -1,6 +1,6 @@
 ﻿namespace Finansik.Domain.Models;
 
-public class RecognisedUser
+public sealed class RecognisedUser
 {
     public Guid UserId { get; set; }
     

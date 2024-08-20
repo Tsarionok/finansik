@@ -4,7 +4,7 @@ using Finansik.Domain.Exceptions;
 
 namespace Finansik.Domain.Authentication;
 
-internal class PasswordManager : IPasswordManager
+internal sealed class PasswordManager : IPasswordManager
 {
     private const int SaltLength = 100;
     private readonly Lazy<SHA256> _hashAlgorithm = new(SHA256.Create);

@@ -6,7 +6,7 @@ using MediatR;
 
 namespace Finansik.Domain.UseCases.CreateGroup;
 
-internal class CreateGroupUseCase(
+internal sealed class CreateGroupUseCase(
     ICreateGroupStorage createGroupStorage,
     IIntentionManager intentionManager,
     IIdentityProvider identityProvider) : IRequestHandler<CreateGroupCommand, Group>

@@ -4,5 +4,5 @@ using MediatR;
 
 namespace Finansik.Domain.UseCases.SignOn;
 
-public record SignOnCommand(string Login, string Password) : 
+public sealed record SignOnCommand(string Login, string Password) : 
     DefaultMonitoredRequest("user.sign-on"), IRequest<IIdentity>;

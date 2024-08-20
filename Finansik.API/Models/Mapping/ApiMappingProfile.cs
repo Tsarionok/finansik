@@ -2,7 +2,7 @@ using AutoMapper;
 
 namespace Finansik.API.Models.Mapping;
 
-internal class ApiMappingProfile : Profile
+internal sealed class ApiMappingProfile : Profile
 {
     public ApiMappingProfile()
     {

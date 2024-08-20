@@ -5,7 +5,7 @@ using Microsoft.Extensions.Caching.Memory;
 
 namespace Finansik.Storage.Storages;
 
-internal class CreateGroupStorage(
+internal sealed class CreateGroupStorage(
     FinansikDbContext dbContext,
     IGuidFactory guidFactory,
     IMemoryCache cache) : ICreateGroupStorage

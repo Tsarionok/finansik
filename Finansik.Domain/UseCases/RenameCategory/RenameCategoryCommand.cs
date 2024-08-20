@@ -4,5 +4,5 @@ using MediatR;
 
 namespace Finansik.Domain.UseCases.RenameCategory;
 
-public record RenameCategoryCommand(Guid CategoryId, string NextName) : 
+public sealed record RenameCategoryCommand(Guid CategoryId, string NextName) : 
     DefaultMonitoredRequest("categories.renamed"), IRequest<Category>;

@@ -3,7 +3,7 @@ using Finansik.Domain.UseCases.RenameCategory;
 
 namespace Finansik.Storage.Storages;
 
-internal class RenameCategoryStorage : IRenameCategoryStorage
+internal sealed class RenameCategoryStorage : IRenameCategoryStorage
 {
     public Task<bool> IsCategoryExists(Guid categoryId, CancellationToken cancellationToken)
     {

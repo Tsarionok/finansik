@@ -6,7 +6,7 @@ using Microsoft.Extensions.Options;
 
 namespace Finansik.Domain.UseCases.SignIn;
 
-internal class SignInUseCase(
+internal sealed class SignInUseCase(
     ISignInStorage storage,
     IPasswordManager passwordManager,
     ISymmetricEncryptor encryptor,

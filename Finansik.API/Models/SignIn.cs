@@ -1,6 +1,6 @@
 ﻿namespace Finansik.API.Models;
 
-public class SignIn
+public sealed class SignIn
 {
     public string Login { get; set; }
     

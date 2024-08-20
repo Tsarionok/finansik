@@ -5,7 +5,7 @@ using FluentAssertions;
 
 namespace Finansik.Storage.Tests.Storages;
 
-public class CreateCategoryStorageShould : IClassFixture<StorageTestFixture>
+public sealed class CreateCategoryStorageShould : IClassFixture<StorageTestFixture>
 {
     private readonly CreateCategoryStorage _sut;
     private readonly FinansikDbContext _dbContext;

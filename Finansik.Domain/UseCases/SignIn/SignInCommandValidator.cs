@@ -2,7 +2,7 @@
 
 namespace Finansik.Domain.UseCases.SignIn;
 
-public class SignInCommandValidator : AbstractValidator<SignInCommand>
+public sealed class SignInCommandValidator : AbstractValidator<SignInCommand>
 {
     public SignInCommandValidator()
     {

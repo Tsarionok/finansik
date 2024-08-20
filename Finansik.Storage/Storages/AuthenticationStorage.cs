@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Finansik.Storage.Storages;
 
-public class AuthenticationStorage(
+public sealed class AuthenticationStorage(
     FinansikDbContext dbContext,
     IMapper mapper
     ) : IAuthenticationStorage

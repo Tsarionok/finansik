@@ -3,7 +3,7 @@ using Finansik.Storage.Entities.Abstractions;
 
 namespace Finansik.Storage.Entities;
 
-public class Session : PrimaryKeyEntity<Guid>
+public sealed class Session : PrimaryKeyEntity<Guid>
 {
     public required Guid UserId { get; set; }
     

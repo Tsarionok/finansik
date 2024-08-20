@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Finansik.Storage.Tests.Storages;
 
-public class SignInStorageShould : IClassFixture<StorageTestFixture>
+public sealed class SignInStorageShould : IClassFixture<StorageTestFixture>
 {
     private readonly SignInStorage _sut;
     private readonly FinansikDbContext _dbContext;

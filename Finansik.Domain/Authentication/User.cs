@@ -1,6 +1,6 @@
 namespace Finansik.Domain.Authentication;
 
-public class User(Guid userId, Guid sessionId) : IIdentity
+public sealed class User(Guid userId, Guid sessionId) : IIdentity
 {
     public Guid UserId { get; } = userId;
 

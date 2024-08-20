@@ -3,7 +3,7 @@ using Finansik.Domain.Models;
 
 namespace Finansik.Storage.Entities.Mapping;
 
-internal class MappingProfile : Profile
+internal sealed class MappingProfile : Profile
 {
     public MappingProfile()
     {

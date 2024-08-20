@@ -5,7 +5,7 @@ using MediatR;
 
 namespace Finansik.Domain.UseCases.GetGroups;
 
-internal class GetGroupsUseCase(
+internal sealed class GetGroupsUseCase(
     IGetGroupsStorage storage,
     IIdentityProvider identityProvider,
     IIntentionManager intentionManager) : IRequestHandler<GetGroupsQuery, IEnumerable<Group>>

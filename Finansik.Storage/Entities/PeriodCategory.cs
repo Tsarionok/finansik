@@ -3,7 +3,7 @@ using Finansik.Storage.Entities.Abstractions;
 
 namespace Finansik.Storage.Entities;
 
-public class PeriodCategory : PrimaryKeyEntity<Guid>
+public sealed class PeriodCategory : PrimaryKeyEntity<Guid>
 {
     public Guid CategoryId { get; set; }
     

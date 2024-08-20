@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Finansik.Storage.Storages;
 
-public class DeleteCategoryStorage(FinansikDbContext dbContext) : IDeleteCategoryStorage
+public sealed class DeleteCategoryStorage(FinansikDbContext dbContext) : IDeleteCategoryStorage
 {
     public async Task<Category> DeleteCategory(Guid categoryId, CancellationToken cancellationToken)
     {

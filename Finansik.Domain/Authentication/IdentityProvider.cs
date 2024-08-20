@@ -1,6 +1,6 @@
 namespace Finansik.Domain.Authentication;
 
-internal class IdentityProvider : IIdentityProvider
+internal sealed class IdentityProvider : IIdentityProvider
 {
     public IIdentity Current { get; set; } = User.Guest;
 }

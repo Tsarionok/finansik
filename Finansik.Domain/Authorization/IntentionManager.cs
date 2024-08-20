@@ -3,7 +3,7 @@ using Finansik.Domain.Exceptions;
 
 namespace Finansik.Domain.Authorization;
 
-internal class IntentionManager(IEnumerable<IIntentionResolver> resolvers, IIdentityProvider identityProvider) : IIntentionManager
+internal sealed class IntentionManager(IEnumerable<IIntentionResolver> resolvers, IIdentityProvider identityProvider) : IIntentionManager
 {
     public bool IsAllowed<TIntention>(TIntention intention) where TIntention : struct
     {

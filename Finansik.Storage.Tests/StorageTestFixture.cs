@@ -6,7 +6,7 @@ using Testcontainers.PostgreSql;
 
 namespace Finansik.Storage.Tests;
 
-public class StorageTestFixture : IAsyncLifetime
+public sealed class StorageTestFixture : IAsyncLifetime
 {
     private readonly PostgreSqlContainer _dbContainer = new PostgreSqlBuilder().Build();
 

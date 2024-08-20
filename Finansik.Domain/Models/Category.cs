@@ -1,6 +1,6 @@
 namespace Finansik.Domain.Models;
 
-public class Category
+public sealed class Category
 {
     public Guid Id { get; set; }
     

@@ -10,7 +10,7 @@ namespace Finansik.API.Controllers;
 
 [ApiController]
 [Route("groups")]
-public class GroupController(IMediator mediator) : ControllerBase
+public sealed class GroupController(IMediator mediator) : ControllerBase
 {
     [HttpGet(Name = nameof(GetGroups))]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Group[]))]

@@ -10,7 +10,7 @@ namespace Finansik.API.Controllers;
 
 [ApiController]
 [Route("category")]
-public class CategoryController(IMediator mediator) : ControllerBase
+public sealed class CategoryController(IMediator mediator) : ControllerBase
 {
     [HttpGet(Name = nameof(GetCategories))]
     public async Task<IActionResult> GetCategories(

@@ -7,7 +7,7 @@ using Session = Finansik.Storage.Entities.Session;
 
 namespace Finansik.Storage.Storages;
 
-public class SignInStorage(
+public sealed class SignInStorage(
     FinansikDbContext dbContext, 
     IGuidFactory guidFactory,
     IMapper mapper) : ISignInStorage

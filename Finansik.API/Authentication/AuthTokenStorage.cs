@@ -1,6 +1,6 @@
 namespace Finansik.API.Authentication;
 
-internal class AuthTokenStorage : IAuthTokenStorage
+internal sealed class AuthTokenStorage : IAuthTokenStorage
 {
     private const string Key = "Finansik-Auth-Token";
     

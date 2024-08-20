@@ -4,7 +4,7 @@ using System.Diagnostics.Metrics;
 
 namespace Finansik.Domain.Monitoring;
 
-public class DomainMetrics(IMeterFactory meterFactory)
+public sealed class DomainMetrics(IMeterFactory meterFactory)
 {
     private readonly Meter _meter = meterFactory.Create("Finansik.Domain");
     private readonly ConcurrentDictionary<string, Counter<int>> _counters = new();

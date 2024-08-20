@@ -1,6 +1,6 @@
 namespace Finansik.Domain.Models;
 
-public class Session
+public sealed class Session
 {
     public Guid UserId { get; set; }
     

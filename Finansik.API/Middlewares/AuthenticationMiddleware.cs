@@ -3,7 +3,7 @@ using Finansik.Domain.Authentication;
 
 namespace Finansik.API.Middlewares;
 
-public class AuthenticationMiddleware(RequestDelegate next)
+public sealed class AuthenticationMiddleware(RequestDelegate next)
 {
     public async Task InvokeAsync(
         HttpContext httpContext,

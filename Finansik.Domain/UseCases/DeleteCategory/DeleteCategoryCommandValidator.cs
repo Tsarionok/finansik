@@ -2,7 +2,7 @@
 
 namespace Finansik.Domain.UseCases.DeleteCategory;
 
-internal class DeleteCategoryCommandValidator : AbstractValidator<DeleteCategoryCommand>
+internal sealed class DeleteCategoryCommandValidator : AbstractValidator<DeleteCategoryCommand>
 {
     public DeleteCategoryCommandValidator()
     {

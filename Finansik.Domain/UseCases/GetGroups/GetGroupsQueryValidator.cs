@@ -2,4 +2,4 @@ using FluentValidation;
 
 namespace Finansik.Domain.UseCases.GetGroups;
 
-public class GetGroupsQueryValidator : AbstractValidator<GetGroupsQuery>;
+public sealed class GetGroupsQueryValidator : AbstractValidator<GetGroupsQuery>;

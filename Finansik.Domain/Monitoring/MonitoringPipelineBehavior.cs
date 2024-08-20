@@ -10,7 +10,7 @@ internal abstract class MonitoringPipelineBehavior
     protected static readonly TextMapPropagator Propagator = Propagators.DefaultTextMapPropagator; 
 }
 
-internal class MonitoringPipelineBehavior<TRequest, TResponse>(
+internal sealed class MonitoringPipelineBehavior<TRequest, TResponse>(
     DomainMetrics metrics,
     ILogger<MonitoringPipelineBehavior<TRequest, TResponse>> logger) 
     : MonitoringPipelineBehavior, IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>

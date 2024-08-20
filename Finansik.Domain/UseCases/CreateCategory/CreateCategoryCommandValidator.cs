@@ -2,7 +2,7 @@
 
 namespace Finansik.Domain.UseCases.CreateCategory;
 
-internal class CreateCategoryCommandValidator : AbstractValidator<CreateCategoryCommand>
+internal sealed class CreateCategoryCommandValidator : AbstractValidator<CreateCategoryCommand>
 {
     public CreateCategoryCommandValidator()
     {

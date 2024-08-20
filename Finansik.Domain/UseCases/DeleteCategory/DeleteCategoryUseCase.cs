@@ -6,7 +6,7 @@ using MediatR;
 
 namespace Finansik.Domain.UseCases.DeleteCategory;
 
-internal class DeleteCategoryUseCase(
+internal sealed class DeleteCategoryUseCase(
     IIntentionManager intentionManager,
     IDeleteCategoryStorage storage) : IRequestHandler<DeleteCategoryCommand, Category>
 {

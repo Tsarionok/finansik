@@ -2,7 +2,7 @@
 
 namespace Finansik.Domain.Authorization.Group;
 
-internal class GroupIntentionResolver : IIntentionResolver<GroupIntention>
+internal sealed class GroupIntentionResolver : IIntentionResolver<GroupIntention>
 {
     public bool IsAllowed(IIdentity subject, GroupIntention intention) => intention switch
     {

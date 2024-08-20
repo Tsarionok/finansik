@@ -4,5 +4,5 @@ using MediatR;
 
 namespace Finansik.Domain.UseCases.DeleteCategory;
 
-public record DeleteCategoryCommand(Guid CategoryId) : 
+public sealed record DeleteCategoryCommand(Guid CategoryId) : 
     DefaultMonitoredRequest("categories.deleted"), IRequest<Category>;

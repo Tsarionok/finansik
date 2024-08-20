@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Finansik.Storage.Storages;
 
-internal class CreateCategoryStorage(
+internal sealed class CreateCategoryStorage(
     FinansikDbContext dbContext, 
     IGuidFactory guidFactory,
     IMapper mapper) : ICreateCategoryStorage

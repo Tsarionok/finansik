@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Finansik.Domain.Authentication.Cryptography;
 
-public class AesSymmetricEncryptorDecryptor : ISymmetricEncryptor, ISymmetricDecryptor
+public sealed class AesSymmetricEncryptorDecryptor : ISymmetricEncryptor, ISymmetricDecryptor
 {
     private const int IvSize = 16;
     private readonly Lazy<Aes> _aes = new(Aes.Create);

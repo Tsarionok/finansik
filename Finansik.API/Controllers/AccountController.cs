@@ -9,7 +9,7 @@ namespace Finansik.API.Controllers;
 
 [ApiController]
 [Route("account")]
-public class AccountController(IMediator mediator) : ControllerBase
+public sealed class AccountController(IMediator mediator) : ControllerBase
 {
     [HttpPost("signon")]
     public async Task<IActionResult> SignOn(

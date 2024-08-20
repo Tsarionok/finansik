@@ -6,7 +6,7 @@ using MediatR;
 
 namespace Finansik.Domain.UseCases.RenameCategory;
 
-internal class RenameCategoryUseCase(
+internal sealed class RenameCategoryUseCase(
     IRenameCategoryStorage storage,
     IIntentionManager intentionManager) : IRequestHandler<RenameCategoryCommand, Category>
 {

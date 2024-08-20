@@ -5,7 +5,7 @@ using Microsoft.Extensions.Options;
 
 namespace Finansik.Domain.Authentication;
 
-internal class AuthenticationService(
+internal sealed class AuthenticationService(
     ISymmetricDecryptor decryptor,
     IAuthenticationStorage storage,
     ILogger<AuthenticationService> logger,

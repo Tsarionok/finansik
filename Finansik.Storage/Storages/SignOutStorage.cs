@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Finansik.Storage.Storages;
 
-public class SignOutStorage(FinansikDbContext dbContext) : ISignOutStorage
+public sealed class SignOutStorage(FinansikDbContext dbContext) : ISignOutStorage
 {
     public async Task RemoveSession(Guid sessionId, CancellationToken cancellationToken)
     {

@@ -1,6 +1,6 @@
 namespace Finansik.API.Models;
 
-public class Group
+public sealed class Group
 {
     public Guid Id { get; set; }
     
@@ -9,4 +9,4 @@ public class Group
     public string? Icon { get; set; }
 }
 
-public record CreateGroup(string Name, string? Icon);
+public sealed record CreateGroup(string Name, string? Icon);
