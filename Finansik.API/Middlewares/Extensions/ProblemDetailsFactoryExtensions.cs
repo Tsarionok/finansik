@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace Finansik.API.Middlewares;
+namespace Finansik.API.Middlewares.Extensions;
 
 public static class ProblemDetailsFactoryExtensions
 {
