@@ -1,5 +1,4 @@
 using Finansik.Domain.Models;
-using Finansik.Domain.UseCases.GetGroup;
 using Finansik.Domain.UseCases.GetGroupById;
 using FluentAssertions;
 using Moq;

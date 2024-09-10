@@ -1,5 +1,4 @@
 using Finansik.Domain.Models;
-using Finansik.Domain.UseCases.GetGroup;
 using MediatR;
 
 namespace Finansik.Domain.UseCases.GetGroupById;

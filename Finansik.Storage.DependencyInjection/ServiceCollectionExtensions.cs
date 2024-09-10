@@ -4,6 +4,7 @@ using Finansik.Domain.UseCases.CreateCategory;
 using Finansik.Domain.UseCases.CreateGroup;
 using Finansik.Domain.UseCases.DeleteCategory;
 using Finansik.Domain.UseCases.GetCategories;
+using Finansik.Domain.UseCases.GetGroupById;
 using Finansik.Domain.UseCases.GetGroups;
 using Finansik.Domain.UseCases.RenameCategory;
 using Finansik.Domain.UseCases.SignIn;
@@ -24,6 +25,7 @@ public static class ServiceCollectionExtensions
         services
             .AddSingleton<IGuidFactory, GuidFactory>()
             .AddScoped<IGetGroupsStorage, GetGroupsStorage>()
+            .AddScoped<IGetGroupByIdStorage, GetGroupByIdStorage>()
             .AddScoped<ICreateGroupStorage, CreateGroupStorage>()
             .AddScoped<IRenameCategoryStorage, RenameCategoryStorage>()
             .AddScoped<IGetCategoriesByGroupIdStorage, GetCategoriesByGroupIdStorage>()

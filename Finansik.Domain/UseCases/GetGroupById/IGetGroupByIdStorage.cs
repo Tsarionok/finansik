@@ -1,6 +1,6 @@
 using Finansik.Domain.Models;
 
-namespace Finansik.Domain.UseCases.GetGroup;
+namespace Finansik.Domain.UseCases.GetGroupById;
 
 public interface IGetGroupByIdStorage
 {
