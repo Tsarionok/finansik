@@ -10,8 +10,8 @@ public class GetGroupByIdStorage(
     FinansikDbContext dbContext,
     IMapper mapper) : IGetGroupByIdStorage
 {
-    public Task<Group> FindGroup(Guid id, CancellationToken cancellationToken) =>
+    public Task<Group?> FindGroup(Guid id, CancellationToken cancellationToken) =>
         dbContext.Groups.Where(g => g.Id == id)
             .ProjectTo<Group>(mapper.ConfigurationProvider)
-            .FirstAsync(cancellationToken);
+            .FirstOrDefaultAsync(cancellationToken);
 }
