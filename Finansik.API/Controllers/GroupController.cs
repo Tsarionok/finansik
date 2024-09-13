@@ -2,6 +2,7 @@ using AutoMapper;
 using Finansik.API.Models;
 using Finansik.Domain.UseCases.CreateCategory;
 using Finansik.Domain.UseCases.CreateGroup;
+using Finansik.Domain.UseCases.GetGroupById;
 using Finansik.Domain.UseCases.GetGroups;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -22,6 +23,19 @@ public sealed class GroupController(IMediator mediator) : ControllerBase
         var groups = await mediator.Send(new GetGroupsQuery(), cancellationToken);
         
         return Ok(groups.Select(mapper.Map<Group>));
+    }
+
+    [HttpGet("{groupId:guid}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Group))]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(string))]
+    public async Task<IActionResult> GetGroup(
+        [FromRoute] Guid groupId,
+        [FromServices] IMapper mapper,
+        CancellationToken cancellationToken)
+    {
+        var group = await mediator.Send(new GetGroupByIdQuery(groupId), cancellationToken);
+        
+        return Ok(mapper.Map<Group>(group));
     }
 
     [HttpPost]
