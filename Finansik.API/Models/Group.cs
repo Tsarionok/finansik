@@ -10,3 +10,5 @@ public sealed class Group
 }
 
 public sealed record CreateGroup(string Name, string? Icon);
+
+public sealed record AddMember(Guid GroupId, Guid UserId);

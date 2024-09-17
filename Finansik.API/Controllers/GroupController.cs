@@ -1,5 +1,6 @@
 using AutoMapper;
 using Finansik.API.Models;
+using Finansik.Domain.UseCases.AddMemberToGroup;
 using Finansik.Domain.UseCases.CreateCategory;
 using Finansik.Domain.UseCases.CreateGroup;
 using Finansik.Domain.UseCases.GetGroupById;
@@ -67,5 +68,16 @@ public sealed class GroupController(IMediator mediator) : ControllerBase
         var category = await mediator.Send(command, cancellationToken);
 
         return CreatedAtRoute(nameof(CategoryController.GetCategories), mapper.Map<Category>(category));
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> AddMember(
+        [FromBody] AddMember request,
+        CancellationToken cancellationToken)
+    {
+        var command = new AddMemberToGroupCommand(request.GroupId, request.UserId);
+        var groupInfo = await mediator.Send(command, cancellationToken);
+
+        return Ok(groupInfo);
     }
 }
