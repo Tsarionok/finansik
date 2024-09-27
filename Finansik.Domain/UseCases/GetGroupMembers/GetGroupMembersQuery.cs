@@ -1,6 +1,8 @@
 using Finansik.Domain.Models;
+using Finansik.Domain.Monitoring;
 using MediatR;
 
 namespace Finansik.Domain.UseCases.GetGroupMembers;
 
-public record GetGroupMembersQuery(Guid GroupId) : IRequest<IEnumerable<GroupMembers>>;
+public record GetGroupMembersQuery(Guid GroupId) : 
+    DefaultMonitoredRequest("group.members.fetched"), IRequest<IEnumerable<GroupMembers>>;
