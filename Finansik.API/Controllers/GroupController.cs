@@ -4,6 +4,7 @@ using Finansik.Domain.UseCases.AddMemberToGroup;
 using Finansik.Domain.UseCases.CreateCategory;
 using Finansik.Domain.UseCases.CreateGroup;
 using Finansik.Domain.UseCases.GetGroupById;
+using Finansik.Domain.UseCases.GetGroupMembers;
 using Finansik.Domain.UseCases.GetGroups;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -76,8 +77,19 @@ public sealed class GroupController(IMediator mediator) : ControllerBase
         CancellationToken cancellationToken)
     {
         var command = new AddMemberToGroupCommand(request.GroupId, request.UserId);
-        var groupInfo = await mediator.Send(command, cancellationToken);
+        var groupMembers = await mediator.Send(command, cancellationToken);
 
-        return Ok(groupInfo);
+        return Ok(groupMembers);
+    }
+
+    [HttpGet("{groupId:guid}")]
+    public async Task<IActionResult> GetMembers(
+        [FromRoute] Guid groupId,
+        CancellationToken cancellationToken)
+    {
+        var command = new GetGroupMembersQuery(groupId);
+        var groupMembers = await mediator.Send(command, cancellationToken);
+
+        return Ok(groupMembers);
     }
 }
