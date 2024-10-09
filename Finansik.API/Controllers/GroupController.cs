@@ -82,7 +82,7 @@ public sealed class GroupController(IMediator mediator) : ControllerBase
         return Ok(groupMembers);
     }
 
-    [HttpGet("{groupId:guid}")]
+    [HttpGet("{groupId:guid}/members")]
     public async Task<IActionResult> GetMembers(
         [FromRoute] Guid groupId,
         CancellationToken cancellationToken)
