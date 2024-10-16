@@ -1,11 +1,22 @@
+using Finansik.Domain.Exceptions;
 using MediatR;
 
 namespace Finansik.Domain.UseCases.RemoveMemberFromGroup;
 
-public class RemoveMemberFromGroupUseCase : IRequestHandler<RemoveMemberFromGroupCommand, Guid>
+public class RemoveMemberFromGroupUseCase(
+    IRemoveMemberFromGroupStorage storage
+    ) : IRequestHandler<RemoveMemberFromGroupCommand, Guid>
 {
-    public Task<Guid> Handle(RemoveMemberFromGroupCommand request, CancellationToken cancellationToken)
+    public async Task<Guid> Handle(RemoveMemberFromGroupCommand command, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        if (!await storage.IsGroupExists(command.GroupId, cancellationToken))
+            throw new GroupNotFoundException(command.GroupId);
+
+        if (!await storage.IsUserExists(command.UserId, cancellationToken))
+            throw new UserNotFoundException(command.UserId);
+
+        await storage.ResetGroupIdForUser(command.UserId, command.GroupId, cancellationToken);
+        
+        return command.UserId;
     }
 }
