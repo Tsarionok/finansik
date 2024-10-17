@@ -71,12 +71,13 @@ public sealed class GroupController(IMediator mediator) : ControllerBase
         return CreatedAtRoute(nameof(CategoryController.GetCategories), mapper.Map<Category>(category));
     }
 
-    [HttpPost]
+    [HttpPost("{groupId:guid}/members")]
     public async Task<IActionResult> AddMember(
+        Guid groupId, 
         [FromBody] AddMember request,
         CancellationToken cancellationToken)
     {
-        var command = new AddMemberToGroupCommand(request.GroupId, request.UserId);
+        var command = new AddMemberToGroupCommand(groupId, request.UserId);
         var groupMembers = await mediator.Send(command, cancellationToken);
 
         return Ok(groupMembers);
