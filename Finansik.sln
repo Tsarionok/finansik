@@ -12,21 +12,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.dockerignore = .dockerignore
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finansik.Domain", "Finansik.Domain\Finansik.Domain.csproj", "{6FEB58E6-8922-4BFD-B65C-4FDF6B07131E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finansik.Domain", "src\Finansik.Domain\Finansik.Domain.csproj", "{6FEB58E6-8922-4BFD-B65C-4FDF6B07131E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finansik.Storage", "Finansik.Storage\Finansik.Storage.csproj", "{1DC49773-3A56-4F74-A807-FE8975638034}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finansik.Storage", "src\Finansik.Storage\Finansik.Storage.csproj", "{1DC49773-3A56-4F74-A807-FE8975638034}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finansik.API", "Finansik.API\Finansik.API.csproj", "{0D2F2E7A-F44E-4787-8F85-03B222BFD315}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finansik.API", "src\Finansik.API\Finansik.API.csproj", "{0D2F2E7A-F44E-4787-8F85-03B222BFD315}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finansik.Domain.Tests", "Finansik.Domain.Tests\Finansik.Domain.Tests.csproj", "{7B4516F0-93D8-4030-92DA-DF17085773BD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finansik.Domain.Tests", "tests\Finansik.Domain.Tests\Finansik.Domain.Tests.csproj", "{7B4516F0-93D8-4030-92DA-DF17085773BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finansik.Domain.DependencyInjection", "Finansik.Domain.DependencyInjection\Finansik.Domain.DependencyInjection.csproj", "{3C5518B0-0F67-49C4-BDE2-EDD4554D7AB5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finansik.Domain.DependencyInjection", "src\Finansik.Domain.DependencyInjection\Finansik.Domain.DependencyInjection.csproj", "{3C5518B0-0F67-49C4-BDE2-EDD4554D7AB5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finansik.Storage.DependencyInjection", "Finansik.Storage.DependencyInjection\Finansik.Storage.DependencyInjection.csproj", "{66578F63-4F37-4F34-A833-0B6F029A8D26}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finansik.Storage.DependencyInjection", "src\Finansik.Storage.DependencyInjection\Finansik.Storage.DependencyInjection.csproj", "{66578F63-4F37-4F34-A833-0B6F029A8D26}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finansik.E2E", "Finansik.E2E\Finansik.E2E.csproj", "{5CD25A27-D96A-49FE-A73D-158C99EA0AAF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finansik.E2E", "tests\Finansik.E2E\Finansik.E2E.csproj", "{5CD25A27-D96A-49FE-A73D-158C99EA0AAF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finansik.Storage.Tests", "Finansik.Storage.Tests\Finansik.Storage.Tests.csproj", "{633C5FEB-DC06-4BF5-B33E-5FC5E81ED211}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finansik.Storage.Tests", "tests\Finansik.Storage.Tests\Finansik.Storage.Tests.csproj", "{633C5FEB-DC06-4BF5-B33E-5FC5E81ED211}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
