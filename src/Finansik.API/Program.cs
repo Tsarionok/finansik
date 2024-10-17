@@ -46,8 +46,6 @@ app.MapGet("/", () => "Hello World!");
 
 app.Run();
 
-Guid.CreateVersion7();
-
 // Used for E2E testing
 // FIX: remove this partial class
 public abstract partial class Program;
