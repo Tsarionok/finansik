@@ -5,7 +5,7 @@ namespace Finansik.Domain.UseCases.ExecuteCode;
 
 public class ExecuteCodeUseCase : IRequestHandler<ExecuteCodeQuery, ExecuteCodeQueryResult>
 {
-    public Task<ExecuteCodeQueryResult> Handle(ExecuteCodeQuery query, CancellationToken cancellationToken)
+    public async Task<ExecuteCodeQueryResult> Handle(ExecuteCodeQuery query, CancellationToken cancellationToken)
     {
         var engine = Python.CreateEngine();
         var scope = engine.CreateScope();
@@ -15,6 +15,6 @@ public class ExecuteCodeUseCase : IRequestHandler<ExecuteCodeQuery, ExecuteCodeQ
         
         var result = startMethod(query.Argument);
 
-        return result;
+        return new ExecuteCodeQueryResult(result.ToString());
     }
 }

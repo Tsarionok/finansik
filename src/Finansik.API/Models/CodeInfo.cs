@@ -6,5 +6,5 @@ public sealed class CodeInfo
     
     public string StartMethod { get; set; }
     
-    public dynamic Argument { get; set; }
+    public int Argument { get; set; }
 }
